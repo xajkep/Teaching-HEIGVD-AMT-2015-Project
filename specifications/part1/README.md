@@ -57,7 +57,7 @@ The minimum domain model that you will implement is shown in the following diagr
 We have not documented the attributes of the business entities. This is your responsibility (the UI mockups will give you hints).
 
 
-<img src="diagrams/part1-domainModel.png" style="width:300">
+<img src="../diagrams/part1-domainModel.png" style="width:300">
 
 
 ## UI flow
@@ -76,9 +76,7 @@ The minimum UI that you will implement is shown in the following diagram. Note t
 
 * Developers can also access a page, where they can edit their account details. One of the things they can do is change their password. You should define a policy for acceptable passwords (length, required characters, etc.) and implement it. The policy should be applied when developers create their account and when they later change their password.
 
-<img src="diagrams/part1-UI.png" style="width:600">
-[image source](diagrams/part1-UI.png)
-
+<img src="../diagrams/part1-UI.png" style="width:600">
 
 ## Testing and validation
 
