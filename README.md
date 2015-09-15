@@ -31,12 +31,16 @@ The goal of the project will be to build a simple gamification platform to suppo
 
 ### Part 1
 
-In the first part of the project, we will apply techniques presented in the.
+In the first part of the project, we will apply techniques presented in the course to build the foundation of the gamification platform. We will implement a simple domain model to deal with user accounts, roles, applications and API keys. We will also implement a web UI to manage these elements.
+
+The specifications are available [here](specifications/part1/).
 
 
 ### Part 2
 
 In the second part of the project, we will design the gamification domain model
+
+The specifications are not available yet. They will be published [here](specifications/part2).
 
 
 ### Part 3
@@ -44,3 +48,5 @@ In the second part of the project, we will design the gamification domain model
 In the third part of the project, we will **validate the gamification engine by using it from a particular application**. 
 
 This will be the most creative part of the project, where every group will have to **select an application domain** (business, commerce, education, travel, photography, etc.) and implement a proof-of-concept system. To do that, each group will have the choice of **either building a simple application** (e.g. a simplified Instagram application) **or integrating an existing third-party service** (e.g. the real Instagram service). In both cases, the group will have to invoke the gamification APIs from the gamified application, configure rules and design a demonstration scenario.
+
+The specifications are not available yet. They will be published [here](specifications/part3).
