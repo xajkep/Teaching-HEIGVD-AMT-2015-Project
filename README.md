@@ -38,7 +38,7 @@ The specifications are available [here](specifications/part1/).
 
 ### Part 2
 
-In the second part of the project, we will design the gamification domain model
+In the second part of the project, we will design the gamification domain model. This is where you will have to define and implement game mechanisms (e.g. badges, reputation scores, leader boards, etc.). This is also where you will have to find a ways to make a connection between what happens within the gamified application (e.g. a stackoverflow user has answered a question) and what happens within the gamification platform (e.g. a badge is awarded to that user). In the second part, we will focus more on the design and implementation of a REST API than on the implementation of a web UI. 
 
 The specifications are not available yet. They will be published [here](specifications/part2).
 
