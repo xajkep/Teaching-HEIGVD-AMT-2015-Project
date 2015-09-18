@@ -57,7 +57,7 @@ View: Implements the presentation layer that interacts with the user. When the u
 
 Controller: Acts as the boss of the application and is responsible for routing data to the right model and view components. The controller oversees the model and the view by reacting to the data the user sends. In online Java applications, the controller is often implemented as a servlet.
 
-![alt tag](https://raw.github.com/mberthouzoz/Teaching-HEIGVD-AMT-2015-Project/master/report/img/MVC-Schema.png)
+<img src="./img/MVC-Schema.png">
 
 
 ## Implementation
