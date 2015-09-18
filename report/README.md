@@ -14,13 +14,26 @@ Zuckschwerdt Benoit, xajkep, User interface
 
 ### Tasks realized by the different team members
 Generate scaffolding of the application.
+
 Create each view, model, controller.
+
 Implementation of the communcation with the database
+
 Implemenation of the webservice rest
+
 ...
 
 
 ## Introduction 
+This project is to make during the AMT course at the HEIG-VD.
+
+The main goal is to design an web application client-server in Java in 3 parts.
+
+The first part is to
+
+The second part is to
+
+The third part is to
 
 ## User Guide
 
@@ -36,6 +49,7 @@ Implemenation of the webservice rest
 ## Design
 
 ### System overview
+Explain with schema
 
 ### Gamification features
 Explain our choice
