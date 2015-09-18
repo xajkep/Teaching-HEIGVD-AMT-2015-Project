@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.heigvd.amt.amt_projet_untitled.models;
+package ch.heigvd.amt.amt_project.services;
 
 /**
  *

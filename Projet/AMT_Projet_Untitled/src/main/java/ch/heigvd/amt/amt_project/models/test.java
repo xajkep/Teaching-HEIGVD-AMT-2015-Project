@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.heigvd.amt.amt_projet_untitled.web.filters;
+package ch.heigvd.amt.amt_project.models;
 
 /**
  *
  * @author thsch
  */
-public class NewClass {
+public class test {
     
 }
