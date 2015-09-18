@@ -124,11 +124,20 @@ The Bootstrap 3 library is used for designed the views.
 ### Test strategy
 
 ### Tools
-#### JMeter
-JMeter is ...
+#### Apache JMeter
+Apache JMeter is an open source software, a 100% pure Java application designed to load test client/server software.
+
+JMeter can be used to simulate a heavy load on a server, network or object to test its strength or to analyze overall performance under different load types.
+
+User's Manual : [http://jmeter.apache.org/usermanual/index.html](http://jmeter.apache.org/usermanual/index.html)
+
 
 #### Selenium
-Selenum is ...
+Selenium is a portable software testing framework for web applications.
+
+Selenium provides a record/playback tool for authoring tests without learning a test scripting language (Selenium IDE). It also provides a test domain-specific language (Selenese) to write tests in a number of popular programming languages, including Java, C#, Groovy, Perl, PHP, Python and Ruby. The tests can then be run against most modern web browsers. Selenium deploys on Windows, Linux, and Macintosh platforms. It is open-source software, released under the Apache 2.0 license, and can be downloaded and used without charge.
+
+Documentation : [http://docs.seleniumhq.org/docs/](http://docs.seleniumhq.org/docs/)
 
 ### Procedures
 
