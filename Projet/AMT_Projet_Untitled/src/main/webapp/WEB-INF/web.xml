@@ -16,6 +16,10 @@
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>ch.heigvd.amt.amt_project.web.controllers.HomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AppServlet</servlet-name>
+        <servlet-class>ch.heigvd.amt.amt_project.web.controllers.AppServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/auth</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/pages/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AppServlet</servlet-name>
+        <url-pattern>/pages/app</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
