@@ -10,33 +10,31 @@ package ch.heigvd.amt.amt_project.models;
  * @author YounTheory
  */
 public class Application {
-    private String idApp;
+    private ApiKey idApp;
     private String name;
     private String description;
     private Boolean enable;
-    private int idUserCreator;
+    private Account fkUserCreator;
 
-    public Application(String idApp, String name, String description, Boolean enable, int idUserCreator )
+    public Application(ApiKey idApp, String name, String description, Boolean enable, Account fkUserCreator )
     {
         this.idApp = idApp;
         this.name = name;
         this.description = description;
         this.enable = enable;
-        this.idUserCreator = idUserCreator;
-
-    
+        this.fkUserCreator = fkUserCreator;
     }
     /**
      * @return the idApp
      */
-    public String getApiKey() {
+    public ApiKey getApiKey() {
         return idApp;
     }
 
     /**
      * @param idApp the idApp to set
      */
-    public void setApiKey(String idApp) {
+    public void setApiKey(ApiKey idApp) {
         this.idApp = idApp;
     }
 
@@ -83,17 +81,17 @@ public class Application {
     }
 
     /**
-     * @return the idUserCreator
+     * @return the fkUserCreator
      */
-    public int getIdUserCreator() {
-        return idUserCreator;
+    public Account getIdUserCreator() {
+        return fkUserCreator;
     }
 
     /**
-     * @param idUserCreator the idCreator to set
+     * @param fkUserCreator the idCreator to set
      */
-    public void setIdCreator(int idUserCreator) {
-        this.idUserCreator = idUserCreator;
+    public void setIdCreator(Account fkUserCreator) {
+        this.fkUserCreator = fkUserCreator;
     }
 
     
