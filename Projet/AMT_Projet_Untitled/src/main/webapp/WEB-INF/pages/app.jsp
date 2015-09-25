@@ -27,8 +27,8 @@
                 <td>ajs09k23ds093h0983zd8aujm3</td>
                 <td>999'999</td>
                 <td>
-                    <a class="btn btn-primary" href="pages/edit_app">Edit</a>
-                    <a class="btn btn-success" disabled>ENABLED<a>
+                    <a class="btn btn-primary" href="pages/app?action=edit&id=1">Edit</a>
+                    <a class="btn btn-success" href="pages/app?action=disable&id=1">ENABLED<a>
                 </td> 
             </tr>
             <tr>
@@ -37,8 +37,8 @@
                 <td>456awkk2poas9jd9</td>
                 <td>2'000</td>
                 <td>
-                    <a class="btn btn-primary" href="pages/edit_app">Edit</a>
-                    <a class="btn btn-danger" disabled>DISABLED<a>
+                    <a class="btn btn-primary" href="pages/app?action=edit&id=2">Edit</a>
+                    <a class="btn btn-danger" href="pages/app?action=enable&id=2">DISABLED<a>
                 </td> 
             </tr>
         </tbody>
