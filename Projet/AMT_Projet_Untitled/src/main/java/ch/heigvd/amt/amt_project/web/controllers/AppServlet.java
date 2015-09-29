@@ -1,5 +1,7 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
+import ch.heigvd.amt.amt_project.services.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.models.Application;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author xajkep
+ * @author xajkep, mberthouzoz
  */
 public class AppServlet extends HttpServlet {
+    
+    private ApplicationsDAOLocal applicationsDAO;
 
     protected static String LIST_APP = "/WEB-INF/pages/app.jsp";
     protected static String NEW_APP = "/WEB-INF/pages/app_new.jsp";
@@ -30,23 +34,27 @@ public class AppServlet extends HttpServlet {
                 //request.setAttribut("app", app);
             } else if (action.equalsIgnoreCase("enable")) {
                 System.out.println("in ENABLE");
-                int appId = Integer.parseInt(request.getParameter("id"));
+                long appId = Integer.parseInt(request.getParameter("id"));
                 // DO SOMETHING TO ENABLE
+                Application app = applicationsDAO.findById(appId);
+                applicationsDAO.enable(app);
                 forward = LIST_APP;
-                //request.setAttribute("apps", XXX.getAllApps());
+                request.setAttribute("apps", applicationsDAO.findAll());
             } else if (action.equalsIgnoreCase("disable")) {
                 System.out.println("in DISABLE");
-                int appId = Integer.parseInt(request.getParameter("id"));
+                long appId = Integer.parseInt(request.getParameter("id"));
+                Application app = applicationsDAO.findById(appId);
+                applicationsDAO.disable(app);
                 // DO SOMETHING TO DISABLE
                 forward = LIST_APP;
-                //request.setAttribute("apps", XXX.getAllApps());
+                request.setAttribute("apps", applicationsDAO.findAll());
             } else {
                 System.out.println("in NEW");
                 forward = NEW_APP;
             }
         } else {
             forward = LIST_APP;
-            //request.setAttribute("apps", XXX.getAllApps());
+            request.setAttribute("apps", applicationsDAO.findAll());
         }
 
         request.getRequestDispatcher(forward).forward(request, response);

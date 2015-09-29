@@ -5,39 +5,49 @@
  */
 package ch.heigvd.amt.amt_project.models;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 /**
+ * This class implements the Application domain model object.
  *
- * @author YounTheory
+ * @author mberthouzoz
  */
-public class Application {
-    private String idApp;
+@Entity
+public class Application extends AbstractDomainModel<Long> {
+    
     private String name;
     private String description;
+    private String key;
     private Boolean enable;
-    private int idUserCreator;
+    
+    @ManyToOne
+    private User creator;
+    
+    public Application() {
+        
+    }
 
-    public Application(String idApp, String name, String description, Boolean enable, int idUserCreator )
+    public Application(String name, String description, String key, Boolean enable, User creator )
     {
-        this.idApp = idApp;
+        this.key = key;
         this.name = name;
         this.description = description;
         this.enable = enable;
-        this.idUserCreator = idUserCreator;
-
-    
+        this.creator = creator;
     }
     /**
-     * @return the idApp
+     * @return the key
      */
-    public String getApiKey() {
-        return idApp;
+    public String getKey() {
+        return key;
     }
 
     /**
-     * @param idApp the idApp to set
+     * @param key the key to set
      */
-    public void setApiKey(String idApp) {
-        this.idApp = idApp;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     /**
@@ -83,20 +93,17 @@ public class Application {
     }
 
     /**
-     * @return the idUserCreator
+     * @return the creator
      */
-    public int getIdUserCreator() {
-        return idUserCreator;
+    public User getCreator() {
+        return creator;
     }
 
     /**
-     * @param idUserCreator the idCreator to set
+     * @param creator the idCreator to set
      */
-    public void setIdCreator(int idUserCreator) {
-        this.idUserCreator = idUserCreator;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
-
-    
-    
     
 }
