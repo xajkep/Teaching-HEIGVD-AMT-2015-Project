@@ -5,37 +5,74 @@
  */
 package ch.heigvd.amt.amt_project.models;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 /**
+ * This class implements the Application domain model object.
  *
- * @author YounTheory
+ * @author mberthouzoz
  */
+<<<<<<< HEAD
 public class Application {
     private ApiKey idApp;
+=======
+@Entity
+public class Application extends AbstractDomainModel<Long> {
+    
+>>>>>>> origin/master
     private String name;
     private String description;
+    private String key;
     private Boolean enable;
+<<<<<<< HEAD
     private Account fkUserCreator;
 
     public Application(ApiKey idApp, String name, String description, Boolean enable, Account fkUserCreator )
+=======
+    
+    @ManyToOne
+    private User creator;
+    
+    public Application() {
+        
+    }
+
+    public Application(String name, String description, String key, Boolean enable, User creator )
+>>>>>>> origin/master
     {
-        this.idApp = idApp;
+        this.key = key;
         this.name = name;
         this.description = description;
         this.enable = enable;
+<<<<<<< HEAD
         this.fkUserCreator = fkUserCreator;
+=======
+        this.creator = creator;
+>>>>>>> origin/master
     }
     /**
-     * @return the idApp
+     * @return the key
      */
+<<<<<<< HEAD
     public ApiKey getApiKey() {
         return idApp;
+=======
+    public String getKey() {
+        return key;
+>>>>>>> origin/master
     }
 
     /**
-     * @param idApp the idApp to set
+     * @param key the key to set
      */
+<<<<<<< HEAD
     public void setApiKey(ApiKey idApp) {
         this.idApp = idApp;
+=======
+    public void setKey(String key) {
+        this.key = key;
+>>>>>>> origin/master
     }
 
     /**
@@ -81,6 +118,7 @@ public class Application {
     }
 
     /**
+<<<<<<< HEAD
      * @return the fkUserCreator
      */
     public Account getIdUserCreator() {
@@ -92,9 +130,19 @@ public class Application {
      */
     public void setIdCreator(Account fkUserCreator) {
         this.fkUserCreator = fkUserCreator;
+=======
+     * @return the creator
+     */
+    public User getCreator() {
+        return creator;
     }
 
-    
-    
+    /**
+     * @param creator the idCreator to set
+     */
+    public void setCreator(User creator) {
+        this.creator = creator;
+>>>>>>> origin/master
+    }
     
 }

@@ -34,21 +34,8 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="pages/app">Your apps</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Examples <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="pages/beers">Beers</a></li>
-                  <li><a href="pages/ugly">Ugly servlet</a></li>
-                  <li><a href="data/json">Json servlet</a></li>
-                  <li><a href="data/graph">Graph servlet</a></li>
-                  <li><a href="pages/ajax">AJAX page</a></li>
-                  <!--
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  -->
-                </ul>
-              </li>
+              <li><a href="pages/app">Applications</a></li>
+              <li><a href="pages/account">Your Account</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="./auth?action=logout">Logout</a></li>

@@ -31,3 +31,20 @@ body {
     border: 1px grey solid; 
     
 }
+
+.control-label {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.static-form {
+    line-height: 1.4em;
+    font-size: 1.1em;
+    vertical-align: middle;
+    display: block;
+    padding-top: 10px;
+}
+
+.form-horizontal textarea {
+    height: 200px;
+}

@@ -6,9 +6,14 @@
 
 <%@include file="includes/header.jsp" %>
 
-<h2>Your applications</h2>
 
-<div class="conatiner">
+<h2 class="pull-left">Your applications</h2><br/>
+<a class="btn btn-primary pull-right" href="pages/app?action=new">New app</a>
+
+
+<div class="container">
+    
+    
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -21,26 +26,18 @@
         </thead>
         
         <tbody>
+            <c:forEach items="${allApps}" var="app">
             <tr>
-                <td>Example</td>
-                <td>This is AN EXAMPLE</td>
-                <td>ajs09k23ds093h0983zd8aujm3</td>
-                <td>999'999</td>
+                <td>${app.name}</td>
+                <td>${app.description}</td>
+                <td>${app.api_key}</td>
+                <td>${app.users}</td>
                 <td>
-                    <a class="btn btn-primary" href="pages/edit_app">Edit</a>
-                    <a class="btn btn-success" disabled>ENABLED<a>
+                    <a class="btn btn-primary" href="pages/app?action=edit&id=1">Edit</a>
+                    <a class="btn btn-success" href="pages/app?action=disable&id=1">ENABLED&nbsp;<a>
                 </td> 
             </tr>
-            <tr>
-                <td>SAMPLE</td>
-                <td>This is A SAMPLE</td>
-                <td>456awkk2poas9jd9</td>
-                <td>2'000</td>
-                <td>
-                    <a class="btn btn-primary" href="pages/edit_app">Edit</a>
-                    <a class="btn btn-danger" disabled>DISABLED<a>
-                </td> 
-            </tr>
+            </c:forEach>
         </tbody>
     </table>
 </div>
