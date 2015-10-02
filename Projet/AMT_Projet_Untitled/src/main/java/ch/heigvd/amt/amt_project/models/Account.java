@@ -6,6 +6,7 @@
 package ch.heigvd.amt.amt_project.models;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
@@ -17,10 +18,15 @@ import javax.persistence.ManyToMany;
 public class Account extends AbstractDomainModel<Long>{
     /* Attributs */
     
+    @Column(unique=true)
     private String email;
+    
     private String firstName;
+    
     private String lastName;
+    
     private String password;
+    
     @ManyToMany
     private List<Role> roles;
     

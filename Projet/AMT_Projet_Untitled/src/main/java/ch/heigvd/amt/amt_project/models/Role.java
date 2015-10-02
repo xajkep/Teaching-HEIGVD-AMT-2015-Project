@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 public class Role extends AbstractDomainModel<Long>{
     @Column(unique=true)
     private String name;
+    
     @ManyToMany
     private List<Account> accounts;
     

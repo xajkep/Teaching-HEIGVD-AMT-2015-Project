@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 public class ApiKey extends AbstractDomainModel<Long>{
     @OneToOne
     private Application app;
+    
     private String apiKey;
     
     public ApiKey() {

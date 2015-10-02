@@ -17,7 +17,9 @@ import javax.persistence.ManyToOne;
 public class EndUser extends AbstractDomainModel<Long>{
     @ManyToOne
     private Application app;
+    
     private String name;
+    
     private Date date;
     
     public EndUser() {
