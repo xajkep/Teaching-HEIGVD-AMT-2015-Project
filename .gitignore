@@ -1,1 +1,11 @@
-sun-resources.xml
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependencyreducedpom.xml
+buildNumber.properties
+desktop.ini
+glassfishresources.xml
+sunresources.xml
