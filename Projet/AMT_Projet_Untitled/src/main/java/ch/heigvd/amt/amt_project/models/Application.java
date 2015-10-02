@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ch.heigvd.amt.amt_project.models;
 
 import javax.persistence.Entity;
@@ -13,66 +9,41 @@ import javax.persistence.ManyToOne;
  *
  * @author mberthouzoz
  */
-<<<<<<< HEAD
-public class Application {
-    private ApiKey idApp;
-=======
 @Entity
 public class Application extends AbstractDomainModel<Long> {
     
->>>>>>> origin/master
     private String name;
     private String description;
     private String key;
     private Boolean enable;
-<<<<<<< HEAD
-    private Account fkUserCreator;
-
-    public Application(ApiKey idApp, String name, String description, Boolean enable, Account fkUserCreator )
-=======
     
     @ManyToOne
-    private User creator;
+    private Account creator;
     
     public Application() {
         
     }
 
     public Application(String name, String description, String key, Boolean enable, User creator )
->>>>>>> origin/master
     {
         this.key = key;
         this.name = name;
         this.description = description;
         this.enable = enable;
-<<<<<<< HEAD
-        this.fkUserCreator = fkUserCreator;
-=======
         this.creator = creator;
->>>>>>> origin/master
     }
     /**
      * @return the key
      */
-<<<<<<< HEAD
-    public ApiKey getApiKey() {
-        return idApp;
-=======
     public String getKey() {
         return key;
->>>>>>> origin/master
     }
 
     /**
      * @param key the key to set
      */
-<<<<<<< HEAD
-    public void setApiKey(ApiKey idApp) {
-        this.idApp = idApp;
-=======
     public void setKey(String key) {
         this.key = key;
->>>>>>> origin/master
     }
 
     /**
@@ -118,31 +89,17 @@ public class Application extends AbstractDomainModel<Long> {
     }
 
     /**
-<<<<<<< HEAD
-     * @return the fkUserCreator
-     */
-    public Account getIdUserCreator() {
-        return fkUserCreator;
-    }
-
-    /**
-     * @param fkUserCreator the idCreator to set
-     */
-    public void setIdCreator(Account fkUserCreator) {
-        this.fkUserCreator = fkUserCreator;
-=======
      * @return the creator
      */
-    public User getCreator() {
+    public Account getCreator() {
         return creator;
     }
 
     /**
      * @param creator the idCreator to set
      */
-    public void setCreator(User creator) {
+    public void setCreator(Account creator) {
         this.creator = creator;
->>>>>>> origin/master
     }
     
 }
