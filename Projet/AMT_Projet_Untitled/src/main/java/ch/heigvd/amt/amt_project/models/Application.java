@@ -3,17 +3,19 @@ package ch.heigvd.amt.amt_project.models;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  * This class implements the Application domain model object.
  *
- * @author mberthouzoz
+ * @author YounTheory, mberthouzoz
  */
 @Entity
 public class Application extends AbstractDomainModel<Long> {
     
     private String name;
     private String description;
+    @OneToOne
     private ApiKey key;
     private Boolean enable;
     

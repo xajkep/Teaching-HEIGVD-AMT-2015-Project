@@ -5,49 +5,57 @@
  */
 package ch.heigvd.amt.amt_project.models;
 
-import java.util.Date;
+import java.sql.Date;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  *
- * @author YounTheory
+ * @author , mberthouzoz
  */
-public class EndUser {
-    private Application idApp;
+@Entity
+public class EndUser extends AbstractDomainModel<Long>{
+    @ManyToOne
+    private Application app;
     private String name;
     private Date date;
+    
+    public EndUser() {
+        
+    }
 
-    public EndUser(Application idApp, String name, Date date)
+    public EndUser(Application app, String name, Date date)
     {
-        this.idApp = idApp;
+        this.app = app;
         this.name = name;
         this.date = date;
     }
     
     /**
-     * @return the idApp
+     * @return the app
      */
-    public Application getFkApp() {
-        return idApp;
+    public Application getApp() {
+        return app;
     }
 
     /**
-     * @param idApp the idApp to set
+     * @param app the app to set
      */
-    public void setFkApp(Application idApp) {
-        this.idApp = idApp;
+    public void setApp(Application app) {
+        this.app = app;
     }
 
     /**
      * @return the name
      */
-    public String getFkUser() {
+    public String getName() {
         return name;
     }
 
     /**
      * @param name the name to set
      */
-    public void setFkUser(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

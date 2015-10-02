@@ -5,32 +5,28 @@
  */
 package ch.heigvd.amt.amt_project.models;
 
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+
 /**
  *
- * @author YounTheory
+ * @author YounTheory, mberthouzoz
  */
-public class Role {
-    private int idRole;
+@Entity
+public class Role extends AbstractDomainModel<Long>{
     private String name;
-    private Account[] fkAccount;
+    @ManyToMany
+    private List<Account> accounts;
     
-    public Role(String name, Account[] fkAccount)
+    public Role() {
+        
+    }
+    
+    public Role(String name, List<Account> accounts)
     {
         this.name = name;
-        this.fkAccount = fkAccount;
-    }
-    /**
-     * @return the idRole
-     */
-    public int getIdRole() {
-        return idRole;
-    }
-
-    /**
-     * @param idRole the idRole to set
-     */
-    public void setIdRole(int idRole) {
-        this.idRole = idRole;
+        this.accounts = accounts;
     }
 
     /**
@@ -48,17 +44,36 @@ public class Role {
     }
 
     /**
-     * @return the fkAccount
+     * @return the accounts
      */
-    public Account[] getFkAccount() {
-        return fkAccount;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
     /**
-     * @param fkAccount the fkAccount to set
+     * @param accounts the Account to set
      */
-    public void setFkAccount(Account[] fkAccount) {
-        this.fkAccount = fkAccount;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
+    
+    /**
+     * @param account the Account to add
+     */
+    public void addAccount(Account account) {
+        this.accounts.add(account);
+    }
+    
+    /**
+     * @param account the account to remove
+     */
+    public void removeAccount(Account account) {
+        if (accounts.contains(account))
+        {
+            this.accounts.remove(account);
+        }
+    }
+    
+    
     
 }

@@ -5,13 +5,22 @@
  */
 package ch.heigvd.amt.amt_project.models;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
 /**
  *
- * @author YounTheory
+ * @author YounTheory, mberthouzoz
  */
-public class ApiKey {
+@Entity
+public class ApiKey extends AbstractDomainModel<Long>{
+    @OneToOne
+    private Application app;
     private String apiKey;
     
+    public ApiKey() {
+        
+    }
     
     public ApiKey(String apiKey)
     {
