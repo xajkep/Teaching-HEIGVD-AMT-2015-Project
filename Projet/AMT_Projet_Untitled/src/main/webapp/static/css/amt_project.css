@@ -14,6 +14,8 @@ body {
 
 .navbar-brand {
     font-family: Impact;
+    letter-spacing: 2px;
+    text-shadow: 0 0 1px white;
 }
 
 .stats {
