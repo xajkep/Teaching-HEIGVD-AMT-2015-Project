@@ -54,7 +54,13 @@ public class AppServlet extends HttpServlet {
             }
         } else {
             forward = LIST_APP;
-            request.setAttribute("apps", applicationsDAO.findAll());
+            
+            // try catch, for empty result
+            try{
+                request.setAttribute("apps", applicationsDAO.findAll());
+            } catch(NullPointerException e) {
+                System.out.println("No applications to list");
+            }
         }
 
         request.getRequestDispatcher(forward).forward(request, response);
