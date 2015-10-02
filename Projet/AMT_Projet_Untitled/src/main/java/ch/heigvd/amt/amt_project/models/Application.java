@@ -14,7 +14,7 @@ public class Application extends AbstractDomainModel<Long> {
     
     private String name;
     private String description;
-    private String key;
+    private ApiKey key;
     private Boolean enable;
     
     @ManyToOne
@@ -24,7 +24,7 @@ public class Application extends AbstractDomainModel<Long> {
         
     }
 
-    public Application(String name, String description, String key, Boolean enable, User creator )
+    public Application(String name, String description, ApiKey key, Boolean enable, Account creator )
     {
         this.key = key;
         this.name = name;
@@ -35,14 +35,14 @@ public class Application extends AbstractDomainModel<Long> {
     /**
      * @return the key
      */
-    public String getKey() {
+    public ApiKey getKey() {
         return key;
     }
 
     /**
      * @param key the key to set
      */
-    public void setKey(String key) {
+    public void setKey(ApiKey key) {
         this.key = key;
     }
 
