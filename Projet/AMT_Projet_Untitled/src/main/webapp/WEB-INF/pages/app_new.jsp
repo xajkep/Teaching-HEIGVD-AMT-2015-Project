@@ -5,7 +5,7 @@
 --%>
 
 <%@include file="includes/header.jsp" %>
-
+<div id="app_new">
 <h2>Register new app</h2>
 
 <div class="container">
@@ -53,6 +53,6 @@
         </div>
     </form>
 </div>
-
+</div>
 <%@include file="includes/footer.jsp" %>
 

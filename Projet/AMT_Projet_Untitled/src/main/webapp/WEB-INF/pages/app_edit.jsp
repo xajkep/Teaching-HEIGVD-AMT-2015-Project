@@ -4,7 +4,7 @@
     Author     : xajkep
 --%>
 <%@include file="includes/header.jsp" %>
-
+<div id="app_edit">
 <h2>App details</h2>
 
 <div class="container">
@@ -52,6 +52,6 @@
         </div>
     </form>
 </div>
-
+</div>
 <%@include file="includes/footer.jsp" %>
 

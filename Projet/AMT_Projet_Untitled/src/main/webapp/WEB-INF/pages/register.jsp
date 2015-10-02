@@ -4,7 +4,7 @@
     Author     : xajkep
 --%>
 <%@include file="includes/header.jsp" %>
-
+<div id="register">
 <h2>Registration</h2>
 
 <div class="container">
@@ -52,7 +52,7 @@
         </div>
     </form>
 </div>
-
+</div>
 <%@include file="includes/footer.jsp" %>
 
 

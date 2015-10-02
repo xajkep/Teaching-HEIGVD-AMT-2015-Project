@@ -6,40 +6,40 @@
 
 <%@include file="includes/header.jsp" %>
 
+<div id="app">
+    <h2 class="pull-left">Your applications</h2><br/>
+    <a class="btn btn-primary pull-right" href="pages/app?action=new">New app</a>
 
-<h2 class="pull-left">Your applications</h2><br/>
-<a class="btn btn-primary pull-right" href="pages/app?action=new">New app</a>
+
+    <div class="container">
 
 
-<div class="container">
-    
-    
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Names</th>
-                <th>Descriptions</th>
-                <th>Api Key</th>
-                <th>Users</th>
-                <th></th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            <c:forEach items="${allApps}" var="app">
-            <tr>
-                <td>${app.name}</td>
-                <td>${app.description}</td>
-                <td>${app.api_key}</td>
-                <td>${app.users}</td>
-                <td>
-                    <a class="btn btn-primary" id="app_edit_button" href="pages/app?action=edit&id=1">Edit</a>
-                    <a class="btn btn-success" id="app_state_button" href="pages/app?action=disable&id=1">ENABLED&nbsp;<a>
-                </td> 
-            </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Names</th>
+                    <th>Descriptions</th>
+                    <th>Api Key</th>
+                    <th>Users</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <c:forEach items="${allApps}" var="app">
+                <tr>
+                    <td>${app.name}</td>
+                    <td>${app.description}</td>
+                    <td>${app.api_key}</td>
+                    <td>${app.users}</td>
+                    <td>
+                        <a class="btn btn-primary" id="app_edit_button" href="pages/app?action=edit&id=1">Edit</a>
+                        <a class="btn btn-success" id="app_state_button" href="pages/app?action=disable&id=1">ENABLED&nbsp;<a>
+                    </td> 
+                </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
-
 <%@include file="includes/footer.jsp" %>
