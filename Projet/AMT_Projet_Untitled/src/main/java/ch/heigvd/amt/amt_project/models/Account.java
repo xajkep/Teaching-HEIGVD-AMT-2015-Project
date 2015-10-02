@@ -1,29 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.heigvd.amt.amt_project.models;
+
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 /**
  *
- * @author thsch
+ * @author YounTheory, mberthouzoz
  */
-public class Account {
+@Entity
+public class Account extends AbstractDomainModel<Long>{
     /* Attributs */
-    private int idUser;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private Role[] fkRole;
     
-    public Account(String email, String firstName, String lastName, String password, Role[] fkRole){
+    @Column(unique=true)
+    private String email;
+    
+    private String firstName;
+    
+    private String lastName;
+    
+    private String password;
+    
+    @ManyToMany
+    private List<Role> roles;
+    
+    public Account() {
+        
+    }
+    
+    public Account(String email, String firstName, String lastName, String password, List<Role> roles){
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
-        this.fkRole = fkRole;
+        this.roles = roles;
     
     }
 
@@ -84,19 +95,36 @@ public class Account {
     }
 
     /**
-     * @return the fkRole
+     * @return the roles
      */
-    public Role[] getFkRole() {
-        return fkRole;
+    public List<Role> getRoles() {
+        return roles;
     }
 
     /**
-     * @param fkRole the fkRole to set
+     * @param roles the Role to set
      */
-    public void setFkRole(Role[] fkRole) {
-        this.fkRole = fkRole;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
     
+    /**
+     * Add a role to Account
+     * @param role 
+     */
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+    
+    /**
+     * Remove a role to Account
+     * @param role 
+     */
+    public void removeRole(Role role) {
+        if (roles.contains(role)) {
+            this.roles.remove(role);
+        }
+    }
     
     
 }
