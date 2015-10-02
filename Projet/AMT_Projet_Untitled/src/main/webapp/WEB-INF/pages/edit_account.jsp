@@ -8,7 +8,7 @@
 <h2>Edit your account details</h2>
 
 <div class="container">
-   <form class="form-horizontal" action="?action=new" method="post">
+   <form class="form-horizontal" id="edit_account_form" action="?action=new" method="post">
         <div class="form-group">
             <label class="col-sm-3 control-label">Email</label>
             <div class="col-sm-9">

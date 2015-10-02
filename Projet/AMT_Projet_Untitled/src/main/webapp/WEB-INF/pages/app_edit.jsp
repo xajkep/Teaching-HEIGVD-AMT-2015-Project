@@ -8,7 +8,7 @@
 <h2>App details</h2>
 
 <div class="container">
-   <form class="form-horizontal" action="?action=new" method="post">
+   <form class="form-horizontal" id="app_edit_form" action="?action=new" method="post">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">

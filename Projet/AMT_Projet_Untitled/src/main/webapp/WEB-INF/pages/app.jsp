@@ -33,8 +33,8 @@
                 <td>${app.api_key}</td>
                 <td>${app.users}</td>
                 <td>
-                    <a class="btn btn-primary" href="pages/app?action=edit&id=1">Edit</a>
-                    <a class="btn btn-success" href="pages/app?action=disable&id=1">ENABLED&nbsp;<a>
+                    <a class="btn btn-primary" id="app_edit_button" href="pages/app?action=edit&id=1">Edit</a>
+                    <a class="btn btn-success" id="app_state_button" href="pages/app?action=disable&id=1">ENABLED&nbsp;<a>
                 </td> 
             </tr>
             </c:forEach>
