@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ch.heigvd.amt.amt_project.models;
 
 import javax.persistence.Entity;
@@ -18,17 +14,17 @@ public class Application extends AbstractDomainModel<Long> {
     
     private String name;
     private String description;
-    private String key;
+    private ApiKey key;
     private Boolean enable;
     
     @ManyToOne
-    private User creator;
+    private Account creator;
     
     public Application() {
         
     }
 
-    public Application(String name, String description, String key, Boolean enable, User creator )
+    public Application(String name, String description, ApiKey key, Boolean enable, Account creator )
     {
         this.key = key;
         this.name = name;
@@ -39,14 +35,14 @@ public class Application extends AbstractDomainModel<Long> {
     /**
      * @return the key
      */
-    public String getKey() {
+    public ApiKey getKey() {
         return key;
     }
 
     /**
      * @param key the key to set
      */
-    public void setKey(String key) {
+    public void setKey(ApiKey key) {
         this.key = key;
     }
 
@@ -95,14 +91,14 @@ public class Application extends AbstractDomainModel<Long> {
     /**
      * @return the creator
      */
-    public User getCreator() {
+    public Account getCreator() {
         return creator;
     }
 
     /**
      * @param creator the idCreator to set
      */
-    public void setCreator(User creator) {
+    public void setCreator(Account creator) {
         this.creator = creator;
     }
     

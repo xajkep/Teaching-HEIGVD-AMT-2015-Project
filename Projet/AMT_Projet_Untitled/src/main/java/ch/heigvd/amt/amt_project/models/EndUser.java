@@ -11,44 +11,44 @@ import java.util.Date;
  *
  * @author YounTheory
  */
-public class ListApplication {
-    private String idApp;
-    private int idUser;
+public class EndUser {
+    private Application idApp;
+    private String name;
     private Date date;
 
-    public ListApplication(String idApp, int idUser, Date date)
+    public EndUser(Application idApp, String name, Date date)
     {
         this.idApp = idApp;
-        this.idUser = idUser;
+        this.name = name;
         this.date = date;
     }
     
     /**
      * @return the idApp
      */
-    public String getFkApp() {
+    public Application getFkApp() {
         return idApp;
     }
 
     /**
      * @param idApp the idApp to set
      */
-    public void setFkApp(String idApp) {
+    public void setFkApp(Application idApp) {
         this.idApp = idApp;
     }
 
     /**
-     * @return the idUser
+     * @return the name
      */
-    public int getFkUser() {
-        return idUser;
+    public String getFkUser() {
+        return name;
     }
 
     /**
-     * @param idUser the idUser to set
+     * @param name the name to set
      */
-    public void setFkUser(int idUser) {
-        this.idUser = idUser;
+    public void setFkUser(String name) {
+        this.name = name;
     }
 
     /**

@@ -9,19 +9,21 @@ package ch.heigvd.amt.amt_project.models;
  *
  * @author thsch
  */
-public class User {
+public class Account {
     /* Attributs */
     private int idUser;
     private String email;
     private String firstName;
     private String lastName;
     private String password;
+    private Role[] fkRole;
     
-    public User(String email, String firstName, String lastName, String password){
+    public Account(String email, String firstName, String lastName, String password, Role[] fkRole){
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.fkRole = fkRole;
     
     }
 
@@ -79,6 +81,20 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the fkRole
+     */
+    public Role[] getFkRole() {
+        return fkRole;
+    }
+
+    /**
+     * @param fkRole the fkRole to set
+     */
+    public void setFkRole(Role[] fkRole) {
+        this.fkRole = fkRole;
     }
     
     
