@@ -5,6 +5,7 @@
  */
 package ch.heigvd.amt.selenium;
 
+import ch.heigvd.amt.selenium.pages.HomePage;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,14 +22,26 @@ public class AMT_Projet_Test {
     @Before
     public void openBrowser() {
         driver = new FirefoxDriver();
-    //System.setProperty("webdriver.chrome.driver", "/Users/admin/Downloads/chromedriver");
+        //System.setProperty("webdriver.chrome.driver", "/Users/admin/Downloads/chromedriver");
         //driver = new ChromeDriver();
     }
-    
-    
-    
-    
-    
+
+    @Test
+    @ProbeTest(tags = "WebUI")
+    public void canGoFromHomeToAccount() {
+        driver.get(baseUrl);
+        HomePage homePage = new HomePage(driver);
+        homePage.goToAccountViaMenu();
+        // Je sais pas quoi mettre ici
+    }
+
+    // pas fini du tout
+    @Test
+    @ProbeTest(tags = "WebUI")
+    public void canDoSomethingCool(){
+        driver.get(baseUrl + "/register");
+        
+    }
     @After
     public void closeBrowser() {
         driver.close();
