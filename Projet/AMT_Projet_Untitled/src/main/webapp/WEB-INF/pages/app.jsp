@@ -14,7 +14,7 @@
     <div class="container">
 
 
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="appTable">
             <thead>
                 <tr>
                     <th>Names</th>

@@ -46,8 +46,8 @@
         
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" onclick="history.back()">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-default" id="cancel" onclick="history.back()">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="submit">Update</button>
             </div>
         </div>
     </form>
