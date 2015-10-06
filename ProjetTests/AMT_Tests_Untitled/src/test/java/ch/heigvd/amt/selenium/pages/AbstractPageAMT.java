@@ -54,7 +54,7 @@ public abstract class AbstractPageAMT extends Page {
 
     public Edit_accountPage goToAccountViaMenu() {
         driver.findElement(main_menu).click();
-        driver.findElement(link_account);
+        driver.findElement(link_account).click();
         return new Edit_accountPage(driver);
     }
 }

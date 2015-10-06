@@ -5,11 +5,19 @@
  */
 package ch.heigvd.amt.selenium.pages;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class App_editPage extends AbstractPageAMT {
 
+    // Identificateurs formulaire
+    By tfName = By.id("name");
+    By tfDescription = By.id("description");
+    By tfSubmit = By.id("submit");
+    By tfCancel = By.id("cancel");
+    
     // Identificateur de la page
     By page = By.id("app_edit");
 
@@ -20,6 +28,37 @@ public class App_editPage extends AbstractPageAMT {
             throw new IllegalStateException("This is not the correct page");
         }
     }
-    
+
     // Méthodes
+    public App_editPage typeName(String name) {
+        driver.findElement(tfName).sendKeys(name);
+        return this;
+    }
+
+    // Cancel
+    public Page cancelForm(Class<? extends Page> expectedPageClass) {
+        driver.findElement(tfCancel).click();
+        Page targetPage = null;
+        try{
+            targetPage = expectedPageClass.getConstructor(WebDriver.class).newInstance(driver);
+        } catch (Exception ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Exception when using reflection: " + ex.getMessage());
+        }
+        return targetPage;
+    }
+    
+    // Submit
+    public Page submitForm(Class<? extends Page> expectedPageClass) {
+        driver.findElement(tfSubmit).click();
+        Page targetPage = null;
+        try {
+            targetPage = expectedPageClass.getConstructor(WebDriver.class).newInstance(driver);
+        } catch (Exception ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("Exception when using reflection: " + ex.getMessage());
+        }
+        return targetPage;
+    }
+
 }
