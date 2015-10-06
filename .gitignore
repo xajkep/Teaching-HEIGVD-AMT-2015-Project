@@ -8,3 +8,15 @@ dependency-reduced-pom.xml
 buildNumber.properties
 desktop.ini
 sun-resources.xml
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+
+Projet/AMT_Projet_Untitled/target/

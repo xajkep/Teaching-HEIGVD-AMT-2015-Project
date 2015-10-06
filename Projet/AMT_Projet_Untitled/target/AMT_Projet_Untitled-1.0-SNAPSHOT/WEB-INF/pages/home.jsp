@@ -1,5 +1,5 @@
 <%@include file="includes/header.jsp" %>
-
+<div id="home">
 <h2>Welcome to the AMT project !!!</h2>
 
 <div class="alert alert-info" role="alert">
@@ -15,5 +15,5 @@
         ${numberOfUserDuringLast30Days} users created by application during the last 30 days<br/>
     </div>
 </div>
-
+</div>
 <%@include file="includes/footer.jsp" %>

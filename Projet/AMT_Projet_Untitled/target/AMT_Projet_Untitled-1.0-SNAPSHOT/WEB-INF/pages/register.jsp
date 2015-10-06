@@ -4,7 +4,7 @@
     Author     : xajkep
 --%>
 <%@include file="includes/header.jsp" %>
-
+<div id="register">
 <h2>Registration</h2>
 
 <div class="container">
@@ -40,19 +40,19 @@
        <div class="form-group">
             <label for="password_confirm" class="col-sm-3 control-label">Confirm</label>
             <div class="col-sm-9">
-                <input name="password_confirm" type="password_confirm" class="form-control" id="password" placeholder="Confirm password" />
+                <input name="password_confirm" type="password_confirm" class="form-control" id="password_conf" placeholder="Confirm password" />
             </div>
         </div>
         
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" onclick="history.back()">Cancel</button>
-                <button type="submit" class="btn btn-primary">Confirm</button>
+                <button type="button" class="btn btn-default" id="cancel" onclick="history.back()">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="submit">Confirm</button>
             </div>
         </div>
     </form>
 </div>
-
+</div>
 <%@include file="includes/footer.jsp" %>
 
 

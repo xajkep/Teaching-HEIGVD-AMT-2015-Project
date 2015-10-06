@@ -5,10 +5,27 @@
  */
 package ch.heigvd.amt.selenium.pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
 /**
  *
  * @author thsch
  */
-public class HomePage {
+public class HomePage extends AbstractPageAMT {
+    // Identificateurs des éléments
+    
+    // Identificateur de la page
+    By page = By.id("home");
+
+    public HomePage(WebDriver driver) {
+        super(driver);
+        // Vérification si on est sur la bonne page
+        if (driver.findElements(By.id("page")).isEmpty()) {
+            throw new IllegalStateException("This is not the correct page");
+        }
+    }
+    
+    // Méthodes
     
 }

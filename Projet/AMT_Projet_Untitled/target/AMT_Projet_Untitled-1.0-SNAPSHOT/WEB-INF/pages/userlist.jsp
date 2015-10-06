@@ -5,7 +5,7 @@
 --%>
 
 <%@include file="includes/header.jsp" %>
-
+<div id="userlist">
 <h2>List of users for "{$app.name}"</h2>
 
 <div class="container">
@@ -28,5 +28,5 @@
         </tbody>
     </table>
 </div>
-
+</div>
 <%@include file="includes/footer.jsp" %>
