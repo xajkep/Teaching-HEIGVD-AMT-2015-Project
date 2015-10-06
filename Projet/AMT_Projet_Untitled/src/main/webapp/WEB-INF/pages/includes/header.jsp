@@ -35,7 +35,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav" id="main_menu">
               <li><a href="pages/app" id="link_application">Applications</a></li>
-              <li><a href="pages/account" id="link_account">Your Account</a></li>
+              <li><a href="pages/account?action=edit" id="link_account">Your Account</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" id="menu_logout">
               <li><a href="./auth?action=logout" id="link_logout">Logout</a></li>
@@ -43,3 +43,5 @@
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
+      
+      ${message}

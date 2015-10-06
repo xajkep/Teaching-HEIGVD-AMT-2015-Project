@@ -8,7 +8,9 @@
 <h2>Registration</h2>
 
 <div class="container">
-   <form class="form-horizontal" action="?action=new" method="post">
+   <form class="form-horizontal" action="pages/account" method="post">
+       <input type="hidden" name="action" value="new" style="display: none;"/>
+       
         <div class="form-group">
             <label for="email" class="col-sm-3 control-label">Email</label>
             <div class="col-sm-9">
@@ -40,7 +42,7 @@
        <div class="form-group">
             <label for="password_confirm" class="col-sm-3 control-label">Confirm</label>
             <div class="col-sm-9">
-                <input name="password_confirm" type="password_confirm" class="form-control" id="password_conf" placeholder="Confirm password" />
+                <input name="password_confirm" type="password" class="form-control" id="password_confirm" placeholder="Confirm password" />
             </div>
         </div>
         
