@@ -13,7 +13,7 @@
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-                <input name="name" type="text" class="form-control" id="name" placeholder="Name">
+                <input name="name" type="text" class="form-control" id="name" placeholder="Name" required pattern="${NAME_PATTERN}">
             </div>
         </div>
         

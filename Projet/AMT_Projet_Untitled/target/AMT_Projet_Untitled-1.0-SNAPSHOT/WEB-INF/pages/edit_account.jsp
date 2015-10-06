@@ -19,28 +19,28 @@
         <div class="form-group">
             <label for="firstname" class="col-sm-3 control-label">First name</label>
             <div class="col-sm-9">
-                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" />
+                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" required pattern="${NAME_PATTERN}"/>
             </div>
         </div>
        
        <div class="form-group">
             <label for="lastname" class="col-sm-3 control-label">Last name</label>
             <div class="col-sm-9">
-                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" />
+                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" required pattern="${NAME_PATTERN}" />
             </div>
         </div>
        
        <div class="form-group">
             <label for="password" class="col-sm-3 control-label">Password</label>
             <div class="col-sm-9">
-                <input name="password" type="password" class="form-control" id="password" placeholder="Password" />
+                <input name="password" type="password" class="form-control" id="password" placeholder="Password" required />
             </div>
         </div>
        
        <div class="form-group">
             <label for="password_confirm" class="col-sm-3 control-label">Confirm</label>
             <div class="col-sm-9">
-                <input name="password_confirm" type="password_confirm" class="form-control" id="password" placeholder="Confirm password" />
+                <input name="password_confirm" type="password_confirm" class="form-control" id="password" placeholder="Confirm password" required />
             </div>
         </div>
         
