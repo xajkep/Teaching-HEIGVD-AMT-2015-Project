@@ -46,6 +46,15 @@ public class AMT_Projet_Test {
         HomePage homePage = (HomePage)loginPage.submitForm(HomePage.class);
     }
 
+    @Test
+    public void aUserShouldBeAbleToVisitAllPagesAfterLogin(){
+        driver.get(baseUrl);
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.typeName("asdf@adsaf.asdf");
+        loginPage.typePwd("any");
+        HomePage homePage = (HomePage)loginPage.submitForm(HomePage.class);
+        homePage.goToAppPageViaMenu();
+    }
 
     @After
     public void closeBrowser() {

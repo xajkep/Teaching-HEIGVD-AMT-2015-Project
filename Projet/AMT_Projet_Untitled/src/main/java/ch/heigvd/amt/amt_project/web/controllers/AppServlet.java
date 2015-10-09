@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author xajkep, mberthouzoz
  */
 public class AppServlet extends HttpServlet {
-    
     @EJB
     private ApplicationsDAOLocal applicationsDAO;
     @EJB
