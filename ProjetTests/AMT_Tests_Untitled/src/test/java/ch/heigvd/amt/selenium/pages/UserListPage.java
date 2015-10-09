@@ -12,7 +12,7 @@ public class UserListPage extends AbstractPageAMT {
     public UserListPage(WebDriver driver) {
         super(driver);
         // Vérification si on est sur la bonne page
-        if (driver.findElements(By.id("page")).isEmpty()) {
+        if (driver.findElements(By.id("userlist")).isEmpty()) {
             throw new IllegalStateException("This is not the correct page");
         }
     }

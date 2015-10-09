@@ -32,7 +32,7 @@ public class Edit_accountPage extends AbstractPageAMT {
     public Edit_accountPage(WebDriver driver) {
         super(driver);
         // Vérification si on est sur la bonne page
-        if (driver.findElements(By.id("page")).isEmpty()) {
+        if (driver.findElements(By.id("edit_account")).isEmpty()) {
             throw new IllegalStateException("This is not the correct page");
         }
     }
