@@ -1,7 +1,10 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
+import ch.heigvd.amt.amt_project.models.Account;
+import ch.heigvd.amt.amt_project.models.ApiKey;
 import ch.heigvd.amt.amt_project.services.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.models.Application;
+import ch.heigvd.amt.amt_project.services.AccountDAOLocal;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +25,8 @@ public class AppServlet extends HttpServlet {
     
     private String NAME_PATTERN = "[a-z -]{3,32}";
     private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
+    
+    private AccountDAOLocal accountsDAO;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -68,7 +73,6 @@ public class AppServlet extends HttpServlet {
         }
 
         request.setAttribute("NAME_PATTERN", NAME_PATTERN);
-        request.setAttribute("EMAIL_PATTERN", EMAIL_PATTERN);
         request.getRequestDispatcher(forward).forward(request, response);
     }
     
@@ -77,19 +81,39 @@ public class AppServlet extends HttpServlet {
         String forward = "";
         
         if (action != null) {
-            if (action.equalsIgnoreCase("edit")) {
-                
-                
-                forward = LIST_APP;
-            }
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            String idString = request.getParameter("id");
             
-            else if (action.equalsIgnoreCase("new")) {
-                
+            if (name != null && description != null
+                && name.matches(NAME_PATTERN)) {
+                if (action.equalsIgnoreCase("edit") && idString != null) {
+                    Long id = (long)Integer.getInteger(idString);
+                    
+                    Application app = applicationsDAO.findById(id);
+                    app.setName(name);
+                    app.setDescription(description);
+                    applicationsDAO.update(app);
+                    
+                    forward = LIST_APP;
+                }
+
+                else if (action.equalsIgnoreCase("new")) {
+                    
+                    ApiKey blahblah = new ApiKey("blahblah"); //hardcoded
+                    long accountId = 0;
+                    Account account = accountsDAO.findById(accountId); //hardcoded
+                    Application app = new Application(name, description, blahblah, true, account);
+
+                    forward = LIST_APP;
+                }
+            } else {
+                request.setAttribute("message", "Formulaire invalide");
                 forward = LIST_APP;
             }
         }
         
-        
+        request.setAttribute("NAME_PATTERN", NAME_PATTERN);
         request.getRequestDispatcher(forward).forward(request, response);
     }
 }

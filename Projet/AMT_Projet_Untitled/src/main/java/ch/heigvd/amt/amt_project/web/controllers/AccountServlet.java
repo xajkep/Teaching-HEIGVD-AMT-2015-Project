@@ -1,10 +1,13 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
 import ch.heigvd.amt.amt_project.models.Account;
+import ch.heigvd.amt.amt_project.models.Role;
 import ch.heigvd.amt.amt_project.services.AccountDAOLocal;
 import static ch.heigvd.amt.amt_project.web.controllers.AppServlet.LIST_APP;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -78,9 +81,10 @@ public class AccountServlet extends HttpServlet {
                     System.out.println("Account in update"); //debug
 
                     Account account = accountsDAO.findById(accountId);
-                    
-                    // update in db ...
-                    //accountsDAO.update(account, firstname, lastname, password, confirm);
+                    account.setFirstName(firstname);
+                    account.setLastName(lastname);
+                    account.setPassword(password);
+                    accountsDAO.update(account);
                     
                     forward = AppServlet.LIST_APP;
                 }
@@ -93,8 +97,11 @@ public class AccountServlet extends HttpServlet {
                     System.out.println("Account in registration"); //debug
 
                     // Save new in db ...
-                    //Account account = new Account(email, firstname, lastname, password);
-                    //accountsDAO.create(account);
+                    Role datRole = new Role("SS", new ArrayList<Account>());
+                    List<Role> lstRoles = new ArrayList<Role>();
+                    lstRoles.add(datRole);
+                    Account account = new Account(email, firstname, lastname, password, lstRoles);
+                    accountsDAO.create(account);
 
                     // auto sign in ?
                     forward = AppServlet.LIST_APP;
