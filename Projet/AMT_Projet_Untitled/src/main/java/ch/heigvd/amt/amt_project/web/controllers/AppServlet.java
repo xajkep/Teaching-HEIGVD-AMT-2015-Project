@@ -3,6 +3,7 @@ package ch.heigvd.amt.amt_project.web.controllers;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.models.Application;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author xajkep, mberthouzoz
  */
 public class AppServlet extends HttpServlet {
-    
+
+    @EJB
     private ApplicationsDAOLocal applicationsDAO;
 
     protected static String LIST_APP = "/WEB-INF/pages/app.jsp";
@@ -54,6 +56,7 @@ public class AppServlet extends HttpServlet {
             }
         } else {
             forward = LIST_APP;
+
             request.setAttribute("apps", applicationsDAO.findAll());
         }
 
