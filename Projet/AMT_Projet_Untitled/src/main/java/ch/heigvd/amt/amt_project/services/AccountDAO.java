@@ -6,6 +6,8 @@
 package ch.heigvd.amt.amt_project.services;
 
 import ch.heigvd.amt.amt_project.models.Account;
+import ch.heigvd.amt.amt_project.models.Role;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -15,6 +17,31 @@ import javax.ejb.Stateless;
 @Stateless
 public class AccountDAO extends GenericDAO<Account, Long> implements AccountDAOLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public void assignRoleToAccount(List<Role> roles, Account account) {
+        for(Role role : roles){
+            assignRoleToAccount(role, account);
+        }
+    }
+
+    @Override
+    public void assignRoleToAccount(Role role, Account account) {
+        role.addAccount(account);
+        account.addRole(role);
+    }
+
+    @Override
+    public void removeRoleFromAccount(List<Role> roles, Account account) {
+        for(Role role : roles){
+            removeRoleFromAccount(role, account);
+        }
+        
+    }
+
+    @Override
+    public void removeRoleFromAccount(Role role, Account account) {
+        role.removeAccount(account);
+        account.removeRole(role);
+
+    }
 }
