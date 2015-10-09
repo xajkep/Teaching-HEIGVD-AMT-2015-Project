@@ -1,6 +1,6 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
-import ch.heigvd.amt.amt_project.services.TestDataManager;
+import ch.heigvd.amt.amt_project.services.TestDataManagerLocal;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HomeServlet extends HttpServlet {
     @EJB
-    private TestDataManager tdm;
+    private TestDataManagerLocal tdm;
     /**
      * Handles the HTTP <code>GET</code> method.
      *

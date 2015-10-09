@@ -58,24 +58,13 @@ public class GenericDAO<T extends AbstractDomainModel<PK>, PK> implements IGener
 
     @Override
     public List<T> findAll() {
-        List<T> result = null;
-        try {
-            result = em.createQuery("Select t from " + jpaEntityClass.getSimpleName() + " t").getResultList();
-        } catch (NullPointerException e) {
-            result = null;
-        }
-        
+        List<T> result = result = em.createQuery("Select t from " + jpaEntityClass.getSimpleName() + " t").getResultList();        
         return result;
     }
 
     @Override
     public List<T> findAllByPage(int pageSize, int pageIndex) {
-        List<T> result = null;
-        try {
-            result = em.createQuery("Select t from " + jpaEntityClass.getSimpleName() + " t").setMaxResults(pageSize).setFirstResult(pageIndex * pageSize).getResultList();
-        } catch (NullPointerException e) {
-            result = null;
-        }
+        List<T> result = em.createQuery("Select t from " + jpaEntityClass.getSimpleName() + " t").setMaxResults(pageSize).setFirstResult(pageIndex * pageSize).getResultList();
         
         return result;
     }

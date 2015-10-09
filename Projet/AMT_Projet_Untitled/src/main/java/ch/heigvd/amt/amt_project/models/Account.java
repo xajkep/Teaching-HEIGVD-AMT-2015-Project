@@ -29,13 +29,11 @@ public class Account extends AbstractDomainModel<Long>{
         
     }
     
-    public Account(String email, String firstName, String lastName, String password, List<Role> roles){
+    public Account(String email, String firstName, String lastName, String password){
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-        this.roles = roles;
-    
+        this.password = password;    
     }
 
     /**
