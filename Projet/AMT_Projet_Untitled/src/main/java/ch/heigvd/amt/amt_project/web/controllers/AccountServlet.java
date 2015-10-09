@@ -1,7 +1,7 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
 import ch.heigvd.amt.amt_project.models.Account;
-import ch.heigvd.amt.amt_project.services.AccountDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import static ch.heigvd.amt.amt_project.web.controllers.AppServlet.LIST_APP;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +23,7 @@ public class AccountServlet extends HttpServlet {
     
     private String NAME_PATTERN = "[a-z -]{3,32}";
     
-    private AccountDAOLocal accountsDAO;
+    private AccountsDAOLocal accountsDAO;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
