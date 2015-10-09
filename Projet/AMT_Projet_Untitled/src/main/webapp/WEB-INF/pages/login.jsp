@@ -33,7 +33,7 @@
 
   <body>
 
-    <div class="container">
+    <div class="container" id="login">
 
       <form method="POST" action="auth" class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>

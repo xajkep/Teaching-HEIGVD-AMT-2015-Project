@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.heigvd.amt.selenium.pages;
 
 import java.util.logging.Level;
@@ -10,18 +5,29 @@ import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class App_editPage extends AbstractPageAMT {
+/**
+ *
+ * @author thsch
+ */
+public class RegisterPage extends AbstractPageAMT {
+    // Identificateurs des éléments
 
-    // Identificateurs formulaire
-    By tfName = By.id("name");
-    By tfDescription = By.id("description");
-    By tfSubmit = By.id("submit");
-    By tfCancel = By.id("cancel");
-    
+    // ATTENTION
+    // ATTENTION -> login particulier, pas d'identificateur de page voir avec Benoit
+    // ATTENTION
     // Identificateur de la page
-    By page = By.id("app_edit");
+    By page = By.id("register");
+    //###############################
+    
+    By tfName = By.id("name");
+    By tfSurname = By.id("surname");
+    By tfMail = By.id("email");
+    By tfPwd = By.id("password");
+    By tfPwd_conf = By.id("password_conf");
+    By tfCancel = By.id("cancel");
+    By tfSubmit = By.id("submit");
 
-    public App_editPage(WebDriver driver) {
+    public RegisterPage(WebDriver driver) {
         super(driver);
         // Vérification si on est sur la bonne page
         if (driver.findElements(By.id("page")).isEmpty()) {
@@ -30,8 +36,28 @@ public class App_editPage extends AbstractPageAMT {
     }
 
     // Méthodes
-    public App_editPage typeName(String name) {
+    public RegisterPage typeName(String name) {
         driver.findElement(tfName).sendKeys(name);
+        return this;
+    }
+
+    public RegisterPage typeSurname(String surname) {
+        driver.findElement(tfSurname).sendKeys(surname);
+        return this;
+    }
+
+    public RegisterPage typeMail(String mail) {
+        driver.findElement(tfMail).sendKeys(mail);
+        return this;
+    }
+
+    public RegisterPage typePwd(String pwd) {
+        driver.findElement(tfSurname).sendKeys(pwd);
+        return this;
+    }
+
+    public RegisterPage typePwd_conf(String pwd) {
+        driver.findElement(tfSurname).sendKeys(pwd);
         return this;
     }
 
@@ -39,7 +65,7 @@ public class App_editPage extends AbstractPageAMT {
     public Page cancelForm(Class<? extends Page> expectedPageClass) {
         driver.findElement(tfCancel).click();
         Page targetPage = null;
-        try{
+        try {
             targetPage = expectedPageClass.getConstructor(WebDriver.class).newInstance(driver);
         } catch (Exception ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,7 +73,7 @@ public class App_editPage extends AbstractPageAMT {
         }
         return targetPage;
     }
-    
+
     // Submit
     public Page submitForm(Class<? extends Page> expectedPageClass) {
         driver.findElement(tfSubmit).click();
