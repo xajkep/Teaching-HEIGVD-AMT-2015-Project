@@ -1,6 +1,6 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
-import ch.heigvd.amt.amt_project.services.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.models.Application;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -54,13 +54,7 @@ public class AppServlet extends HttpServlet {
             }
         } else {
             forward = LIST_APP;
-            
-            // try catch, for empty result
-            try{
-                request.setAttribute("apps", applicationsDAO.findAll());
-            } catch(NullPointerException e) {
-                System.out.println("No applications to list");
-            }
+            request.setAttribute("apps", applicationsDAO.findAll());
         }
 
         request.getRequestDispatcher(forward).forward(request, response);

@@ -15,7 +15,8 @@ public class ApiKey extends AbstractDomainModel<Long>{
     private String apiKey;
     
     public ApiKey() {
-        
+        //TODO : change this generation
+        apiKey = String.valueOf(Math.floor((Math.random() * 10123213) + 1));
     }
     
     public ApiKey(String apiKey)
