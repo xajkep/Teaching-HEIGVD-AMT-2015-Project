@@ -22,6 +22,7 @@ public class AccountServlet extends HttpServlet {
     
     
     private String NAME_PATTERN = "[a-z -]{3,32}";
+    private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
     
     private AccountDAOLocal accountsDAO;
 
@@ -54,6 +55,7 @@ public class AccountServlet extends HttpServlet {
         
 
         request.setAttribute("NAME_PATTERN", NAME_PATTERN);
+        request.setAttribute("EMAIL_PATTERN", EMAIL_PATTERN);
         request.getRequestDispatcher(forward).forward(request, response);
     }
     
@@ -64,6 +66,9 @@ public class AccountServlet extends HttpServlet {
         String forward = "";
         
         if (verifyForm(request)) {
+            String firstname = request.getParameter("firstname");
+            String lastname = request.getParameter("lastname");
+            String password = request.getParameter("password");
             
             // Update
             String id = request.getParameter("id");
@@ -83,13 +88,19 @@ public class AccountServlet extends HttpServlet {
 
             // Registration
             else {
-                System.out.println("Account in registration"); //debug
-                
-                // Save new in db ...
-                //Account account
-                
-                // auto sign in ?
-                forward = AppServlet.LIST_APP;
+                String email = request.getParameter("email");
+                if (email.matches(EMAIL_PATTERN)) {
+                    System.out.println("Account in registration"); //debug
+
+                    // Save new in db ...
+                    //Account account = new Account(email, firstname, lastname, password);
+                    //accountsDAO.create(account);
+
+                    // auto sign in ?
+                    forward = AppServlet.LIST_APP;
+                } else {
+                    request.setAttribute("message", "This email is not valid");
+                }
             }
             
         // Invalid form

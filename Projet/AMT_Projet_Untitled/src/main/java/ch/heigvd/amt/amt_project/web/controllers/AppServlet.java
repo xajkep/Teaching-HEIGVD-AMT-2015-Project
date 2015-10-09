@@ -19,6 +19,9 @@ public class AppServlet extends HttpServlet {
     protected static String LIST_APP = "/WEB-INF/pages/app.jsp";
     protected static String NEW_APP = "/WEB-INF/pages/app_new.jsp";
     private static String EDIT_APP = "/WEB-INF/pages/app_edit.jsp";
+    
+    private String NAME_PATTERN = "[a-z -]{3,32}";
+    private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -59,10 +62,34 @@ public class AppServlet extends HttpServlet {
             try{
                 request.setAttribute("apps", applicationsDAO.findAll());
             } catch(NullPointerException e) {
-                System.out.println("No applications to list");
+                System.out.println("No applications to list"); //debug
+                request.setAttribute("message", "No applications to list");
             }
         }
 
+        request.setAttribute("NAME_PATTERN", NAME_PATTERN);
+        request.setAttribute("EMAIL_PATTERN", EMAIL_PATTERN);
+        request.getRequestDispatcher(forward).forward(request, response);
+    }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        String forward = "";
+        
+        if (action != null) {
+            if (action.equalsIgnoreCase("edit")) {
+                
+                
+                forward = LIST_APP;
+            }
+            
+            else if (action.equalsIgnoreCase("new")) {
+                
+                forward = LIST_APP;
+            }
+        }
+        
+        
         request.getRequestDispatcher(forward).forward(request, response);
     }
 }
