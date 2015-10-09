@@ -21,7 +21,7 @@ public class HomePage extends AbstractPageAMT {
     public HomePage(WebDriver driver) {
         super(driver);
         // Vérification si on est sur la bonne page
-        if (driver.findElements(By.id("page")).isEmpty()) {
+        if (driver.findElements(By.id("home")).isEmpty()) {
             throw new IllegalStateException("This is not the correct page");
         }
     }
