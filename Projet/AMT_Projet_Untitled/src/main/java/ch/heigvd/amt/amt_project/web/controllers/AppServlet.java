@@ -2,10 +2,12 @@ package ch.heigvd.amt.amt_project.web.controllers;
 
 import ch.heigvd.amt.amt_project.models.Account;
 import ch.heigvd.amt.amt_project.models.ApiKey;
-import ch.heigvd.amt.amt_project.services.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.models.Application;
-import ch.heigvd.amt.amt_project.services.AccountDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.ApiKeysDAOLocal;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +19,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AppServlet extends HttpServlet {
     
+    @EJB
     private ApplicationsDAOLocal applicationsDAO;
-
+    @EJB
+    private AccountsDAOLocal accountsDAO;
+    @EJB
+    private ApiKeysDAOLocal apiKeysDAO;
+    
     protected static String LIST_APP = "/WEB-INF/pages/app.jsp";
     protected static String NEW_APP = "/WEB-INF/pages/app_new.jsp";
     private static String EDIT_APP = "/WEB-INF/pages/app_edit.jsp";
@@ -26,8 +33,6 @@ public class AppServlet extends HttpServlet {
     private String NAME_PATTERN = "[a-z -]{3,32}";
     private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
     
-    private AccountDAOLocal accountsDAO;
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getParameter("action");
@@ -100,10 +105,10 @@ public class AppServlet extends HttpServlet {
 
                 else if (action.equalsIgnoreCase("new")) {
                     
-                    ApiKey blahblah = new ApiKey("blahblah"); //hardcoded
+                    ApiKey apiKey = apiKeysDAO.createAndReturnManagedEntity(new ApiKey());
                     long accountId = 0;
                     Account account = accountsDAO.findById(accountId); //hardcoded
-                    Application app = new Application(name, description, blahblah, true, account);
+                    Application app = new Application(name, description, apiKey, true, account);
 
                     forward = LIST_APP;
                 }

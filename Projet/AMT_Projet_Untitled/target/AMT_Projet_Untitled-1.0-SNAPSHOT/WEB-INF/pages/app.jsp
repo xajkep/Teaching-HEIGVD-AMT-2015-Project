@@ -26,15 +26,15 @@
             </thead>
 
             <tbody>
-                <c:forEach items="${allApps}" var="app">
+                <c:forEach items="${apps}" var="app">
                 <tr>
-                    <td>${app.name}</td>
-                    <td>${app.description}</td>
-                    <td>${app.api_key}</td>
-                    <td>${app.users}</td>
+                    <td>${app.getName()}</td>
+                    <td>${app.getDescription()}</td>
+                    <td>${app.getKey().getApiKey()}</td>
+                    <td>-1</td>
                     <td>
-                        <a class="btn btn-primary" id="app_edit_button" href="pages/app?action=edit&id=1">Edit</a>
-                        <a class="btn btn-success" id="app_state_button" href="pages/app?action=disable&id=1">ENABLED&nbsp;<a>
+                        <a class="btn btn-primary" id="app_edit_button" href="pages/app?action=edit&id=${app.getId()}">Edit</a>
+                        <a class="btn btn-success" id="app_state_button" href="pages/app?action=disable&id=${app.getId()}">ENABLED&nbsp;<a>
                     </td> 
                 </tr>
                 </c:forEach>

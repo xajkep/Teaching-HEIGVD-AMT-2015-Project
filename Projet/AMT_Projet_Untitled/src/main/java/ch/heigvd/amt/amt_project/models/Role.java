@@ -21,6 +21,10 @@ public class Role extends AbstractDomainModel<Long>{
         
     }
     
+    public Role(String name) {
+        this.name = name;
+    }
+    
     public Role(String name, List<Account> accounts)
     {
         this.name = name;

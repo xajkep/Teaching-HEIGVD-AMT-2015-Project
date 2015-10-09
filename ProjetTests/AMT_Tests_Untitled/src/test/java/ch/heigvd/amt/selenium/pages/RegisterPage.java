@@ -30,7 +30,7 @@ public class RegisterPage extends AbstractPageAMT {
     public RegisterPage(WebDriver driver) {
         super(driver);
         // Vérification si on est sur la bonne page
-        if (driver.findElements(By.id("page")).isEmpty()) {
+        if (driver.findElements(By.id("register")).isEmpty()) {
             throw new IllegalStateException("This is not the correct page");
         }
     }
