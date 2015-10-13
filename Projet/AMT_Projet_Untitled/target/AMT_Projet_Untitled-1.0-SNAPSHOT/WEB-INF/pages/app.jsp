@@ -34,7 +34,14 @@
                     <td>-1</td>
                     <td>
                         <a class="btn btn-primary" id="app_edit_button" href="pages/app?action=edit&id=${app.getId()}">Edit</a>
-                        <a class="btn btn-success" id="app_state_button" href="pages/app?action=disable&id=${app.getId()}">ENABLED&nbsp;<a>
+                        
+                        <c:if test="${app.getEnable()}">
+                            <a class="btn btn-success" id="app_state_button" href="pages/app?action=disable&id=${app.getId()}">ENABLED&nbsp;<a>
+                        </c:if>
+                                    
+                        <c:if test="${!app.getEnable()}">
+                            <a class="btn btn-danger" id="app_state_button" href="pages/app?action=enable&id=${app.getId()}">DISABLED<a>
+                        </c:if>
                     </td> 
                 </tr>
                 </c:forEach>
