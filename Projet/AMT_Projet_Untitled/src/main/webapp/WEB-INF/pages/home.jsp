@@ -3,7 +3,7 @@
 <h2>Welcome to the AMT project !!!</h2>
 
 <div class="alert alert-info" role="alert">
-  You are logged in as ${principal}.
+  You are logged in as ${user.getEmail()}.
 </div>
 
 <div class="container">

@@ -34,9 +34,10 @@
   <body>
 
     <div class="container" id="login">
-
+        
       <form method="POST" action="auth" class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
+        <p class="text-center bg-danger">${error}</p>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="hidden" name="action" value="login">
         <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
