@@ -26,7 +26,7 @@ public class AccountServlet extends HttpServlet {
 
     
     
-    private String NAME_PATTERN = "[a-z -]{3,32}";
+    private String NAME_PATTERN = "[a-zA-Z0-9 -]{3,32}";
     private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
     
     @EJB
@@ -46,14 +46,13 @@ public class AccountServlet extends HttpServlet {
             // Edition
             if (action.equalsIgnoreCase("edit")) {
                 forward = EDIT_ACCOUNT;
+
+                long accountId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
                 
-                String id = request.getParameter("id");
-                if (id != null) {
-                    long accountId = Integer.parseInt(id);
-                    if (accountId >= 0) {
-                        System.out.println("Account in edition"); //debug
-                    }
-                }
+                Account account = accountsDAO.findById(accountId);
+                request.setAttribute("id", accountId);
+                request.setAttribute("lastname", account.getLastName());
+                request.setAttribute("firstname", account.getFirstName());
             }
             
             // Registration

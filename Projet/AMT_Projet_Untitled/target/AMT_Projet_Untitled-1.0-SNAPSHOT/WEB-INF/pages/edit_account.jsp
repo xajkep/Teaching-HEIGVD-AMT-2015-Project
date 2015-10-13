@@ -10,6 +10,7 @@
     <div class="container" >
         <form class="form-horizontal" id="edit_account_form" action="pages/account" method="post">
             <input type="hidden" name="action" value="edit" style="display: none;"/>
+            <input type="hidden" name="id" value="${id}" style="display: none;"/>
             
             <div class="form-group">
                 <label class="col-sm-3 control-label">Email</label>
