@@ -10,18 +10,19 @@
 <div class="container">
    <form class="form-horizontal" id="app_edit_form" action="pages/app" method="post">
        <input type="hidden" name="action" value="edit" style="display: none;"/>
+       <input type="hidden" name="id" value="${id}" style="display: none;"/>
        
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-                <input name="name" type="text" class="form-control" id="name" placeholder="Name" required pattern="${NAME_PATTERN}">
+                <input name="name" type="text" class="form-control" id="name" placeholder="Name" required pattern="${NAME_PATTERN}" value="${name}">
             </div>
         </div>
         
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                <textarea name="description" class="form-control" id="description" placeholder="Description">${description}</textarea>
             </div>
         </div>
         

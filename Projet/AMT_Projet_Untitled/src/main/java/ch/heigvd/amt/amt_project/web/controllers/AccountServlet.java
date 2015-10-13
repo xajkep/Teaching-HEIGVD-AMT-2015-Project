@@ -26,7 +26,7 @@ public class AccountServlet extends HttpServlet {
 
     
     
-    private String NAME_PATTERN = "[a-z -]{3,32}";
+    private String NAME_PATTERN = "[a-zA-Z0-9 -]{3,32}";
     private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
     
     @EJB
@@ -46,14 +46,15 @@ public class AccountServlet extends HttpServlet {
             // Edition
             if (action.equalsIgnoreCase("edit")) {
                 forward = EDIT_ACCOUNT;
+
+                long accountId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
                 
-                String id = request.getParameter("id");
-                if (id != null) {
-                    long accountId = Integer.parseInt(id);
-                    if (accountId >= 0) {
-                        System.out.println("Account in edition"); //debug
-                    }
-                }
+                System.out.println(accountId); //debug
+                
+                Account account = accountsDAO.findById(accountId);
+                request.setAttribute("id", accountId);
+                request.setAttribute("lastname", account.getLastName());
+                request.setAttribute("firstname", account.getFirstName());
             }
             
             // Registration
@@ -61,8 +62,6 @@ public class AccountServlet extends HttpServlet {
                 forward = REGISTER_ACCOUNT;
             }
         }
-        
-        
 
         request.setAttribute("NAME_PATTERN", NAME_PATTERN);
         request.setAttribute("EMAIL_PATTERN", EMAIL_PATTERN);
@@ -118,10 +117,12 @@ public class AccountServlet extends HttpServlet {
         // Invalid form
         } else if (action != null) {
             forward = action.equalsIgnoreCase("edit") ? EDIT_ACCOUNT : REGISTER_ACCOUNT;
+            request.setAttribute("NAME_PATTERN", NAME_PATTERN);
+            request.getRequestDispatcher(LIST_APP).forward(request, response);
         }
         
-        request.setAttribute("NAME_PATTERN", NAME_PATTERN);
-        request.getRequestDispatcher(forward).forward(request, response);
+        
+        response.sendRedirect("app");
     }
     
     
@@ -142,12 +143,12 @@ public class AccountServlet extends HttpServlet {
         }
 
         else if (!lastname.matches(NAME_PATTERN)) {
-            System.out.println("This lastname is not allowed"); //debug
+            request.setAttribute("message", "This lastname is not allowed");
             return false;
         }
 
         else if (!confirm.equals(password)) {
-            System.out.println("Passwords does not match"); //debug
+            request.setAttribute("message", "Passwords does not match");
             return false;
         }
         

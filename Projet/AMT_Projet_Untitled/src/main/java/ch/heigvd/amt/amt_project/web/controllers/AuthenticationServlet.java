@@ -74,6 +74,7 @@ public class AuthenticationServlet extends HttpServlet {
 
     if ("login".equals(action)) {
       request.getSession().setAttribute("principal", email);
+      request.getSession().setAttribute("userId", 1); //hardcoded
       response.sendRedirect(targetUrl);
     } else if ("logout".equals(action)) {
       request.getSession().invalidate();

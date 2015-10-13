@@ -29,7 +29,7 @@ public class AppServlet extends HttpServlet {
     protected static String NEW_APP = "/WEB-INF/pages/app_new.jsp";
     private static String EDIT_APP = "/WEB-INF/pages/app_edit.jsp";
     
-    private String NAME_PATTERN = "[a-z -]{3,32}";
+    private String NAME_PATTERN = "[a-z0-9A-Z -]{3,32}";
     private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,29 +40,44 @@ public class AppServlet extends HttpServlet {
         if (action != null) {
             if (action.equalsIgnoreCase("edit")) {
                 System.out.println("in EDIT");
-                int appId = Integer.parseInt(request.getParameter("id"));
+                long appId = Integer.parseInt(request.getParameter("id"));
                 forward = EDIT_APP;
-                //Application app = ;
-                //request.setAttribut("app", app);
+                
+                Application app = applicationsDAO.findById(appId);
+                
+                request.setAttribute("id", appId);
+                request.setAttribute("name", app.getName());
+                request.setAttribute("description", app.getDescription());
             } else if (action.equalsIgnoreCase("enable")) {
                 System.out.println("in ENABLE");
                 long appId = Integer.parseInt(request.getParameter("id"));
                 // DO SOMETHING TO ENABLE
                 Application app = applicationsDAO.findById(appId);
-                applicationsDAO.enable(app);
+                
+                app.setEnable(Boolean.TRUE);
+                applicationsDAO.update(app);
+                
                 forward = LIST_APP;
                 request.setAttribute("apps", applicationsDAO.findAll());
             } else if (action.equalsIgnoreCase("disable")) {
                 System.out.println("in DISABLE");
                 long appId = Integer.parseInt(request.getParameter("id"));
                 Application app = applicationsDAO.findById(appId);
-                applicationsDAO.disable(app);
-                // DO SOMETHING TO DISABLE
+                
+                app.setEnable(Boolean.FALSE);
+                applicationsDAO.update(app);
+                
                 forward = LIST_APP;
                 request.setAttribute("apps", applicationsDAO.findAll());
             } else {
                 System.out.println("in NEW");
+                
+                // Generate the API Key
+                ApiKey apiKey = apiKeysDAO.createAndReturnManagedEntity(new ApiKey());
+                request.getSession().setAttribute("apiKey", apiKey);
+                
                 forward = NEW_APP;
+                request.setAttribute("apiKey", apiKey.getApiKey());
             }
         } else {
             forward = LIST_APP;
@@ -82,7 +97,6 @@ public class AppServlet extends HttpServlet {
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        String forward = "";
         
         if (action != null) {
             String name = request.getParameter("name");
@@ -92,32 +106,33 @@ public class AppServlet extends HttpServlet {
             if (name != null && description != null
                 && name.matches(NAME_PATTERN)) {
                 if (action.equalsIgnoreCase("edit") && idString != null) {
-                    Long id = (long)Integer.getInteger(idString);
+                    long id = Integer.parseInt(request.getParameter("id"));
                     
                     Application app = applicationsDAO.findById(id);
                     app.setName(name);
                     app.setDescription(description);
                     applicationsDAO.update(app);
-                    
-                    forward = LIST_APP;
                 }
 
                 else if (action.equalsIgnoreCase("new")) {
                     
-                    ApiKey apiKey = apiKeysDAO.createAndReturnManagedEntity(new ApiKey());
-                    long accountId = 0;
-                    Account account = accountsDAO.findById(accountId); //hardcoded
-                    Application app = new Application(name, description, apiKey, true, account);
-
-                    forward = LIST_APP;
+                    if (request.getSession().getAttribute("apiKey") != null) {
+                        ApiKey apiKey = (ApiKey)request.getSession().getAttribute("apiKey");
+                        
+                        long accountId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
+                        Account account = accountsDAO.findById(accountId);
+                        Application app = new Application(name, description, apiKey, true, account);
+                        applicationsDAO.create(app);
+                    }
+                    
+                    request.getSession().setAttribute("apiKey", null);
                 }
             } else {
                 request.setAttribute("message", "Formulaire invalide");
-                forward = LIST_APP;
+                request.getRequestDispatcher(LIST_APP).forward(request, response);
             }
         }
         
-        request.setAttribute("NAME_PATTERN", NAME_PATTERN);
-        request.getRequestDispatcher(forward).forward(request, response);
+        response.sendRedirect("app");
     }
 }
