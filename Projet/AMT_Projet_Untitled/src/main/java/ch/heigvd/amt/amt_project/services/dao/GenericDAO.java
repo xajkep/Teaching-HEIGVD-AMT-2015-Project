@@ -58,7 +58,7 @@ public class GenericDAO<T extends AbstractDomainModel<PK>, PK> implements IGener
 
     @Override
     public List<T> findAll() {
-        List<T> result = result = em.createQuery("Select t from " + jpaEntityClass.getSimpleName() + " t").getResultList();        
+        List<T> result = em.createQuery("Select t from " + jpaEntityClass.getSimpleName() + " t").getResultList();        
         return result;
     }
 

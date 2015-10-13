@@ -4,12 +4,17 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author YounTheory, mberthouzoz
  */
 @Entity
+@NamedQueries({
+  @NamedQuery(name = "Account.login", query = "SELECT a FROM Account a WHERE a.email = :email AND a.password = :password")
+})
 public class Account extends AbstractDomainModel<Long>{
     /* Attributs */
     

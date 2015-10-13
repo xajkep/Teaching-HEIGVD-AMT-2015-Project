@@ -1,6 +1,9 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
+import ch.heigvd.amt.amt_project.models.Account;
+import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,91 +40,102 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AuthenticationServlet extends HttpServlet {
 
-  /**
-   * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-   * methods.
-   *
-   * @param request servlet request
-   * @param response servlet response
-   * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
-   */
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    @EJB
+    private AccountsDAOLocal accountDao;
 
-    /*
-     Get the parameter values, which have been transmitted either in the query string
-     (for GET requests) or in the body (for POST requests).
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
-    String action = request.getParameter("action");
-    String email = request.getParameter("email");
-    String password = request.getParameter("password");
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    /*
-     When the user is not logged in yet and tries to access /pages/xxx, then he
-     is redirected to the login page by the security filter. The security filter
-     stores the targer url (/pages/xxx) in the request context, so that we can
-     send redirect the user to the desired location after successful authentication.
+        /*
+         Get the parameter values, which have been transmitted either in the query string
+         (for GET requests) or in the body (for POST requests).
+         */
+        String action = request.getParameter("action");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        /*
+         When the user is not logged in yet and tries to access /pages/xxx, then he
+         is redirected to the login page by the security filter. The security filter
+         stores the targer url (/pages/xxx) in the request context, so that we can
+         send redirect the user to the desired location after successful authentication.
     
-     If the user accessed /auth directly and there is no targetUrl, then we send him
-     to the home page.
+         If the user accessed /auth directly and there is no targetUrl, then we send him
+         to the home page.
+         */
+        String targetUrl = (String) request.getAttribute("targetUrl");
+        if (targetUrl == null) {
+            targetUrl = "/pages/home";
+        }
+        targetUrl = request.getContextPath() + targetUrl;
+
+        if ("login".equals(action)) {
+            try {
+                Account user = accountDao.login(email, password);
+                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute("userId", 1); //hardcoded
+
+            } catch (Exception e) {
+                request.setAttribute("error", "Login failed");
+                request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+            }
+
+            response.sendRedirect(targetUrl);
+        } else if ("logout".equals(action)) {
+            request.getSession().invalidate();
+            response.sendRedirect(request.getContextPath());
+        } else {
+            response.sendRedirect(targetUrl);
+        }
+
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
-    String targetUrl = (String) request.getAttribute("targetUrl");
-    if (targetUrl == null) {
-      targetUrl = "/pages/home";
-    }
-    targetUrl = request.getContextPath() + targetUrl;
-
-    if ("login".equals(action)) {
-      request.getSession().setAttribute("principal", email);
-      request.getSession().setAttribute("userId", 1); //hardcoded
-      response.sendRedirect(targetUrl);
-    } else if ("logout".equals(action)) {
-      request.getSession().invalidate();
-      response.sendRedirect(request.getContextPath());
-    } else {
-      response.sendRedirect(targetUrl);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
-  }
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-  // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-  /**
-   * Handles the HTTP <code>GET</code> method.
-   *
-   * @param request servlet request
-   * @param response servlet response
-   * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
-   */
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-    processRequest(request, response);
-  }
-
-  /**
-   * Handles the HTTP <code>POST</code> method.
-   *
-   * @param request servlet request
-   * @param response servlet response
-   * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
-   */
-  @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-    processRequest(request, response);
-  }
-
-  /**
-   * Returns a short description of the servlet.
-   *
-   * @return a String containing servlet description
-   */
-  @Override
-  public String getServletInfo() {
-    return "Short description";
-  }// </editor-fold>
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

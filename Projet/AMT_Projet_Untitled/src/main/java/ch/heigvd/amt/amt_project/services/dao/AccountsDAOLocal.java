@@ -22,4 +22,6 @@ public interface AccountsDAOLocal extends IGenericDAO<Account, Long>{
     public void removeRoleFromAccount(List<Role> roles, Account account);
     public void removeRoleFromAccount(Role role, Account account);
     
+    public Account login(String email, String password);
+    
 }

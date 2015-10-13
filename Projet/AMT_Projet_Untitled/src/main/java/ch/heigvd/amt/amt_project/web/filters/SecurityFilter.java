@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.web.filters;
 
+import ch.heigvd.amt.amt_project.models.Account;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -75,8 +76,8 @@ public class SecurityFilter implements Filter {
      * If the user has been authenticated before, then the AuthenticationServlet has placed
      * an object (in this case a String) in the HTTP session. We can retrieve it.
      */
-    String principal = (String) httpRequest.getSession().getAttribute("principal");
-    if (principal == null && isTargetUrlProtected) {
+    Account user = (Account) httpRequest.getSession().getAttribute("user");
+    if (user == null && isTargetUrlProtected) {
       /*
        * The user has not been authenticated and tries to access a protected resource,
        * we display the login page (and interrupt the request processing pipeline).
