@@ -71,7 +71,13 @@ public class AppServlet extends HttpServlet {
                 request.setAttribute("apps", applicationsDAO.findAll());
             } else {
                 System.out.println("in NEW");
+                
+                // Generate the API Key
+                ApiKey apiKey = apiKeysDAO.createAndReturnManagedEntity(new ApiKey());
+                request.getSession().setAttribute("apiKey", apiKey);
+                
                 forward = NEW_APP;
+                request.setAttribute("apiKey", apiKey.getApiKey());
             }
         } else {
             forward = LIST_APP;
@@ -110,11 +116,16 @@ public class AppServlet extends HttpServlet {
 
                 else if (action.equalsIgnoreCase("new")) {
                     
-                    ApiKey apiKey = apiKeysDAO.createAndReturnManagedEntity(new ApiKey());
-                    long accountId = 1;
-                    Account account = accountsDAO.findById(accountId); //hardcoded (cause auth. isnt implemented
-                    Application app = new Application(name, description, apiKey, true, account);
-                    applicationsDAO.create(app);
+                    if (request.getSession().getAttribute("apiKey") != null) {
+                        ApiKey apiKey = (ApiKey)request.getSession().getAttribute("apiKey");
+                        
+                        long accountId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
+                        Account account = accountsDAO.findById(accountId);
+                        Application app = new Application(name, description, apiKey, true, account);
+                        applicationsDAO.create(app);
+                    }
+                    
+                    request.getSession().setAttribute("apiKey", null);
                 }
             } else {
                 request.setAttribute("message", "Formulaire invalide");
@@ -123,7 +134,5 @@ public class AppServlet extends HttpServlet {
         }
         
         response.sendRedirect("app");
-        
-        
     }
 }

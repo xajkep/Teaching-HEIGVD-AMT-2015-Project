@@ -29,7 +29,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">API Key</label>
             <div class="col-sm-10">
-                <span class="static-form">bcabcacnrrvbwgdtgecjvxcdsrfyeawkdkukalezs</span>
+                <span class="static-form">${apiKey}</span>
             </div>
         </div>
         
