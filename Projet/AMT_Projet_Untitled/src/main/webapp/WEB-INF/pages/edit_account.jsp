@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-9">
-                    <span class="static-form">{user.getEmail()}</span>
+                    <span class="static-form">${user.getEmail()}</span>
                 </div>
             </div>
         
