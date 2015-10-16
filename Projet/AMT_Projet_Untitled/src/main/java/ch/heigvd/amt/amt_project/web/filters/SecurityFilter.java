@@ -78,11 +78,18 @@ public class SecurityFilter implements Filter {
      */
     Account user = (Account) httpRequest.getSession().getAttribute("user");
     if (user == null && isTargetUrlProtected) {
+      System.out.println(path);
       /*
        * The user has not been authenticated and tries to access a protected resource,
        * we display the login page (and interrupt the request processing pipeline).
        */
-      request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+        
+      // For reach register page
+      if (path.startsWith("/pages/account") && httpRequest.getParameter("action").equals("new")) {
+          chain.doFilter(request, response);
+      } else {
+        request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+      }
     } else {
       /*
        * We authorize the access, so we can tell the request processing pipeline to
