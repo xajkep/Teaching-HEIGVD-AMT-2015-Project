@@ -119,8 +119,8 @@ public class AppServlet extends HttpServlet {
                     if (request.getSession().getAttribute("apiKey") != null) {
                         ApiKey apiKey = (ApiKey)request.getSession().getAttribute("apiKey");
                         
-                        long accountId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
-                        Account account = accountsDAO.findById(accountId);
+
+                        Account account = (Account)request.getSession().getAttribute("user");
                         Application app = new Application(name, description, apiKey, true, account);
                         applicationsDAO.create(app);
                     }

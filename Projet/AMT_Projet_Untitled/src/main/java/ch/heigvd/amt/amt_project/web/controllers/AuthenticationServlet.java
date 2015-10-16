@@ -82,7 +82,6 @@ public class AuthenticationServlet extends HttpServlet {
             try {
                 Account user = accountDao.login(email, password);
                 request.getSession().setAttribute("user", user);
-                request.getSession().setAttribute("userId", 1); //hardcoded
 
             } catch (Exception e) {
                 request.setAttribute("error", "Login failed");

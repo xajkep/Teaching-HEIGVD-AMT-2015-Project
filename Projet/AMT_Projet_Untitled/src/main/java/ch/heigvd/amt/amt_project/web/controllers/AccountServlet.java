@@ -46,13 +46,8 @@ public class AccountServlet extends HttpServlet {
             // Edition
             if (action.equalsIgnoreCase("edit")) {
                 forward = EDIT_ACCOUNT;
-
-                long accountId = Integer.parseInt(request.getSession().getAttribute("userId").toString());
                 
-                System.out.println(accountId); //debug
-                
-                Account account = accountsDAO.findById(accountId);
-                request.setAttribute("id", accountId);
+                Account account = (Account)request.getSession().getAttribute("user");
                 request.setAttribute("lastname", account.getLastName());
                 request.setAttribute("firstname", account.getFirstName());
             }
