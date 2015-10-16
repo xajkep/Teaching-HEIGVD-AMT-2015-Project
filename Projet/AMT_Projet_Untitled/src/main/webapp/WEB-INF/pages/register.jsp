@@ -3,7 +3,31 @@
     Created on : Sep 18, 2015, 11:30:26 AM
     Author     : xajkep
 --%>
-<%@include file="includes/header.jsp" %>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <base href="${pageContext.request.contextPath}/">
+
+    <title>Register Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/signin.css" rel="stylesheet">
+    
+    <link href="static/css/amt_project.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
 <div id="register">
 <h2>Registration</h2>
 
@@ -55,6 +79,7 @@
     </form>
 </div>
 </div>
-<%@include file="includes/footer.jsp" %>
+  </body>
+</html>
 
 
