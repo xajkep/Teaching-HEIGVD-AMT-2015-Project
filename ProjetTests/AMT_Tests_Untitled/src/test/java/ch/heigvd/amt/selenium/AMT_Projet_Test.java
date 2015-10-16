@@ -38,22 +38,24 @@ public class AMT_Projet_Test {
     }
     
     @Test
-    public void  canLoginWithValidEmail(){
+    public void  aUserCanLoginWithValidEmail(){
         driver.get(baseUrl);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.typeName("asdf@adsaf.asdf");
-        loginPage.typePwd("any");
+        loginPage.typeName("toto@contoso.com");
+        loginPage.typePwd("12345");
         HomePage homePage = (HomePage)loginPage.submitForm(HomePage.class);
     }
 
     @Test
-    public void aUserShouldBeAbleToVisitAllPagesAfterLogin(){
+    public void aUserShouldBeAbleToVisitAllPagesAfterLogin() throws InterruptedException{
         driver.get(baseUrl);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.typeName("asdf@adsaf.asdf");
-        loginPage.typePwd("any");
+        loginPage.typeName("toto@contoso.com");
+        loginPage.typePwd("12345");
         HomePage homePage = (HomePage)loginPage.submitForm(HomePage.class);
-        homePage.goToAppPageViaMenu();
+        homePage.goToAccountViaMenu().goToAppPageViaMenu().clickOnFirstAppLinkInAppsTable();
+        Thread.sleep(2000); // voir app_edit page : http://www.seleniumhq.org/docs/04_webdriver_advanced.jsp
+        
     }
 
     @After
