@@ -27,7 +27,7 @@
 
             <tbody>
                 <c:forEach items="${apps}" var="app">
-                <tr>
+                <tr data-test="${app.getName()}">
                     <td>${app.getName()}</td>
                     <td>${app.getDescription()}</td>
                     <td>${app.getKey().getApiKey()}</td>

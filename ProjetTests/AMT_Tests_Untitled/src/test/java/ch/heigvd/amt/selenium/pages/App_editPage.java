@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
 public class App_editPage extends AbstractPageAMT {
 
@@ -21,9 +22,16 @@ public class App_editPage extends AbstractPageAMT {
     // Identificateur de la page
     By page = By.id("app_edit");
 
-    public App_editPage(WebDriver driver) {
+    public App_editPage(WebDriver driver) throws InterruptedException {
         super(driver);
         // Vérification si on est sur la bonne page
+        // WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("someid")));
+        //WebElement element = wait.until(); 
+        
+        
+        
+        // ATTENTION
+        Thread.sleep(2000);
         if (driver.findElements(By.id("app_edit")).isEmpty()) {
             throw new IllegalStateException("This is not the correct page");
         }
