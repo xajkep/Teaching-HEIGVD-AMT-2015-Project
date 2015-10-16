@@ -22,14 +22,14 @@
         <div class="form-group">
             <label for="firstname" class="col-sm-3 control-label">First name</label>
             <div class="col-sm-9">
-                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" required pattern="${NAME_PATTERN}" value="${user.getFirstname()}" />
+                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" required pattern="${NAME_PATTERN}" value="${user.getFirstName()}" />
             </div>
         </div>
        
        <div class="form-group">
             <label for="lastname" class="col-sm-3 control-label">Last name</label>
             <div class="col-sm-9">
-                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" required pattern="${NAME_PATTERN}" value="${user.getLastname()}" />
+                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" required pattern="${NAME_PATTERN}" value="${user.getLastName()}" />
             </div>
         </div>
        
