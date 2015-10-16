@@ -20,28 +20,30 @@ public class AppPage extends AbstractPageAMT {
     // Mettre ici les By locateur -> voir exemple CorporateInformationPage pour le selecteur
     //By bEdit = By.id("app_edit_button");
     //By bState = By.id("app_state_button");
-    By allAppLinksInAppTableLocator = By.cssSelector("#appTable tbody tr td:nth-of-type(1) a");
+    // By firstLinkInAppTableLocator = By.cssSelector("#appTable tbody tr:first td:nth-of-type(5) a:first");
+    By tbody = By.tagName("tbody");
+    By raws = By.tagName("tr");
 
     // Identificateur de la page
     By page = By.id("app");
 
-    public AppPage(WebDriver driver) {
+    public AppPage(WebDriver driver) throws InterruptedException {
         super(driver);
 
         // Vérification si on est sur la bonne page
+        Thread.sleep(2000);
         if (driver.findElements(By.id("app")).isEmpty()) {
-            throw new IllegalStateException("This is not the correct page");
+            throw new IllegalStateException("This is not the correct page (AppPage)");
         }
     }
 
     // Mettre ici méthode pour clicker sur le premier lien du tableau
-    public App_editPage clickOnFirstAppLinkInAppsTable() {
-        List<WebElement> links = driver.findElements(allAppLinksInAppTableLocator);
-
-        assertFalse(links.isEmpty());
+    public App_editPage clickOnFirstAppLinkInAppsTable() throws InterruptedException {
         
-        links.get(0).click();
-        
+        WebElement elem0 = driver.findElement(tbody);
+        WebElement elem1 = elem0.findElements(raws).get(0);
+        System.out.println(elem1.getAttribute("data-test"));
+        elem1.findElement(By.className("btn-primary")).click();
         return new App_editPage(driver);
     }
     

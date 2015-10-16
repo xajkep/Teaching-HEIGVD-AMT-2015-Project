@@ -25,7 +25,7 @@ public abstract class AbstractPageAMT extends Page {
     By link_application = By.id("link_application");
 
     By menu_logout = By.id("menu_logout");
-    By link_account = By.id("link_logout");
+    By link_account = By.id("link_account");
 
     public AbstractPageAMT(WebDriver driver) {
         super(driver);
@@ -46,14 +46,14 @@ public abstract class AbstractPageAMT extends Page {
      *
      * @return the Beer page
      */
-    public AppPage goToAppPageViaMenu() {
-        driver.findElement(main_menu).click();
+    public AppPage goToAppPageViaMenu() throws InterruptedException {
+        //driver.findElement(main_menu).click();
         driver.findElement(link_application).click();
         return new AppPage(driver);
     }
 
-    public Edit_accountPage goToAccountViaMenu() {
-        driver.findElement(main_menu).click();
+    public Edit_accountPage goToAccountViaMenu() throws InterruptedException {
+        //driver.findElement(main_menu).click();
         driver.findElement(link_account).click();
         return new Edit_accountPage(driver);
     }

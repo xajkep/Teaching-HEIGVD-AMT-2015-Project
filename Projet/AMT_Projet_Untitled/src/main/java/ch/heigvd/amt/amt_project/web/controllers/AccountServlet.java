@@ -23,11 +23,11 @@ public class AccountServlet extends HttpServlet {
 
     protected static String EDIT_ACCOUNT     = "/WEB-INF/pages/edit_account.jsp";
     protected static String REGISTER_ACCOUNT = "/WEB-INF/pages/register.jsp";
-
+    protected static String HOME = "/WEB-INF/pages/home.jsp";
     
     
     private String NAME_PATTERN = "[a-zA-Z0-9 -]{3,32}";
-    private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
+    private String EMAIL_PATTERN = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
     
     @EJB
     private AccountsDAOLocal accountsDAO;
@@ -76,9 +76,10 @@ public class AccountServlet extends HttpServlet {
             
             // Update
             String id = request.getParameter("id");
+            Account user = (Account)request.getSession().getAttribute("user");
             if (id != null) {
                 long accountId = Integer.parseInt(id);
-                if (accountId >= 0) {
+                if (accountId >= 0 && accountId == user.getId()) {
                     System.out.println("Account in update"); //debug
 
                     Account account = accountsDAO.findById(accountId);
@@ -93,7 +94,13 @@ public class AccountServlet extends HttpServlet {
 
             // Registration
             else {
+                
+                // 2do: verifier que l'email est unique
+                //  if (accountsDAO.exists(...)) {...}
+                
+                
                 String email = request.getParameter("email");
+                forward = AccountServlet.HOME;
                 if (email.matches(EMAIL_PATTERN)) {
                     System.out.println("Account in registration"); //debug
 
@@ -101,9 +108,6 @@ public class AccountServlet extends HttpServlet {
                     Account account = accountsDAO.createAndReturnManagedEntity(new Account(email, firstname, lastname, password));
                     Role userRole = rolesDAO.findById((long)2);
                     accountsDAO.assignRoleToAccount(userRole, account);
-
-                    // auto sign in ?
-                    forward = AppServlet.LIST_APP;
                 } else {
                     request.setAttribute("message", "This email is not valid");
                 }

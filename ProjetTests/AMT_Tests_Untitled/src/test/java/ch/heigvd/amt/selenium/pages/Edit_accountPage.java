@@ -29,11 +29,13 @@ public class Edit_accountPage extends AbstractPageAMT {
     // Identificateur de la page
     By page = By.id("edit_account");
 
-    public Edit_accountPage(WebDriver driver) {
+    public Edit_accountPage(WebDriver driver) throws InterruptedException {
         super(driver);
         // Vérification si on est sur la bonne page
-        if (driver.findElements(By.id("edit_account")).isEmpty()) {
-            throw new IllegalStateException("This is not the correct page");
+        Thread.sleep(2000);
+        
+        if (driver.findElements(page).isEmpty()) {
+            throw new IllegalStateException("This is not the correct page (edit account)");
         }
     }
 
