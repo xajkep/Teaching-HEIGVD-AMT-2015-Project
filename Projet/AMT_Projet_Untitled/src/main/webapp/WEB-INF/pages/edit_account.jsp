@@ -10,26 +10,26 @@
     <div class="container" >
         <form class="form-horizontal" id="edit_account_form" action="pages/account" method="post">
             <input type="hidden" name="action" value="edit" style="display: none;"/>
-            <input type="hidden" name="id" value="${id}" style="display: none;"/>
+            <input type="hidden" name="id" value="${user.getId()}" style="display: none;"/>
             
             <div class="form-group">
                 <label class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-9">
-                    <span class="static-form">sample@example.com</span>
+                    <span class="static-form">${user.getEmail()}</span>
                 </div>
             </div>
         
         <div class="form-group">
             <label for="firstname" class="col-sm-3 control-label">First name</label>
             <div class="col-sm-9">
-                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" required pattern="${NAME_PATTERN}" value="${firstname}" />
+                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" required pattern="${NAME_PATTERN}" value="${user.getFirstName()}" />
             </div>
         </div>
        
        <div class="form-group">
             <label for="lastname" class="col-sm-3 control-label">Last name</label>
             <div class="col-sm-9">
-                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" required pattern="${NAME_PATTERN}" value="${lastname}" />
+                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" required pattern="${NAME_PATTERN}" value="${user.getLastName()}" />
             </div>
         </div>
        

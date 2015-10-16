@@ -79,17 +79,14 @@ public class AuthenticationServlet extends HttpServlet {
         targetUrl = request.getContextPath() + targetUrl;
 
         if ("login".equals(action)) {
-            try {
-                Account user = accountDao.login(email, password);
+            Account user = accountDao.login(email, password);
+            if (user instanceof Account) {
                 request.getSession().setAttribute("user", user);
-                request.getSession().setAttribute("userId", 1); //hardcoded
-
-            } catch (Exception e) {
+                response.sendRedirect(targetUrl);
+            } else {
                 request.setAttribute("error", "Login failed");
                 request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
             }
-
-            response.sendRedirect(targetUrl);
         } else if ("logout".equals(action)) {
             request.getSession().invalidate();
             response.sendRedirect(request.getContextPath());

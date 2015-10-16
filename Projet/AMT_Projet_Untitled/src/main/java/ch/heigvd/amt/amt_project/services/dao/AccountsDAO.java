@@ -44,6 +44,13 @@ public class AccountsDAO extends GenericDAO<Account, Long> implements AccountsDA
         role.removeAccount(account);
         account.removeRole(role);
     }
+    
+    @Override
+    public boolean exists(String email) {
+        return (boolean) em.createNamedQuery("SELECT COUNT(*) FROM Account where email = :email")
+                    .setParameter("email", email)
+                    .getSingleResult();
+    }
 
     @Override
     public Account login(String email, String password) {
