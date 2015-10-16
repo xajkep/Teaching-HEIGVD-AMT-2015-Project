@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.models;
 
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -14,9 +15,9 @@ public class ApiKey extends AbstractDomainModel<Long>{
     
     private String apiKey;
     
-    public ApiKey() {
-        //TODO : change this generation
-        apiKey = String.valueOf(Math.floor((Math.random() * 10123213) + 1));
+    public ApiKey(){
+        UUID id = UUID.randomUUID();
+        apiKey = String.valueOf(id);
     }
     
     public ApiKey(String apiKey)
