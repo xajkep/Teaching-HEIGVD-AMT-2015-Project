@@ -58,6 +58,9 @@ public class AMT_Projet_Test {
         
     }
 
+    // TODO 
+    // méthode d'identification des pages ineficace, le DOM n'est pas chargé. Essayer avec les titres ou avec les
+    // méthodes wait de sélénium
     @After
     public void closeBrowser() {
         driver.close();
