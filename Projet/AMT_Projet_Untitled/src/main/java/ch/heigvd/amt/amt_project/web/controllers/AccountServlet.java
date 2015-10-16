@@ -93,15 +93,12 @@ public class AccountServlet extends HttpServlet {
             }
 
             // Registration
-            else {
-                
-                // 2do: verifier que l'email est unique
-                //  if (accountsDAO.exists(...)) {...}
-                
+            else {               
                 
                 String email = request.getParameter("email");
                 forward = AccountServlet.HOME;
-                if (email.matches(EMAIL_PATTERN)) {
+                if (email.matches(EMAIL_PATTERN) && !accountsDAO.exists(email)) {
+                    
                     System.out.println("Account in registration"); //debug
 
                     // Save new in db ...

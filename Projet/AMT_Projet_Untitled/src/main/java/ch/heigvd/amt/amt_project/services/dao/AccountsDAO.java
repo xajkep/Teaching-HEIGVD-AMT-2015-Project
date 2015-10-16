@@ -47,9 +47,11 @@ public class AccountsDAO extends GenericDAO<Account, Long> implements AccountsDA
     
     @Override
     public boolean exists(String email) {
-        return (boolean) em.createNamedQuery("SELECT COUNT(*) FROM Account where email = :email")
+        long res = (long) em.createQuery("SELECT COUNT(a) FROM Account a WHERE a.email = :email")
                     .setParameter("email", email)
                     .getSingleResult();
+        
+        return res > 0;
     }
 
     @Override
