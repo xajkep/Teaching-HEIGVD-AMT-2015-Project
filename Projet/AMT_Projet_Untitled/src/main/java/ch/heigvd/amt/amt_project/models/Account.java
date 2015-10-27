@@ -27,7 +27,7 @@ public class Account extends AbstractDomainModel<Long>{
     
     private String password;
     
-    @ManyToMany
+    @ManyToMany(mappedBy = "accounts")
     private List<Role> roles;
     
     public Account() {
