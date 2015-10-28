@@ -29,7 +29,7 @@ This project is to make during the AMT course at the HEIG-VD.
 
 The main goal is to design an web application client-server in Java in 3 parts.
 
-The first part is to
+The first part is to create the scaffolding of the application (Account, Application, Role, Api Key) and implementation of the design pattern MVC.
 
 The second part is to
 
@@ -38,10 +38,23 @@ The third part is to
 ## User Guide
 
 ### How to execute and access the application
+**Netbeans**:
+
+1. Open Netbeans and open the project
+2. Start the Glassfish server
+3. Run the project (The application is started in your browser)
+
 
 ### How to use the application
 
 ### How to update, build and deploy the application
+**Netbeans**:
+
+1. Open Netbeans and open the project
+2. Start the Glassfish server
+3. Change the part as you wish
+4. Build the project (Run -> Build Project)
+5. Deploy the project (Run -> Run Project)
 
 ### How to run the automated test procedure
 
@@ -72,6 +85,10 @@ View: Implements the presentation layer that interacts with the user. When the u
 Controller: Acts as the boss of the application and is responsible for routing data to the right model and view components. The controller oversees the model and the view by reacting to the data the user sends. In online Java applications, the controller is often implemented as a servlet.
 
 <img src="./img/MVC-Schema.png">
+
+### Database
+
+<img src="./img/db.png">
 
 
 ## Implementation
@@ -121,8 +138,6 @@ The Bootstrap 3 library is used for designed the views.
 
 ## Testing and validation
 
-### Test strategy
-
 ### Tools
 #### Apache JMeter
 Apache JMeter is an open source software, a 100% pure Java application designed to load test client/server software.
@@ -138,6 +153,8 @@ Selenium is a portable software testing framework for web applications.
 Selenium provides a record/playback tool for authoring tests without learning a test scripting language (Selenium IDE). It also provides a test domain-specific language (Selenese) to write tests in a number of popular programming languages, including Java, C#, Groovy, Perl, PHP, Python and Ruby. The tests can then be run against most modern web browsers. Selenium deploys on Windows, Linux, and Macintosh platforms. It is open-source software, released under the Apache 2.0 license, and can be downloaded and used without charge.
 
 Documentation : [http://docs.seleniumhq.org/docs/](http://docs.seleniumhq.org/docs/)
+
+### Test strategy
 
 ### Procedures
 
