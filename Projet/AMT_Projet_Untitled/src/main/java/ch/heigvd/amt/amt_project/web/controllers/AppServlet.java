@@ -106,7 +106,7 @@ public class AppServlet extends HttpServlet {
             if (name != null && description != null
                 && name.matches(NAME_PATTERN)) {
                 if (action.equalsIgnoreCase("edit") && idString != null) {
-                    long id = Integer.parseInt(request.getParameter("id"));
+                    long id = Integer.parseInt(idString);
                     
                     Application app = applicationsDAO.findById(id);
                     app.setName(name);
