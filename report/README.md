@@ -222,7 +222,7 @@ Here are the requests that will be executed for each thread:
 * Authentication of this random user
 * Get application list
 * Add a new application
-*
+* 
 * ...
 
 ### Procedures
