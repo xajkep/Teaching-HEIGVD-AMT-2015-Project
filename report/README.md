@@ -40,6 +40,8 @@ The third part is to
 ### How to execute and access the application
 **Netbeans**:
 
+Prerequisite : The MySQL server must be started.
+
 1. Open Netbeans and open the project
 2. Start the Glassfish server
 3. Run the project (The application is started in your browser)
@@ -49,6 +51,8 @@ The third part is to
 
 ### How to update, build and deploy the application
 **Netbeans**:
+
+Prerequisite : The MySQL server must be started.
 
 1. Open Netbeans and open the project
 2. Start the Glassfish server
@@ -60,7 +64,6 @@ The third part is to
 **Selenium**:
 
 Prerequisite : The main application must be launched.
-
 
 1. Open Netbeans and open the ProjectTest
 2. Build the project (Run -> Build Project)
