@@ -57,7 +57,23 @@ The third part is to
 5. Deploy the project (Run -> Run Project)
 
 ### How to run the automated test procedure
+**Selenium**:
 
+Prerequisite : The main application must be launched.
+
+
+1. Open Netbeans and open the ProjectTest
+2. Build the project (Run -> Build Project)
+3. Run the project (Run -> Run Project)
+
+The tests are launched.
+
+**JMeter**:
+
+Prerequisite : The main application must be launched.
+
+1. Open JMeter
+2. Run the automated test
 
 ## Design
 
