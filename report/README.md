@@ -123,6 +123,10 @@ Project
 				- header.jsp
 			- home.jsp
 			- login.jsp
+			- app.jsp
+			- register.jsp
+			- app_edit.jsp
+			- app_new.jsp
 	- static
 		- css
 			- amt_project.css
@@ -140,12 +144,33 @@ Project
 	- index.jsp
 - Source Pakages
 	- ch.heigvd.amt.amt_project.models
-		- User.java
+		- AbastractDomainModel.java
+		- Account.java
+		- ApiKey.java
 		- Application.java
+		- EndUser.java
+		- Role.java
 	- ch.heigvd.amt.amt_project.services
-		- UserDataStore.java
-		- ApplicationDataStore.java
+		- TestDataManager.java
+		- TestDataManagerLocal.java
+	- ch.heigvd.amt.amt_project.services.dao
+		- AccountsDao.java
+		- AccountsLocalDao.java
+		- ApiKeysDao.java
+		- ApiKeysLocalDao.java
+		- ApplicationsDao.java
+		- ApplicationsLocalDao.java
+		- EndUsersDao.java
+		- EndUsersLocalDao.java
+		- GenericDao.java
+		- IGenericDao.java
+		- RolesDao.java
+		- RolesDaoLocal.java
+	- ch.heigvd.amt.amt_project.util
+		- MonitoringListener.java
 	- ch.heigvd.amt.amt_project.web.controllers
+		- AccountServlet.java
+		- AppServlet.java
 		- AuthenticationServlet.java
 		- HomeServlet.java
 	- ch.heigvd.amt.amt_project.web.flters
