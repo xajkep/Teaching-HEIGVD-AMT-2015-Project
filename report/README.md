@@ -24,7 +24,7 @@ Implemenation of the webservice rest
 ...
 
 
-## Introduction 
+## Introduction
 This project is to make during the AMT course at the HEIG-VD.
 
 The main goal is to design an web application client-server in Java in 3 parts.
@@ -76,7 +76,8 @@ The tests are launched.
 Prerequisite : The main application must be launched.
 
 1. Open JMeter
-2. Run the automated test
+2. Open the "AMT_Test_charge.jmx" file in JMeter
+3. Run the automated test by clicking the green arrow
 
 ## Design
 
@@ -200,6 +201,30 @@ Documentation : [http://docs.seleniumhq.org/docs/](http://docs.seleniumhq.org/do
 
 ### Test strategy
 
+#### Automated piloting tests
+
+Selenium will be used to simulate user actions such as:
+
+* Login with wrong credentials. It should not work and the user should stay on the same page.
+* Login with valid credentials. It should redirect the user to the homepage
+* Once logged-in the user should join every pages on the website
+* Once logged-in the user should be able to make CRUD operations on the applications.
+* Once logged-in the user should be able to make modifications on his profile.
+* ...
+
+#### Automated heavy load test
+
+JMeter will be used to simulate multiple simultaneous access to the website to check for eventual multi-thread bugs.
+Here are the requests that will be executed for each thread:
+
+* Get homepage
+* Register random user
+* Authentication of this random user
+* Get application list
+* Add a new application
+*
+* ...
+
 ### Procedures
 
 ### Results
@@ -210,4 +235,3 @@ Documentation : [http://docs.seleniumhq.org/docs/](http://docs.seleniumhq.org/do
 ## Conclusion
 
 ## Appending A: Auto Evaluation
-

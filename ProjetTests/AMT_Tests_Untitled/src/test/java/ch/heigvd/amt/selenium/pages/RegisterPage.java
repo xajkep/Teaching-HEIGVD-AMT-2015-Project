@@ -12,9 +12,6 @@ import org.openqa.selenium.WebDriver;
 public class RegisterPage extends AbstractPageAMT {
     // Identificateurs des éléments
 
-    // ATTENTION
-    // ATTENTION -> login particulier, pas d'identificateur de page voir avec Benoit
-    // ATTENTION
     // Identificateur de la page
     By page = By.id("register");
     //###############################

@@ -41,6 +41,7 @@ public class TestDataManager implements TestDataManagerLocal {
     @EJB
     EndUsersDAOLocal endUsersDAO;
 
+    @Override
     public void generateTestData() {
 
         /**

@@ -53,7 +53,9 @@ public class AMT_Projet_Test {
         loginPage.typeName("toto@contoso.com");
         loginPage.typePwd("12345");
         HomePage homePage = (HomePage)loginPage.submitForm(HomePage.class);
-        homePage.goToAccountViaMenu().goToAppPageViaMenu().clickOnFirstAppLinkInAppsTable();
+        homePage.goToAccountViaMenu()
+                .goToAppPageViaMenu();
+                //.clickOnFirstAppLinkInAppsTable();
         Thread.sleep(2000); // voir app_edit page : http://www.seleniumhq.org/docs/04_webdriver_advanced.jsp
         
     }
