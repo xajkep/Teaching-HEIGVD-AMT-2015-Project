@@ -37,33 +37,76 @@ The third part is to
 
 ## User Guide
 
-### How to execute and access the application
-**Netbeans**:
+Prerequisite :
+* Clone the Project
+	* git@github.com:xajkep/Teaching-HEIGVD-AMT-2015-Project.git
+* Install MySQL server
+* Configure MySQL server
+	* Create "amt" database
+	* User root must be connect to amt
+	* User root must have 1234 like password
+* Create Glassfish server
+	* Server : Glassfish
+	* Name : AMT Server
+	* Location : default
+	* Domain : default
+	* Host : localhost
+	* Port : default
 
-Prerequisite : The MySQL server must be started.
+At startup, the application generate some data and save to database.
+* 2 roles
+	* Admin
+	* User
+* 2 accounts
+	* toto@contoso.com, Toto, Smith, 12345, Admin
+	* bob@contoso.com, Bob, Lenon, 54321, User
+* 4 applications
+	* app1, testapp1, toto
+		* 25 end users
+	* app2, testapp2, bob
+		* 30 end users
+	* app3, testapp3, toto
+		* 20 end users
+	* app4, testapp4, toto
+		* 15 end users
+* 90 end users
+
+### How to execute and access the application
+Prerequisite :
+* The MySQL server must be started.
+* The Glassfish server must be started.
+
+**Netbeans**
 
 1. Open Netbeans and open the project
-2. Start the Glassfish server
-3. Run the project (The application is started in your browser)
-
+2. Run the project (The application is started in your browser)
 
 ### How to use the application
+
+Prerequisite :
+* The application must be started
+* The Glassfish server must be started.
+
+1. Open your browser
+2. Go to http://localhost:8080/AMT_Projet_Untitled/
 
 ### How to update, build and deploy the application
 **Netbeans**:
 
-Prerequisite : The MySQL server must be started.
+Prerequisite :
+* The MySQL server must be started.
+* The Glassfish server must be started.
 
 1. Open Netbeans and open the project
-2. Start the Glassfish server
-3. Change the part as you wish
-4. Build the project (Run -> Build Project)
-5. Deploy the project (Run -> Run Project)
+2. Change the part as you wish
+3. Build the project (Run -> Build Project)
+4. Deploy the project (Run -> Run Project)
 
 ### How to run the automated test procedure
 **Selenium**:
 
-Prerequisite : The main application must be launched.
+Prerequisite :
+* The main application must be launched.
 
 1. Open Netbeans and open the ProjectTest
 2. Build the project (Run -> Build Project)
@@ -73,7 +116,8 @@ The tests are launched.
 
 **JMeter**:
 
-Prerequisite : The main application must be launched.
+Prerequisite :
+* The main application must be launched.
 
 1. Open JMeter
 2. Open the "AMT_Test_charge.jmx" file in JMeter
@@ -105,11 +149,12 @@ View: Implements the presentation layer that interacts with the user. When the u
 Controller: Acts as the boss of the application and is responsible for routing data to the right model and view components. The controller oversees the model and the view by reacting to the data the user sends. In online Java applications, the controller is often implemented as a servlet.
 
 <img src="./img/MVC-Schema.png">
+<caption>MVC schema</caption>
 
 ### Database
 
 <img src="./img/db.png">
-
+<caption>Database schema</caption>
 
 ## Implementation
 
@@ -210,7 +255,6 @@ Selenium will be used to simulate user actions such as:
 * Once logged-in the user should join every pages on the website
 * Once logged-in the user should be able to make CRUD operations on the applications.
 * Once logged-in the user should be able to make modifications on his profile.
-* ...
 
 #### Automated heavy load test
 
@@ -222,13 +266,20 @@ Here are the requests that will be executed for each thread:
 * Authentication of this random user
 * Get application list
 * Add a new application
-* 
-* ...
 
 ### Procedures
 
 ### Results
 
+### Apache JMeter
+
+The thread group of JMeter tests contains two views to visualize query results. The first, "View results tree" can see requests and responses sent and the other, "Graph Results", lets see the send-response time and other details on the flow, the average or data for example. Other views can be added without worries thread group.
+
+The requests results can be seen in the database.
+
+#### Selenium
+
+When the Selenium project is implemented (in test mode), the NetBeans progress bar shows the percentage of green and red successful tests stranded results.
 
 ## Known Issues
 
