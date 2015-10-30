@@ -12,9 +12,10 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-  @NamedQuery(name = "EndUser.findByApp", query = "SELECT * FROM ENDUSER WHERE ENDUSER.APP_ID = :appId"),
-  @NamedQuery(name = "EndUser.getNumberOfUserDuringLast30Days", query = "SELECT COUNT(*) FROM ENDUSER WHERE ENDUSER.date > :date")
+  @NamedQuery(name = "EndUser.findByApp", query = "SELECT e FROM EndUser e WHERE e.app = :app"),
+  @NamedQuery(name = "EndUser.getNumberOfUserDuringLastDays", query = "SELECT count(e) FROM EndUser e WHERE e.date > :date")
 })
+
 public class EndUser extends AbstractDomainModel<Long>{
     @ManyToOne
     private Application app;

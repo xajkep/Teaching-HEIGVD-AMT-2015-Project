@@ -2,6 +2,8 @@ package ch.heigvd.amt.amt_project.web.controllers;
 
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.EndUsersDAO;
+import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -20,6 +22,9 @@ public class HomeServlet extends HttpServlet {
     @EJB
     private AccountsDAOLocal accountsDAO;
     
+    @EJB
+    private EndUsersDAOLocal endUsersDAO;
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -34,7 +39,7 @@ public class HomeServlet extends HttpServlet {
         /* Stats */
         request.setAttribute("numberOfAccount", accountsDAO.count());
         request.setAttribute("numberOfApplication", applicationsDAO.count());
-        request.setAttribute("numberOfUserDuringLast30Days", 3);
+        request.setAttribute("numberOfUserDuringLast30Days", endUsersDAO.getNumberOfUserDuringLast30Days());
         
         request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
     }

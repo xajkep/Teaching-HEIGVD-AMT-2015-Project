@@ -1,7 +1,8 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
 import ch.heigvd.amt.amt_project.models.EndUser;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -13,16 +14,13 @@ import javax.persistence.NoResultException;
  */
 @Stateless
 public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDAOLocal {
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
             
     @Override
     public List<EndUser> findByApp(long appId) {
         List<EndUser> results;
         try {
             results = em.createNamedQuery("EndUser.findByApp")
-                    .setParameter("appId", appId).getResultList();
+                    .setParameter("app", appId).getResultList();
             return results;
         } catch (NoResultException e) {
             return null;
@@ -30,13 +28,18 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
     }
     
     @Override
-    public int getNumberOfUserDuringLast30Days(long appId) {
-        int results;
-        
-        String date = "2015-09-30";
-        
+    public long getNumberOfUserDuringLast30Days() {
+        long results = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("1");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -30);
+        System.out.println("2");
+        Date date = new Date(cal.getTimeInMillis());
+        System.out.println("3");
+                
         try {
-            results = (int) em.createNamedQuery("EndUser.getNumberOfUserDuringLast30Days")
+            results = (long) em.createNamedQuery("EndUser.getNumberOfUserDuringLastDays")
                     .setParameter("date", date).getSingleResult();
             return results;
         } catch (NoResultException e) {
