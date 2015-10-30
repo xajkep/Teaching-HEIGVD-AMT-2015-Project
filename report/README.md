@@ -1,6 +1,5 @@
 # Project Report
 
-
 ## Administrative information
 
 ### Team
@@ -126,7 +125,8 @@ Prerequisite :
 ## Design
 
 ### System overview
-Explain with schema
+<img src="./img/navigation-schema.jpg"/>
+
 
 ### Gamification features
 Explain our choice
