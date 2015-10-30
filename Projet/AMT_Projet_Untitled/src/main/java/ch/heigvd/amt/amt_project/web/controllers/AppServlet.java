@@ -6,6 +6,7 @@ import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApiKeysDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -24,10 +25,13 @@ public class AppServlet extends HttpServlet {
     private AccountsDAOLocal accountsDAO;
     @EJB
     private ApiKeysDAOLocal apiKeysDAO;
+    @EJB
+    private EndUsersDAOLocal endUsersDAO;
     
     protected static String LIST_APP = "/WEB-INF/pages/app.jsp";
     protected static String NEW_APP = "/WEB-INF/pages/app_new.jsp";
     private static String EDIT_APP = "/WEB-INF/pages/app_edit.jsp";
+    private static String LIST_USER_APP = "/WEB-INF/pages/userlist.jsp";
     
     private String NAME_PATTERN = "[a-z0-9A-Z -]{3,32}";
     private String EMAIL_PATTERN = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
@@ -69,6 +73,12 @@ public class AppServlet extends HttpServlet {
                 
                 forward = LIST_APP;
                 request.setAttribute("apps", applicationsDAO.findAll());
+            } else if (action.equalsIgnoreCase("userlist")){
+                long appId = Integer.parseInt(request.getParameter("id"));
+                Application app = applicationsDAO.findById(appId);
+                
+                forward = LIST_USER_APP;
+                request.setAttribute("allUsers", endUsersDAO.findByApp(app.getId()));
             } else {
                 System.out.println("in NEW");
                 

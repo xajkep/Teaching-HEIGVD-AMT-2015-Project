@@ -3,12 +3,18 @@ package ch.heigvd.amt.amt_project.models;
 import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author , mberthouzoz
  */
 @Entity
+@NamedQueries({
+  @NamedQuery(name = "EndUser.findByApp", query = "SELECT * FROM ENDUSER WHERE ENDUSER.APP_ID = :appId"),
+  @NamedQuery(name = "EndUser.getNumberOfUserDuringLast30Days", query = "SELECT COUNT(*) FROM ENDUSER WHERE ENDUSER.date > :date")
+})
 public class EndUser extends AbstractDomainModel<Long>{
     @ManyToOne
     private Application app;
@@ -69,4 +75,6 @@ public class EndUser extends AbstractDomainModel<Long>{
     public void setDate(Date date) {
         this.date = date;
     }
+    
+    
 }

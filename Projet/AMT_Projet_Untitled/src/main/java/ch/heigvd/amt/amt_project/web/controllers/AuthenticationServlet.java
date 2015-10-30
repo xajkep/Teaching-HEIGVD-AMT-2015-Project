@@ -2,6 +2,7 @@ package ch.heigvd.amt.amt_project.web.controllers;
 
 import ch.heigvd.amt.amt_project.models.Account;
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -42,6 +43,9 @@ public class AuthenticationServlet extends HttpServlet {
 
     @EJB
     private AccountsDAOLocal accountDao;
+    
+    @EJB
+    private ApplicationsDAOLocal applicationsDAO;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,6 +58,12 @@ public class AuthenticationServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        /* stats */
+        request.setAttribute("numberOfAccount", accountDao.count());
+        request.setAttribute("numberOfApplication", applicationsDAO.count());
+        request.setAttribute("numberOfUserDuringLast30Days", 3);
+        
 
         /*
          Get the parameter values, which have been transmitted either in the query string
