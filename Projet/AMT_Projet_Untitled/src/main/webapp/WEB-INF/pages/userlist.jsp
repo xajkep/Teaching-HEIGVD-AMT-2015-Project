@@ -6,7 +6,8 @@
 
 <%@include file="includes/header.jsp" %>
 <div id="userlist">
-<h2>List of users for "{$app.name}"</h2>
+    <h2>List of users for <b>${app.getName()}</b></h2>
+    <br/>
 
 <div class="container">
     <table class="table table-bordered">
@@ -14,19 +15,21 @@
             <tr>
                 <th>User ID</th>
                 <th>Creation date</th>
-                <th></th>
             </tr>
         </thead>
         
         <tbody>
             <c:forEach items="${allUsers}" var="user">
             <tr>
-                <td>{$user.name}</td>
-                <td>{$user.creation_date}</td>
+                <td>${user.getName()}</td>
+                <td>${user.getDate()}</td>
             </tr>
             </c:forEach>
         </tbody>
     </table>
+    <div style="text-align: center;">
+        <a href="pages/app?action=userlist&id=${user.getId()}&page=1">&lt;&lt;</a> <a href="pages/app?action=userlist&id=${user.getId()}&page=${prev_page}">&lt;</a> ${current_page}/${total_page} <a href="pages/app?action=userlist&id=${user.getId()}&page=${next_page}">&gt;</a> <a href="pages/app?action=userlist&id=${user.getId()}&page=${total_page}">&gt;&gt;</a>
+    </div>
 </div>
 </div>
 <%@include file="includes/footer.jsp" %>

@@ -20,7 +20,8 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
         List<EndUser> results;
         try {
             results = em.createNamedQuery("EndUser.findByApp")
-                    .setParameter("app", appId).getResultList();
+                    .getResultList();
+                    //.setParameter("app", appId).getResultList();
             return results;
         } catch (NoResultException e) {
             return null;

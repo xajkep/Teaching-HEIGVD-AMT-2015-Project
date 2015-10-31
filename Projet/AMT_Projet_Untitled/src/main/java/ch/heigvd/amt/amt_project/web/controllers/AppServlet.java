@@ -75,10 +75,26 @@ public class AppServlet extends HttpServlet {
                 request.setAttribute("apps", applicationsDAO.findAll());
             } else if (action.equalsIgnoreCase("userlist")){
                 long appId = Integer.parseInt(request.getParameter("id"));
-                Application app = applicationsDAO.findById(appId);
+                
+                int total_page = (int)endUsersDAO.count() / 10;
+                long current_page;
+                
+                if (request.getParameter("page") != null) {
+                    current_page = Integer.parseInt(request.getParameter("page"));
+                } else {
+                    current_page = 1;
+                }
+                
+                long prev_page = (current_page > 1 ? current_page-1 : 1);
+                long next_page = (current_page < total_page ? current_page+1 : total_page);
                 
                 forward = LIST_USER_APP;
-                request.setAttribute("allUsers", endUsersDAO.findByApp(app.getId()));
+                request.setAttribute("allUsers", endUsersDAO.findAllByPage(total_page, (int)current_page));
+                request.setAttribute("app", applicationsDAO.findById(appId));
+                request.setAttribute("current_page", current_page);
+                request.setAttribute("prev_page", prev_page);
+                request.setAttribute("next_page", next_page);
+                request.setAttribute("total_page", total_page);
             } else {
                 System.out.println("in NEW");
                 
