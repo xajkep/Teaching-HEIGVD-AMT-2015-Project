@@ -42,6 +42,8 @@ public class AppServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         String forward = "";
+        
+        Account account = (Account)request.getSession().getAttribute("user");
 
         if (action != null) {
             if (action.equalsIgnoreCase("edit")) {
@@ -93,7 +95,7 @@ public class AppServlet extends HttpServlet {
                 long next_page = (current_page < total_page ? current_page+1 : total_page);
                 
                 forward = LIST_USER_APP;
-                request.setAttribute("allUsers", endUsersDAO.findByApp(appId, 10, (int)current_page-1));
+                request.setAttribute("allUsers", endUsersDAO.findByApp(appId, account.getId(), 10, (int)current_page-1));
                 request.setAttribute("app", applicationsDAO.findById(appId));
                 request.setAttribute("current_page", current_page);
                 request.setAttribute("prev_page", prev_page);
@@ -114,7 +116,6 @@ public class AppServlet extends HttpServlet {
             
             // try catch, for empty result
             try{
-                Account account = (Account)request.getSession().getAttribute("user");
                 List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
                 
                 ArrayList<Long> totals = new ArrayList<Long>(); 
@@ -137,6 +138,8 @@ public class AppServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         
+        Account account = (Account)request.getSession().getAttribute("user");
+        
         if (action != null) {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
@@ -158,8 +161,6 @@ public class AppServlet extends HttpServlet {
                     if (request.getSession().getAttribute("apiKey") != null) {
                         ApiKey apiKey = (ApiKey)request.getSession().getAttribute("apiKey");
                         
-
-                        Account account = (Account)request.getSession().getAttribute("user");
                         Application app = new Application(name, description, apiKey, true, account);
                         applicationsDAO.create(app);
                     }

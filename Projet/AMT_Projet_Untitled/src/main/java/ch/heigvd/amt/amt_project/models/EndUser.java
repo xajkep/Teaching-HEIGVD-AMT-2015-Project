@@ -12,7 +12,7 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-  @NamedQuery(name = "EndUser.findByApp", query = "SELECT e FROM EndUser e WHERE e.app.id = :app"),
+  @NamedQuery(name = "EndUser.findByApp", query = "SELECT e FROM EndUser e WHERE e.app.id = :app AND e.app.creator.id = :user"),
   @NamedQuery(name = "EndUser.getNumberOfUserDuringLastDays", query = "SELECT count(e) FROM EndUser e WHERE e.date > :date"),
   @NamedQuery(name = "EndUser.getNumberOfUserByApp", query = "SELECT count(e) FROM EndUser e WHERE e.app.id = :app"),
 })
