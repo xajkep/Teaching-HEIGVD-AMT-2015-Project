@@ -14,4 +14,6 @@ public interface EndUsersDAOLocal extends IGenericDAO<EndUser, Long> {
     public List<EndUser> findByApp(long appId);
     
     public long getNumberOfUserDuringLast30Days();
+    
+    public long getNumberOfUserByApp(long appId);
 }

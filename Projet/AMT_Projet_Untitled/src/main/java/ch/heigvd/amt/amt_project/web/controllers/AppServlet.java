@@ -8,6 +8,8 @@ import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApiKeysDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -110,7 +112,17 @@ public class AppServlet extends HttpServlet {
             
             // try catch, for empty result
             try{
-                request.setAttribute("apps", applicationsDAO.findAll());
+                List<Application> apps = applicationsDAO.findAll();
+                
+                ArrayList<Long> totals = new ArrayList<Long>(); 
+                for (Application a : apps) {
+                    totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
+                }
+                
+                //System.out.println("BONJOUR: "+totals.get(0));
+                
+                request.setAttribute("apps", apps);
+                request.setAttribute("totals", totals);
             } catch(NullPointerException e) {
                 System.out.println("No applications to list"); //debug
                 request.setAttribute("message", "No applications to list");

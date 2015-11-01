@@ -47,4 +47,17 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
             return 0;
         }
     }
+    
+    @Override
+    public long getNumberOfUserByApp(long appId) {
+        long result = 0;
+        try {
+            result = (long) em.createNamedQuery("EndUser.getNumberOfUserByApp")
+                    .setParameter("app", appId).getSingleResult();
+            return result;
+        } catch (NoResultException e) {
+            return 0;
+        }
+    }
+    
 }

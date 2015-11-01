@@ -26,12 +26,12 @@
             </thead>
 
             <tbody>
-                <c:forEach items="${apps}" var="app">
+                <c:forEach items="${apps}" var="app" varStatus="loop">
                 <tr data-test="${app.getName()}">
                     <td>${app.getName()}</td>
                     <td>${app.getDescription()}</td>
                     <td>${app.getKey().getApiKey()}</td>
-                    <td><a href="pages/app?action=userlist&id=${app.getId()}&page=1">-1</a></td>
+                    <td><a href="pages/app?action=userlist&id=${app.getId()}&page=1">${totals.get(loop.index)}</a></td>
                     <td>
                         <a class="btn btn-primary" id="app_edit_button" href="pages/app?action=edit&id=${app.getId()}">Edit</a>
                         
