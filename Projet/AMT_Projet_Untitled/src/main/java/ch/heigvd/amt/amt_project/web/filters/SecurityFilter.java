@@ -1,7 +1,11 @@
 package ch.heigvd.amt.amt_project.web.filters;
 
 import ch.heigvd.amt.amt_project.models.Account;
+import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -31,6 +35,13 @@ import javax.servlet.http.HttpServletRequest;
  * @author Olivier Liechti (olivier.liechti@heig-vd.ch)
  */
 public class SecurityFilter implements Filter {
+    
+    @EJB
+    private ApplicationsDAOLocal applicationsDAO;
+    @EJB
+    private AccountsDAOLocal accountsDAO;
+    @EJB
+    private EndUsersDAOLocal endUsersDAO;
 
   /**
    *
@@ -88,6 +99,11 @@ public class SecurityFilter implements Filter {
       if (path.startsWith("/pages/account") && httpRequest.getParameter("action").equals("new")) {
           chain.doFilter(request, response);
       } else {
+        /* Stats */
+        request.setAttribute("numberOfAccount", accountsDAO.count());
+        request.setAttribute("numberOfApplication", applicationsDAO.count());
+        request.setAttribute("numberOfUserDuringLast30Days", endUsersDAO.getNumberOfUserDuringLast30Days());
+        
         request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
       }
     } else {
