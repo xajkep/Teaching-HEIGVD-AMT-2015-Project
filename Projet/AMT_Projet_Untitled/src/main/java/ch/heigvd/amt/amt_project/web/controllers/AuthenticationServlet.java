@@ -44,12 +44,6 @@ public class AuthenticationServlet extends HttpServlet {
 
     @EJB
     private AccountsDAOLocal accountDao;
-    
-    @EJB
-    private ApplicationsDAOLocal applicationsDAO;
-    
-    @EJB
-    private EndUsersDAOLocal endUsersDAO;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -61,13 +55,7 @@ public class AuthenticationServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        /* stats */
-        request.setAttribute("numberOfAccount", accountDao.count());
-        request.setAttribute("numberOfApplication", applicationsDAO.count());
-        request.setAttribute("numberOfUserDuringLast30Days", endUsersDAO.getNumberOfUserDuringLast30Days());
-        
+            throws ServletException, IOException {        
 
         /*
          Get the parameter values, which have been transmitted either in the query string

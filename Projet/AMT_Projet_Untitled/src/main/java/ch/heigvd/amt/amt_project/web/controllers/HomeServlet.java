@@ -21,7 +21,6 @@ public class HomeServlet extends HttpServlet {
     private ApplicationsDAOLocal applicationsDAO;
     @EJB
     private AccountsDAOLocal accountsDAO;
-    
     @EJB
     private EndUsersDAOLocal endUsersDAO;
     
@@ -35,7 +34,6 @@ public class HomeServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         /* Stats */
         request.setAttribute("numberOfAccount", accountsDAO.count());
         request.setAttribute("numberOfApplication", applicationsDAO.count());

@@ -47,7 +47,6 @@ public class AppServlet extends HttpServlet {
 
         if (action != null) {
             if (action.equalsIgnoreCase("edit")) {
-                System.out.println("in EDIT");
                 long appId = Integer.parseInt(request.getParameter("id"));
                 forward = EDIT_APP;
                 
@@ -59,9 +58,8 @@ public class AppServlet extends HttpServlet {
                 request.setAttribute("apiKey", app.getKey().getApiKey());
                 request.setAttribute("endUsers", endUsersDAO.getNumberOfUserByApp(appId));
             } else if (action.equalsIgnoreCase("enable")) {
-                System.out.println("in ENABLE");
                 long appId = Integer.parseInt(request.getParameter("id"));
-                // DO SOMETHING TO ENABLE
+                
                 Application app = applicationsDAO.findById(appId);
                 
                 app.setEnable(Boolean.TRUE);
@@ -70,7 +68,6 @@ public class AppServlet extends HttpServlet {
                 forward = LIST_APP;
                 request.setAttribute("apps", applicationsDAO.findAll());
             } else if (action.equalsIgnoreCase("disable")) {
-                System.out.println("in DISABLE");
                 long appId = Integer.parseInt(request.getParameter("id"));
                 Application app = applicationsDAO.findById(appId);
                 
