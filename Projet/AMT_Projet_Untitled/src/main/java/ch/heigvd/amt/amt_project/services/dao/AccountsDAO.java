@@ -57,7 +57,7 @@ public class AccountsDAO extends GenericDAO<Account, Long> implements AccountsDA
     public Account login(String email, String password) {
         Account result;
         try {
-            password = Account.dotHash(password, email);
+            password = Account.doHash(password, email);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

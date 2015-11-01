@@ -86,6 +86,7 @@ Prerequisite :
 * The application must be started
 * The Glassfish server must be started.
 
+
 1. Open your browser
 2. Go to http://localhost:8080/AMT_Projet_Untitled/
 
@@ -95,6 +96,7 @@ Prerequisite :
 Prerequisite :
 * The MySQL server must be started.
 * The Glassfish server must be started.
+
 
 1. Open Netbeans and open the project
 2. Change the part as you wish
@@ -107,6 +109,7 @@ Prerequisite :
 Prerequisite :
 * The main application must be launched.
 
+
 1. Open Netbeans and open the ProjectTest
 2. Build the project (Run -> Build Project)
 3. Run the project (Run -> Run Project)
@@ -117,6 +120,7 @@ The tests are launched.
 
 Prerequisite :
 * The main application must be launched.
+
 
 1. Open JMeter
 2. Open the "AMT_Test_charge.jmx" file in JMeter
@@ -177,6 +181,8 @@ Controller: Acts as the boss of the application and is responsible for routing d
 
 <img src="./img/db.png">
 <caption>Database schema</caption>
+
+The password isn't stored in clear, he is hashed.
 
 ## Implementation
 
@@ -306,5 +312,6 @@ When the Selenium project is implemented (in test mode), the NetBeans progress b
 ## Known Issues
 
 ## Conclusion
+The development of this application is not easy because it lacks some concepts for some member of the group to effectively move forward. Separating the tasks (Model, Documentation, Controller / View, Test) do not help learning.
 
 ## Appending A: Auto Evaluation
