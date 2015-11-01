@@ -114,7 +114,8 @@ public class AppServlet extends HttpServlet {
             
             // try catch, for empty result
             try{
-                List<Application> apps = applicationsDAO.findAll();
+                Account account = (Account)request.getSession().getAttribute("user");
+                List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
                 
                 ArrayList<Long> totals = new ArrayList<Long>(); 
                 for (Application a : apps) {

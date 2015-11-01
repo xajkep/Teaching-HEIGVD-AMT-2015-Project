@@ -4,6 +4,8 @@ package ch.heigvd.amt.amt_project.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -12,6 +14,9 @@ import javax.persistence.OneToOne;
  * @author YounTheory, mberthouzoz
  */
 @Entity
+@NamedQueries({
+  @NamedQuery(name = "Application.findAllByUserId", query = "SELECT a FROM Application a WHERE a.creator.id = :user"),
+})
 public class Application extends AbstractDomainModel<Long> {
     
     @Column(unique=true)
