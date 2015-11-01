@@ -78,7 +78,7 @@ public class AppServlet extends HttpServlet {
             } else if (action.equalsIgnoreCase("userlist")){
                 long appId = Integer.parseInt(request.getParameter("id"));
                 
-                int total_page = (int)endUsersDAO.count() / 10;
+                int total_page = (int) Math.ceil(endUsersDAO.getNumberOfUserByApp(appId) / 10.);
                 long current_page;
                 
                 if (request.getParameter("page") != null) {
@@ -91,7 +91,7 @@ public class AppServlet extends HttpServlet {
                 long next_page = (current_page < total_page ? current_page+1 : total_page);
                 
                 forward = LIST_USER_APP;
-                request.setAttribute("allUsers", endUsersDAO.findAllByPage(total_page, (int)current_page));
+                request.setAttribute("allUsers", endUsersDAO.findByApp(appId, 10, (int)current_page-1));
                 request.setAttribute("app", applicationsDAO.findById(appId));
                 request.setAttribute("current_page", current_page);
                 request.setAttribute("prev_page", prev_page);
@@ -118,8 +118,6 @@ public class AppServlet extends HttpServlet {
                 for (Application a : apps) {
                     totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
                 }
-                
-                //System.out.println("BONJOUR: "+totals.get(0));
                 
                 request.setAttribute("apps", apps);
                 request.setAttribute("totals", totals);

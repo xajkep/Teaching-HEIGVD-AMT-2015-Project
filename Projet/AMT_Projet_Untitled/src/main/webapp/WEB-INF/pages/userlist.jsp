@@ -28,7 +28,7 @@
         </tbody>
     </table>
     <div style="text-align: center;">
-        <a href="pages/app?action=userlist&id=${user.getId()}&page=1">&lt;&lt;</a> <a href="pages/app?action=userlist&id=${user.getId()}&page=${prev_page}">&lt;</a> ${current_page}/${total_page} <a href="pages/app?action=userlist&id=${user.getId()}&page=${next_page}">&gt;</a> <a href="pages/app?action=userlist&id=${user.getId()}&page=${total_page}">&gt;&gt;</a>
+        <a href="pages/app?action=userlist&id=${app.getId()}&page=1">&lt;&lt;</a> <a href="pages/app?action=userlist&id=${app.getId()}&page=${prev_page}">&lt;</a> ${current_page}/${total_page} <a href="pages/app?action=userlist&id=${app.getId()}&page=${next_page}">&gt;</a> <a href="pages/app?action=userlist&id=${app.getId()}&page=${total_page}">&gt;&gt;</a>
     </div>
 </div>
 </div>
