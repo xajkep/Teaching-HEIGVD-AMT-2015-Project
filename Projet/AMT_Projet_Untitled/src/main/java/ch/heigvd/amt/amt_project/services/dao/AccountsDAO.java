@@ -2,7 +2,11 @@ package ch.heigvd.amt.amt_project.services.dao;
 
 import ch.heigvd.amt.amt_project.models.Account;
 import ch.heigvd.amt.amt_project.models.Role;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
@@ -52,6 +56,11 @@ public class AccountsDAO extends GenericDAO<Account, Long> implements AccountsDA
     @Override
     public Account login(String email, String password) {
         Account result;
+        try {
+            password = Account.dotHash(password, email);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+            Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             result = (Account) em.createNamedQuery("Account.login")
                     .setParameter("email", email)

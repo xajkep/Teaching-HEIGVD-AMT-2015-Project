@@ -3,6 +3,7 @@ package ch.heigvd.amt.amt_project.models;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,23 +45,24 @@ public class Account extends AbstractDomainModel<Long>{
         this.firstName = firstName;
         this.lastName = lastName;
         try {    
-            this.password = dotHash(password);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
+            this.password = dotHash(password, email);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     /**
      * @param password the string password not hashed
+     * @param salt the salt of the pwd
      * @return the password hashed
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.security.NoSuchAlgorithmException
      */
-    public String dotHash(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException{
+    public static String dotHash(String password, String salt) throws UnsupportedEncodingException, NoSuchAlgorithmException{
        MessageDigest digest = MessageDigest.getInstance("SHA-256");
        digest.reset();
-       digest.update(this.email.getBytes());
-       return digest.digest(password.getBytes("UTF-8")).toString();
+       digest.update(salt.getBytes());
+       return Arrays.toString(digest.digest(password.getBytes("UTF-8")));
  }
     /**
      * @return the email
@@ -110,10 +112,8 @@ public class Account extends AbstractDomainModel<Long>{
      */
     public void setPassword(String password) {
         try {    
-            this.password = dotHash(password);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
+            this.password = dotHash(password, getEmail());
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
