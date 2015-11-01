@@ -112,13 +112,20 @@ public class AccountServlet extends HttpServlet {
             
         // Invalid form
         } else if (action != null) {
+            String firstname = request.getParameter("firstname");
+            String lastname = request.getParameter("lastname");
+            String email = request.getParameter("email");
+            
             forward = action.equalsIgnoreCase("edit") ? EDIT_ACCOUNT : REGISTER_ACCOUNT;
-            request.setAttribute("NAME_PATTERN", NAME_PATTERN);
-            request.getRequestDispatcher(LIST_APP).forward(request, response);
+            request.setAttribute("error", "Invalid form");
+            request.setAttribute("email", email);
+            request.setAttribute("firstName", firstname);
+            request.setAttribute("lastName", lastname);
+            
+            request.getRequestDispatcher(forward).forward(request, response);
         }
         
-        
-        response.sendRedirect("app");
+        response.sendRedirect("home");
     }
     
     

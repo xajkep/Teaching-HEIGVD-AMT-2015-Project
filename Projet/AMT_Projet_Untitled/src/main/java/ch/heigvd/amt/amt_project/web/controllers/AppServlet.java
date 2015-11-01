@@ -54,6 +54,8 @@ public class AppServlet extends HttpServlet {
                 request.setAttribute("id", appId);
                 request.setAttribute("name", app.getName());
                 request.setAttribute("description", app.getDescription());
+                request.setAttribute("apiKey", app.getKey().getApiKey());
+                request.setAttribute("endUsers", endUsersDAO.getNumberOfUserByApp(appId));
             } else if (action.equalsIgnoreCase("enable")) {
                 System.out.println("in ENABLE");
                 long appId = Integer.parseInt(request.getParameter("id"));

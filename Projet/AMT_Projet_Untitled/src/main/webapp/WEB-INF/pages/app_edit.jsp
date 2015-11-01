@@ -36,7 +36,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Users</label>
             <div class="col-sm-10">
-                <span class="static-form">256'048</span>
+                <span class="static-form">${endUsers}</span>
             </div>
         </div>
         

@@ -34,33 +34,34 @@
 <div class="container">
     <h2>Registration</h2>
    <form class="form-horizontal" action="pages/account" method="post">
+       <p class="text-center bg-danger">${error}</p>
        <input type="hidden" name="action" value="new" style="display: none;"/>
        
         <div class="form-group">
             <label for="email" class="col-sm-3 control-label">Email</label>
             <div class="col-sm-9">
-                <input name="email" type="email" class="form-control" id="email" placeholder="Email" />
+                <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="${email}" required/>
             </div>
         </div>
         
         <div class="form-group">
             <label for="firstname" class="col-sm-3 control-label">First name</label>
             <div class="col-sm-9">
-                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" />
+                <input name="firstname" type="text" class="form-control" id="firstname" placeholder="First name" value="${firstName}" required/>
             </div>
         </div>
        
        <div class="form-group">
             <label for="lastname" class="col-sm-3 control-label">Last name</label>
             <div class="col-sm-9">
-                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" />
+                <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Last name" value="${lastName}" required/>
             </div>
         </div>
        
        <div class="form-group">
             <label for="password" class="col-sm-3 control-label">Password</label>
             <div class="col-sm-9">
-                <input name="password" type="password" class="form-control" id="password" placeholder="Password" />
+                <input name="password" type="password" class="form-control" id="password" placeholder="Password"/>
             </div>
         </div>
        
