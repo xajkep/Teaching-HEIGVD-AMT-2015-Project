@@ -29,9 +29,10 @@
   <body>
 
 <div id="register">
-<h2>Registration</h2>
+
 
 <div class="container">
+    <h2>Registration</h2>
    <form class="form-horizontal" action="pages/account" method="post">
        <input type="hidden" name="action" value="new" style="display: none;"/>
        
