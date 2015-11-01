@@ -1,6 +1,11 @@
 package ch.heigvd.amt.amt_project.models;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -38,9 +43,25 @@ public class Account extends AbstractDomainModel<Long>{
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;    
+        try {    
+            this.password = dotHash(password);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    /**
+     * @param password the string password not hashed
+     * @return the password hashed
+     */
+    public String dotHash(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException{
+       MessageDigest digest = MessageDigest.getInstance("SHA-256");
+       digest.reset();
+       digest.update(this.email.getBytes());
+       return digest.digest(password.getBytes("UTF-8")).toString();
+ }
     /**
      * @return the email
      */
@@ -48,12 +69,6 @@ public class Account extends AbstractDomainModel<Long>{
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     /**
      * @return the firstName
@@ -94,7 +109,13 @@ public class Account extends AbstractDomainModel<Long>{
      * @param password the password to set
      */
     public void setPassword(String password) {
-        this.password = password;
+        try {    
+            this.password = dotHash(password);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
