@@ -16,12 +16,12 @@ import javax.persistence.NoResultException;
 public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDAOLocal {
             
     @Override
-    public List<EndUser> findByApp(long appId) {
+    public List<EndUser> findByApp(long appId, int pageSize, int pageIndex) {
         List<EndUser> results;
         try {
             results = em.createNamedQuery("EndUser.findByApp")
-                    .getResultList();
-                    //.setParameter("app", appId).getResultList();
+                    .setParameter("app", appId).setMaxResults(pageSize)
+                    .setFirstResult(pageIndex * pageSize).getResultList();
             return results;
         } catch (NoResultException e) {
             return null;
