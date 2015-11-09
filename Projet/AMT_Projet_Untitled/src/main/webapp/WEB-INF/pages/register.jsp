@@ -74,7 +74,7 @@
         
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" id="cancel" onclick="history.back()">Cancel</button>
+                <a type="button" class="btn btn-default" id="cancel" href="pages/home">Cancel</a>
                 <button type="submit" class="btn btn-primary" id="submit">Confirm</button>
             </div>
         </div>
