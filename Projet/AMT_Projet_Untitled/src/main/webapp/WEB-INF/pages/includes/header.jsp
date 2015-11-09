@@ -45,7 +45,7 @@
       </nav>
       
       <c:if test="${not empty message}">
-          <div class="message">
+          <div class="info-message">
             ${message}
           </div>
       </c:if>
