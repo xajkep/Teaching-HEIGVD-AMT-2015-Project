@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 /**
  * This class implements the Application domain model object.
  *
- * @author YounTheory, mberthouzoz
+ * @author YounTheory, mberthouzoz, xajkep
  */
 @Entity
 @NamedQueries({
