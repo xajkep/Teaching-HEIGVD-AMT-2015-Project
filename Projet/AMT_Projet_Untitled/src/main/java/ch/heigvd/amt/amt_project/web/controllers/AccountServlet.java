@@ -87,6 +87,9 @@ public class AccountServlet extends HttpServlet {
                     account.setPassword(password);
                     accountsDAO.update(account);
                     
+                    // Update session
+                    request.getSession().setAttribute("user", account);
+                    
                     forward = AppServlet.LIST_APP;
                 }
             }
