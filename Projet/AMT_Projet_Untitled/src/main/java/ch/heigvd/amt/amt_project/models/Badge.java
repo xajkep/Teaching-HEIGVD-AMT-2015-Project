@@ -34,7 +34,7 @@ public class Badge extends AbstractDomainModel<Long>{
     }
 
     /**
-     * @param the badge description
+     * @param description the badge description
      */
     public void setDescription(String description) {
         this.description = description;
@@ -48,7 +48,7 @@ public class Badge extends AbstractDomainModel<Long>{
     }
 
     /**
-     * @param the badge picture
+     * @param picture the badge picture
      */
     public void setPicture(String picture) {
         this.picture = picture;
@@ -62,7 +62,7 @@ public class Badge extends AbstractDomainModel<Long>{
     }
 
     /**
-     * @param badge award list
+     * @param badgeAwards list
      */
     public void setBadgeAwards(List<BadgeAward> badgeAwards) {
         this.badgeAwards = badgeAwards;

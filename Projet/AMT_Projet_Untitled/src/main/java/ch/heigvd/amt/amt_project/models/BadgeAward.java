@@ -38,7 +38,7 @@ public class BadgeAward extends AbstractDomainModel<Long>{
     }
 
     /**
-     * @param the date of the badge award
+     * @param date the date of the badge award
      */
     public void setDate(Date date) {
         this.date = date;
@@ -52,7 +52,7 @@ public class BadgeAward extends AbstractDomainModel<Long>{
     }
 
     /**
-     * @param the badge
+     * @param badge the badge
      */
     public void setBadge(Badge badge) {
         this.badge = badge;
@@ -66,7 +66,7 @@ public class BadgeAward extends AbstractDomainModel<Long>{
     }
     
     /**
-     * @param user rewarded
+     * @param endUser user rewarded
      */
     public void setEndUser(EndUser endUser) {
         this.userRewarded = endUser;

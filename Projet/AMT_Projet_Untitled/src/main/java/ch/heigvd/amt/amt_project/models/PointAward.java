@@ -40,7 +40,7 @@ public class PointAward extends AbstractDomainModel<Long> {
 
     
     /**
-     * @param the date of the award
+     * @param date the date of the award
      */
     public void setDate(Date date) {
         this.date = date;
@@ -54,7 +54,7 @@ public class PointAward extends AbstractDomainModel<Long> {
     }
 
     /**
-     * @param the number of points of the award
+     * @param pts the number of points of the award
      */
     public void setPts(long pts) {
         this.pts = pts;
@@ -68,7 +68,7 @@ public class PointAward extends AbstractDomainModel<Long> {
     }
 
     /**
-     * @param the reason of the award
+     * @param reason the reason of the award
      */
     public void setReason(String reason) {
         this.reason = reason;
@@ -82,7 +82,7 @@ public class PointAward extends AbstractDomainModel<Long> {
     }
 
     /**
-     * @param the end user
+     * @param endUser the end user
      */
     public void setEndUser(EndUser endUser) {
         this.userScored = endUser;
