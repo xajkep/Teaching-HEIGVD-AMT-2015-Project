@@ -54,7 +54,7 @@ public class AccountsDAO extends GenericDAO<Account, Long> implements AccountsDA
     }
 
     @Override
-    public Account login(String email, String password) {
+    public Account login(String email, String password) throws BusinessDomainEntityNotFoundException {
         Account result;
         try {
             password = Account.doHash(password, email);
@@ -68,7 +68,7 @@ public class AccountsDAO extends GenericDAO<Account, Long> implements AccountsDA
                     .getSingleResult();
             return result;
         } catch (NoResultException e) {
-            return null;
+            throw new BusinessDomainEntityNotFoundException();
         }
     }
 

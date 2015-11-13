@@ -15,5 +15,5 @@ public interface ApplicationsDAOLocal extends IGenericDAO<Application, Long>{
     
     public void enable(Application app);
     
-    public List<Application> findAllByUserId(long id);
+    public List<Application> findAllByUserId(long id) throws BusinessDomainEntityNotFoundException;
 }
