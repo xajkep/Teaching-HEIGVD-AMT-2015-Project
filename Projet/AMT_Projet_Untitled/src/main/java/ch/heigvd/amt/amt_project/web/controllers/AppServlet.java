@@ -6,10 +6,13 @@ import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApiKeysDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,75 +50,91 @@ public class AppServlet extends HttpServlet {
 
         if (action != null) {
             if (action.equalsIgnoreCase("edit")) {
-                long appId = Integer.parseInt(request.getParameter("id"));
-                forward = EDIT_APP;
-                
-                Application app = applicationsDAO.findById(appId);
-                
-                request.setAttribute("id", appId);
-                request.setAttribute("name", app.getName());
-                request.setAttribute("description", app.getDescription());
-                request.setAttribute("apiKey", app.getKey().getApiKey());
-                request.setAttribute("endUsers", endUsersDAO.getNumberOfUserByApp(appId));
+                try {
+                    long appId = Integer.parseInt(request.getParameter("id"));
+                    forward = EDIT_APP;
+                    
+                    Application app = applicationsDAO.findById(appId);
+                    
+                    request.setAttribute("id", appId);
+                    request.setAttribute("name", app.getName());
+                    request.setAttribute("description", app.getDescription());
+                    request.setAttribute("apiKey", app.getKey().getApiKey());
+                    request.setAttribute("endUsers", endUsersDAO.getNumberOfUserByApp(appId));
+                } catch (BusinessDomainEntityNotFoundException ex) {
+                    Logger.getLogger(AppServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else if (action.equalsIgnoreCase("enable")) {
-                long appId = Integer.parseInt(request.getParameter("id"));
-                
-                Application app = applicationsDAO.findById(appId);
-                
-                app.setEnable(Boolean.TRUE);
-                applicationsDAO.update(app);
-                
-                forward = LIST_APP;
-                
-                List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
-                
-                ArrayList<Long> totals = new ArrayList<Long>(); 
-                for (Application a : apps) {
-                    totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
+                try {
+                    long appId = Integer.parseInt(request.getParameter("id"));
+                    
+                    Application app = applicationsDAO.findById(appId);
+                    
+                    app.setEnable(Boolean.TRUE);
+                    applicationsDAO.update(app);
+                    
+                    forward = LIST_APP;
+                    
+                    List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
+                    
+                    ArrayList<Long> totals = new ArrayList<Long>();
+                    for (Application a : apps) {
+                        totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
+                    }
+                    
+                    request.setAttribute("apps", apps);
+                    request.setAttribute("totals", totals);
+                } catch (BusinessDomainEntityNotFoundException ex) {
+                    Logger.getLogger(AppServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                request.setAttribute("apps", apps);
-                request.setAttribute("totals", totals);
             } else if (action.equalsIgnoreCase("disable")) {
-                long appId = Integer.parseInt(request.getParameter("id"));
-                Application app = applicationsDAO.findById(appId);
-                
-                app.setEnable(Boolean.FALSE);
-                applicationsDAO.update(app);
-                
-                forward = LIST_APP;
-                
-                List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
-                
-                ArrayList<Long> totals = new ArrayList<Long>(); 
-                for (Application a : apps) {
-                    totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
+                try {
+                    long appId = Integer.parseInt(request.getParameter("id"));
+                    Application app = applicationsDAO.findById(appId);
+                    
+                    app.setEnable(Boolean.FALSE);
+                    applicationsDAO.update(app);
+                    
+                    forward = LIST_APP;
+                    
+                    List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
+                    
+                    ArrayList<Long> totals = new ArrayList<Long>();
+                    for (Application a : apps) {
+                        totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
+                    }
+                    
+                    request.setAttribute("apps", apps);
+                    request.setAttribute("totals", totals);
+                } catch (BusinessDomainEntityNotFoundException ex) {
+                    Logger.getLogger(AppServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                request.setAttribute("apps", apps);
-                request.setAttribute("totals", totals);
             } else if (action.equalsIgnoreCase("userlist")){
-                long appId = Integer.parseInt(request.getParameter("id"));
-                
-                int total_page = (int) Math.ceil(endUsersDAO.getNumberOfUserByApp(appId) / 10.);
-                long current_page;
-                
-                if (request.getParameter("page") != null) {
-                    current_page = Integer.parseInt(request.getParameter("page"));
-                } else {
-                    current_page = 1;
+                try {
+                    long appId = Integer.parseInt(request.getParameter("id"));
+                    
+                    int total_page = (int) Math.ceil(endUsersDAO.getNumberOfUserByApp(appId) / 10.);
+                    long current_page;
+                    
+                    if (request.getParameter("page") != null) {
+                        current_page = Integer.parseInt(request.getParameter("page"));
+                    } else {
+                        current_page = 1;
+                    }
+                    
+                    long prev_page = (current_page > 1 ? current_page-1 : 1);
+                    long next_page = (current_page < total_page ? current_page+1 : total_page);
+                    
+                    forward = LIST_USER_APP;
+                    request.setAttribute("allUsers", endUsersDAO.findByApp(appId, account.getId(), 10, (int)current_page-1));
+                    request.setAttribute("app", applicationsDAO.findById(appId));
+                    request.setAttribute("current_page", current_page);
+                    request.setAttribute("prev_page", prev_page);
+                    request.setAttribute("next_page", next_page);
+                    request.setAttribute("total_page", total_page);
+                } catch (BusinessDomainEntityNotFoundException ex) {
+                    Logger.getLogger(AppServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                long prev_page = (current_page > 1 ? current_page-1 : 1);
-                long next_page = (current_page < total_page ? current_page+1 : total_page);
-                
-                forward = LIST_USER_APP;
-                request.setAttribute("allUsers", endUsersDAO.findByApp(appId, account.getId(), 10, (int)current_page-1));
-                request.setAttribute("app", applicationsDAO.findById(appId));
-                request.setAttribute("current_page", current_page);
-                request.setAttribute("prev_page", prev_page);
-                request.setAttribute("next_page", next_page);
-                request.setAttribute("total_page", total_page);
             } else {
                 System.out.println("in NEW");
                 
@@ -143,6 +162,8 @@ public class AppServlet extends HttpServlet {
             } catch(NullPointerException e) {
                 System.out.println("No applications to list"); //debug
                 request.setAttribute("message", "No applications to list");
+            } catch (BusinessDomainEntityNotFoundException ex) {
+                Logger.getLogger(AppServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
