@@ -44,8 +44,8 @@
         </div><!--/.container-fluid -->
       </nav>
       
-      <c:if test="${not empty var1}">
-          <div class="message">
+      <c:if test="${not empty message}">
+          <div class="info-message">
             ${message}
           </div>
       </c:if>

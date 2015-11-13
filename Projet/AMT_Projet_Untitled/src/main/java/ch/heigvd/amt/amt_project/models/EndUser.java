@@ -1,14 +1,16 @@
 package ch.heigvd.amt.amt_project.models;
 
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
- * @author , mberthouzoz
+ * @author younTheory, mberthouzoz, xajkep
  */
 @Entity
 @NamedQueries({
@@ -24,6 +26,12 @@ public class EndUser extends AbstractDomainModel<Long>{
     private String name;
     
     private Date date;
+    
+    @OneToMany(mappedBy = "userRewarded", targetEntity=BadgeAward.class)
+    private List<BadgeAward> badgeAwards;
+    
+    @OneToMany(mappedBy = "userScored", targetEntity=PointAward.class)
+    private List<PointAward> pointAwards;
     
     public EndUser() {
         
@@ -77,6 +85,23 @@ public class EndUser extends AbstractDomainModel<Long>{
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public List<BadgeAward> getBadgeAwards() {
+        return badgeAwards;
+    }
+
+    public void setBadgeAwards(List<BadgeAward> badgeAwards) {
+        this.badgeAwards = badgeAwards;
+    }
+
+    public List<PointAward> getPointAwards() {
+        return pointAwards;
+    }
+
+    public void setPointAwards(List<PointAward> pointAwards) {
+        this.pointAwards = pointAwards;
+    }
+    
     
     
 }

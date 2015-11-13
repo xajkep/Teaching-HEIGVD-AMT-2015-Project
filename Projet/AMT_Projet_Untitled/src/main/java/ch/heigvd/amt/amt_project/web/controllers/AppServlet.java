@@ -66,7 +66,16 @@ public class AppServlet extends HttpServlet {
                 applicationsDAO.update(app);
                 
                 forward = LIST_APP;
-                request.setAttribute("apps", applicationsDAO.findAll());
+                
+                List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
+                
+                ArrayList<Long> totals = new ArrayList<Long>(); 
+                for (Application a : apps) {
+                    totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
+                }
+                
+                request.setAttribute("apps", apps);
+                request.setAttribute("totals", totals);
             } else if (action.equalsIgnoreCase("disable")) {
                 long appId = Integer.parseInt(request.getParameter("id"));
                 Application app = applicationsDAO.findById(appId);
@@ -75,7 +84,16 @@ public class AppServlet extends HttpServlet {
                 applicationsDAO.update(app);
                 
                 forward = LIST_APP;
-                request.setAttribute("apps", applicationsDAO.findAll());
+                
+                List<Application> apps = applicationsDAO.findAllByUserId(account.getId());
+                
+                ArrayList<Long> totals = new ArrayList<Long>(); 
+                for (Application a : apps) {
+                    totals.add(endUsersDAO.getNumberOfUserByApp(a.getId()));
+                }
+                
+                request.setAttribute("apps", apps);
+                request.setAttribute("totals", totals);
             } else if (action.equalsIgnoreCase("userlist")){
                 long appId = Integer.parseInt(request.getParameter("id"));
                 

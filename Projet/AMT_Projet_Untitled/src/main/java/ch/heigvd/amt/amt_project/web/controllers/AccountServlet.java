@@ -31,7 +31,6 @@ public class AccountServlet extends HttpServlet {
     
     @EJB
     private AccountsDAOLocal accountsDAO;
-    
     @EJB
     private RolesDAOLocal rolesDAO;
     
@@ -88,6 +87,9 @@ public class AccountServlet extends HttpServlet {
                     account.setPassword(password);
                     accountsDAO.update(account);
                     
+                    // Update session
+                    request.getSession().setAttribute("user", account);
+                    
                     forward = AppServlet.LIST_APP;
                 }
             }
@@ -107,6 +109,7 @@ public class AccountServlet extends HttpServlet {
                     accountsDAO.assignRoleToAccount(userRole, account);
                 } else {
                     request.setAttribute("message", "This email is not valid");
+                    request.getRequestDispatcher(forward).forward(request, response);
                 }
             }
             

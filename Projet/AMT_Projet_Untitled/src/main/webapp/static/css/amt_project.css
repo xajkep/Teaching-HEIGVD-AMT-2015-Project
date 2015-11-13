@@ -45,15 +45,16 @@ body {
     vertical-align: middle;
     display: block;
     padding-top: 10px;
+}
 
 .form-horizontal textarea {
     height: 200px;
 }
 
-.message {
+.info-message {
     padding: 10px;
     border-radius: 6px;
-    background: rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.1);
     
     font-size: 1.2em;
 }
