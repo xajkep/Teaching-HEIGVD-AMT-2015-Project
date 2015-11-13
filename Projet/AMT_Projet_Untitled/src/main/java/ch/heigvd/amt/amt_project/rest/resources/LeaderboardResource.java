@@ -1,8 +1,9 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
-import ch.heigvd.amt.amt_project.models.EndUser;
 import ch.heigvd.amt.amt_project.rest.DTO.EndUserReputationDTO;
+import ch.heigvd.amt.amt_project.rest.DTO.LeaderboardDTO;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -11,22 +12,22 @@ import javax.ws.rs.PathParam;
 
 /**
  *
- * @author thsch
+ * @author xajkep
  */
 
 @Stateless
-@Path("users")
-public class UserResource {
+@Path("leaderboard")
+public class LeaderboardResource {
     
     @EJB
     EndUsersDAOLocal endUserDAO;
     
-    public UserResource(){};
+    @EJB
+    PointAwardsDAOLocal pointAwardsDAO;
     
     @GET
-    @Path("{endUserID}/reputation")
-    public EndUserReputationDTO getEndUserReputation(@PathParam("endUserID") long endUserID){
+    @Path(" /api/leaderboards/current")
+    public LeaderboardDTO getLeaderboard(){
         return null;
     }
-    
 }
