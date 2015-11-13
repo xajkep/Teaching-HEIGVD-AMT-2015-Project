@@ -1,4 +1,4 @@
-package ch.heigvd.amt.amt_project.rest.ressources;
+package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.EndUser;
 import ch.heigvd.amt.amt_project.rest.DTO.EndUserReputationDTO;
@@ -16,12 +16,12 @@ import javax.ws.rs.PathParam;
 
 @Stateless
 @Path("users")
-public class UserRessource {
+public class UserResource {
     
     @EJB
     EndUsersDAOLocal endUserDAO;
     
-    public UserRessource(){};
+    public UserResource(){};
     
     @GET
     @Path("{endUserID}/reputation")
