@@ -1,7 +1,9 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.rest.DTO.EndUserReputationDTO;
+import ch.heigvd.amt.amt_project.rest.DTO.LeaderboardDTO;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -14,11 +16,14 @@ import javax.ws.rs.PathParam;
  */
 
 @Stateless
-@Path("users")
+@Path("leaderboard")
 public class LeaderboardResource {
     
     @EJB
     EndUsersDAOLocal endUserDAO;
+    
+    @EJB
+    PointAwardsDAOLocal pointAwardsDAO;
     
     @GET
     @Path(" /api/leaderboards/current")
