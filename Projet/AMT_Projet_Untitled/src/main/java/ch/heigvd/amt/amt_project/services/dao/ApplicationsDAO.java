@@ -7,42 +7,41 @@ import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
 /**
- *  Data Access Object for Application
- * 
+ * Data Access Object for Application
+ *
  * @author mberthouzoz
  */
 @Stateless
 public class ApplicationsDAO extends GenericDAO<Application, Long> implements ApplicationsDAOLocal {
-  
-  /**
-   * Disable the application.
-   * 
-   * @param app Application to disable
-   */
-  public void disable(Application app) {
-      app.setEnable(Boolean.FALSE);      
-  }
-  
-  
-  /**
-   * Enable the application.
-   * 
-   * @param app Application to enable
-   */
-  public void enable(Application app) {
-      app.setEnable(Boolean.TRUE);      
-  }
-  
+
+    /**
+     * Disable the application.
+     *
+     * @param app Application to disable
+     */
+    public void disable(Application app) {
+        app.setEnable(Boolean.FALSE);
+    }
+
+    /**
+     * Enable the application.
+     *
+     * @param app Application to enable
+     */
+    public void enable(Application app) {
+        app.setEnable(Boolean.TRUE);
+    }
+
     @Override
-    public List<Application> findAllByUserId(long userId) {
+    public List<Application> findAllByUserId(long userId) throws BusinessDomainEntityNotFoundException {
         List<Application> results;
         try {
             results = em.createNamedQuery("Application.findAllByUserId")
                     .setParameter("user", userId).getResultList();
             return results;
         } catch (NoResultException e) {
-            return null;
+            throw new BusinessDomainEntityNotFoundException();
         }
     }
- 
+
 }
