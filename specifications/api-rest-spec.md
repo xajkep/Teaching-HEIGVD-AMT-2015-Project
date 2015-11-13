@@ -15,7 +15,7 @@ GET /api/users/id/reputation
 }
 ~~~
 
-##
+## Get leaderboard
 
 GET /api/leaderboards/current?numberOfUsers
 
@@ -25,6 +25,34 @@ GET /api/leaderboards/current?numberOfUsers
     "id": String,
     "email": String,
     "points": Integer
+  }]
+}
+~~~
+
+## Get all badges
+
+GET /api/badges
+
+~~~json
+{
+  [{
+    "id": String,
+    "picture": String,
+    "description": String
+  }]
+}
+~~~
+
+## Get all point awards
+
+GET /api/pointawards
+
+~~~json
+{
+  [{
+    "id": String,
+    "numberOfPoints": Integer,
+    "reason": String
   }]
 }
 ~~~
