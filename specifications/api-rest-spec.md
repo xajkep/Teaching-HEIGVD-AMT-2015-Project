@@ -23,8 +23,14 @@ GET /api/leaderboards/current?numberOfUsers
 {
   "users": [{
     "id": String,
-    "email": String,
-    "points": Integer
+    "firstname": String,
+    "lastname": String,
+    "points": Integer,
+    "badges": [{
+        "id": String,
+        "picture": String,
+        "description": String
+      }]
   }]
 }
 ~~~
@@ -43,6 +49,18 @@ GET /api/badges
 }
 ~~~
 
+## Get one badge
+
+GET /api/badges/id
+
+~~~json
+{
+  "id": String,
+  "picture": String,
+  "description": String
+}
+~~~
+
 ## Get all point awards
 
 GET /api/pointawards
@@ -54,5 +72,17 @@ GET /api/pointawards
     "numberOfPoints": Integer,
     "reason": String
   }]
+}
+~~~
+
+## Get one point award
+
+GET /api/pointawards/id
+
+~~~json
+{
+  "id": String,
+  "numberOfPoints": Integer,
+  "reason": String
 }
 ~~~
