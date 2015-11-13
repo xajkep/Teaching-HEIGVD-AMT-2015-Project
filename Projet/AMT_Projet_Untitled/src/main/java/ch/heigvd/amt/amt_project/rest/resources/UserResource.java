@@ -26,6 +26,7 @@ public class UserResource {
     @GET
     @Path("{endUserID}/reputation")
     public EndUserReputationDTO getEndUserReputation(@PathParam("endUserID") long endUserID){
+        return null;
         
     }
     
