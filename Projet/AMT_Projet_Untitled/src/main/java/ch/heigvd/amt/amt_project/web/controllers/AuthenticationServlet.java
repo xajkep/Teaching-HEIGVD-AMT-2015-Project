@@ -3,8 +3,11 @@ package ch.heigvd.amt.amt_project.web.controllers;
 import ch.heigvd.amt.amt_project.models.Account;
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -81,13 +84,17 @@ public class AuthenticationServlet extends HttpServlet {
         targetUrl = request.getContextPath() + targetUrl;
 
         if ("login".equals(action)) {
-            Account user = accountDao.login(email, password);
-            if (user instanceof Account) {
-                request.getSession().setAttribute("user", user);
-                response.sendRedirect(targetUrl);
-            } else {
-                request.setAttribute("error", "Login failed");
-                request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+            try {
+                Account user = accountDao.login(email, password);
+                if (user instanceof Account) {
+                    request.getSession().setAttribute("user", user);
+                    response.sendRedirect(targetUrl);
+                } else {
+                    request.setAttribute("error", "Login failed");
+                    request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+                }
+            } catch (BusinessDomainEntityNotFoundException ex) {
+                Logger.getLogger(AuthenticationServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if ("logout".equals(action)) {
             request.getSession().invalidate();

@@ -3,8 +3,11 @@ package ch.heigvd.amt.amt_project.web.filters;
 import ch.heigvd.amt.amt_project.models.Account;
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -99,12 +102,16 @@ public class SecurityFilter implements Filter {
       if (path.startsWith("/pages/account") && httpRequest.getParameter("action").equals("new")) {
           chain.doFilter(request, response);
       } else {
-        /* Stats */
-        request.setAttribute("numberOfAccount", accountsDAO.count());
-        request.setAttribute("numberOfApplication", applicationsDAO.count());
-        request.setAttribute("numberOfUserDuringLast30Days", endUsersDAO.getNumberOfUserDuringLast30Days());
-        
-        request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+          try {
+              /* Stats */
+              request.setAttribute("numberOfAccount", accountsDAO.count());
+              request.setAttribute("numberOfApplication", applicationsDAO.count());
+              request.setAttribute("numberOfUserDuringLast30Days", endUsersDAO.getNumberOfUserDuringLast30Days());
+              
+              request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+          } catch (BusinessDomainEntityNotFoundException ex) {
+              Logger.getLogger(SecurityFilter.class.getName()).log(Level.SEVERE, null, ex);
+          }
       }
     } else {
       /*
