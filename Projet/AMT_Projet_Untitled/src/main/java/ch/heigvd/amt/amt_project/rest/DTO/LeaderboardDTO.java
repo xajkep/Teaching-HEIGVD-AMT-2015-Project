@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 
-public class LeaderBoardDTO {
+public class LeaderboardDTO {
     private String firstName;
     private String lastName;
     private long points;
