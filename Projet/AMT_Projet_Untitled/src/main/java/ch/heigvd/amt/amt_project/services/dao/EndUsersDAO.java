@@ -16,7 +16,7 @@ import javax.persistence.NoResultException;
 public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDAOLocal {
             
     @Override
-    public List<EndUser> findByApp(long appId, long userId, int pageSize, int pageIndex) {
+    public List<EndUser> findByApp(long appId, long userId, int pageSize, int pageIndex) throws BusinessDomainEntityNotFoundException {
         List<EndUser> results;
         try {
             results = em.createNamedQuery("EndUser.findByApp")
@@ -26,12 +26,12 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
                     .setFirstResult(pageIndex * pageSize).getResultList();
             return results;
         } catch (NoResultException e) {
-            return null;
+            throw new BusinessDomainEntityNotFoundException();
         }
     }
     
     @Override
-    public long getNumberOfUserDuringLast30Days() {
+    public long getNumberOfUserDuringLast30Days() throws BusinessDomainEntityNotFoundException {
         long results = 0;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("1");
@@ -46,19 +46,19 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
                     .setParameter("date", date).getSingleResult();
             return results;
         } catch (NoResultException e) {
-            return 0;
+            throw new BusinessDomainEntityNotFoundException();
         }
     }
     
     @Override
-    public long getNumberOfUserByApp(long appId) {
+    public long getNumberOfUserByApp(long appId) throws BusinessDomainEntityNotFoundException {
         long result = 0;
         try {
             result = (long) em.createNamedQuery("EndUser.getNumberOfUserByApp")
                     .setParameter("app", appId).getSingleResult();
             return result;
         } catch (NoResultException e) {
-            return 0;
+            throw new BusinessDomainEntityNotFoundException();
         }
     }
     

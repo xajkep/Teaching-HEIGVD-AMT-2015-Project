@@ -19,6 +19,6 @@ public interface AccountsDAOLocal extends IGenericDAO<Account, Long>{
     
     public boolean exists(String email);
     
-    public Account login(String email, String password);
+    public Account login(String email, String password) throws BusinessDomainEntityNotFoundException;
     
 }

@@ -11,9 +11,9 @@ import javax.ejb.Local;
 @Local
 public interface EndUsersDAOLocal extends IGenericDAO<EndUser, Long> {
     
-    public List<EndUser> findByApp(long appId, long userId, int pageSize, int pageIndex);
+    public List<EndUser> findByApp(long appId, long userId, int pageSize, int pageIndex) throws BusinessDomainEntityNotFoundException;
     
-    public long getNumberOfUserDuringLast30Days();
+    public long getNumberOfUserDuringLast30Days() throws BusinessDomainEntityNotFoundException;
     
-    public long getNumberOfUserByApp(long appId);
+    public long getNumberOfUserByApp(long appId) throws BusinessDomainEntityNotFoundException;
 }
