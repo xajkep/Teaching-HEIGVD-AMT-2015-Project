@@ -43,6 +43,7 @@ public class AppConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ch.heigvd.amt.amt_project.rest.config.JacksonConfigurationProvider.class);
         resources.add(ch.heigvd.amt.amt_project.rest.config.JsonExceptionMapper.class);
+        resources.add(ch.heigvd.amt.amt_project.rest.ressources.UserRessource.class);
     }
 
 }
