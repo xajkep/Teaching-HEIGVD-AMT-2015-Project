@@ -50,24 +50,25 @@ public class UserResource {
             EndUserReputationDTO dto = new EndUserReputationDTO();
             dto.setPoints(endUsersDAO.getPoints(endUser.getId()));
             List<BadgeDTO> badgeList = new ArrayList<>();
-            
+
             for (BadgeAward badgeAward : endUser.getBadgeAwards()) {
                 BadgeDTO badgeDTO = new BadgeDTO();
                 Badge badge = badgeAward.getBadge();
                 badgeDTO.setDescription(badge.getDescription());
                 badgeDTO.setPicture(badge.getPicture());
-                
+
                 URI badgeHref = uriInfo
                         .getAbsolutePathBuilder()
                         .path(BadgeResource.class, "getBadge")
                         .build(badge.getId());
                 badgeDTO.setHref(badgeHref);
-                
+
                 badgeList.add(badgeDTO);
             }
             return dto;
         } catch (BusinessDomainEntityNotFoundException ex) {
             Logger.getLogger(UserResource.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 }

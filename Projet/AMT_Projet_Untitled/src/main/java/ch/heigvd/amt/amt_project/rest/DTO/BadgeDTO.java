@@ -2,13 +2,10 @@ package ch.heigvd.amt.amt_project.rest.DTO;
 
 import java.net.URI;
 
-
 /**
  *
- * @author thsch
+ * @author thsch, mberthouzoz
  */
-
-
 public class BadgeDTO {
     private URI href;
     private String picture;
