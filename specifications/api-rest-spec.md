@@ -11,7 +11,7 @@ GET /api/users/id/reputation
       "picture": String,
       "description": String
     }],
-    "points": Integer
+    "points": Long
 }
 ~~~
 

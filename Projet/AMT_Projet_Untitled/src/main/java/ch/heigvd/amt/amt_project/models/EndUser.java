@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
   @NamedQuery(name = "EndUser.findByApp", query = "SELECT e FROM EndUser e WHERE e.app.id = :app AND e.app.creator.id = :user"),
   @NamedQuery(name = "EndUser.getNumberOfUserDuringLastDays", query = "SELECT count(e) FROM EndUser e WHERE e.date > :date"),
   @NamedQuery(name = "EndUser.getNumberOfUserByApp", query = "SELECT count(e) FROM EndUser e WHERE e.app.id = :app"),
+  @NamedQuery(name = "EndUser.getPoints", query = "SELECT SUM(p.point) FROM EndUser e INNER JOIN PointAwards p ON e.pointAwards = p.id WHERE e.id = :user"),
 })
 
 public class EndUser extends AbstractDomainModel<Long>{
