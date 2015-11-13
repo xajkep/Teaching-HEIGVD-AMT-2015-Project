@@ -30,8 +30,8 @@ public class EndUser extends AbstractDomainModel<Long>{
     @OneToMany(mappedBy = "userRewarded", targetEntity=BadgeAward.class)
     private List<BadgeAward> badgeAwards;
     
-    @OneToMany(mappedBy = "userScored", targetEntity=PointAward.class)
-    private List<PointAward> pointAwards;
+    @OneToMany(mappedBy = "userScored", targetEntity=PointAwards.class)
+    private List<PointAwards> pointAwards;
     
     public EndUser() {
         
@@ -94,11 +94,11 @@ public class EndUser extends AbstractDomainModel<Long>{
         this.badgeAwards = badgeAwards;
     }
 
-    public List<PointAward> getPointAwards() {
+    public List<PointAwards> getPointAwards() {
         return pointAwards;
     }
 
-    public void setPointAwards(List<PointAward> pointAwards) {
+    public void setPointAwards(List<PointAwards> pointAwards) {
         this.pointAwards = pointAwards;
     }
     
