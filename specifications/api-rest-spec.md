@@ -86,3 +86,20 @@ GET /api/pointawards/id
   "reason": String
 }
 ~~~
+
+## Post event
+## Properties depends of event type, apikey is in the HTTP header authorisation
+
+POST /api/events/
+~~~json
+{
+  "type": String,
+  "apiKey": String,
+  "timestamp": Date,
+  "endUserId": String,
+    {
+      "tag": String,
+      "difficulty": String
+    }
+}
+~~~
