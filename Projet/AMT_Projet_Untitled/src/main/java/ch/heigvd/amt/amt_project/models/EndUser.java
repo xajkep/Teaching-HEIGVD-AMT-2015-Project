@@ -31,7 +31,7 @@ public class EndUser extends AbstractDomainModel<Long>{
     @OneToMany(mappedBy = "userRewarded", targetEntity=BadgeAward.class)
     private List<BadgeAward> badgeAwards;
     
-    @OneToMany(mappedBy = "userScored", targetEntity=PointAwards.class)
+    @OneToMany(mappedBy = "endUser", targetEntity=PointAwards.class)
     private List<PointAwards> pointAwards;
     
     public EndUser() {
