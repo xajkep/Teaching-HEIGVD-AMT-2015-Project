@@ -12,6 +12,7 @@ buildNumber.properties
 .mvn/timing.properties
 
 Projet/AMT_Projet_Untitled/target/
+*.class
 
 ### Linux ###
 *~

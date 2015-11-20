@@ -1,18 +1,18 @@
 package ch.heigvd.amt.amt_project.rest.DTO;
 
+import java.net.URI;
+
 /**
  *
- * @author thsch
+ * @author thsch, mberthouzoz
  */
-
-
 public class BadgeDTO {
-    private String id;
+    private URI href;
     private String picture;
     private String description;
     
-    public String getId(){
-        return id;
+    public URI getHref(){
+        return href;
     }
     
     public String getPicture(){
@@ -23,8 +23,8 @@ public class BadgeDTO {
         return description;
     }
     
-    public void setId(String id){
-        this.id = id;
+    public void setHref(URI href){
+        this.href = href;
     }
     
     public void setPicture(String picture){

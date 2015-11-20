@@ -34,12 +34,9 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
     public long getNumberOfUserDuringLast30Days() throws BusinessDomainEntityNotFoundException {
         long results = 0;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("1");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -30);
-        System.out.println("2");
         Date date = new Date(cal.getTimeInMillis());
-        System.out.println("3");
                 
         try {
             results = (long) em.createNamedQuery("EndUser.getNumberOfUserDuringLastDays")
@@ -62,4 +59,14 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
         }
     }
     
+    public long getPoints(long userId) throws BusinessDomainEntityNotFoundException {
+        long result;
+        try {
+            result = (long) em.createNamedQuery("EndUser.getPoints")
+                    .setParameter("user", userId).getSingleResult();
+            return result;
+        } catch (NoResultException e) {
+            throw new BusinessDomainEntityNotFoundException();
+        }
+    }
 }
