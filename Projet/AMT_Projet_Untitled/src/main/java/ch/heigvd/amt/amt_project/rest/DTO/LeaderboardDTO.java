@@ -9,37 +9,22 @@ import java.util.List;
 
 
 public class LeaderboardDTO {
-    private String firstName;
-    private String lastName;
+    private String name;
     private long points;
     private List<BadgeDTO> badges;
 
     /**
-     * @return the firstName
+     * @return the name
      */
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
     /**
-     * @param firstName the firstName to set
+     * @param the name to set
      */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return the lastName
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**

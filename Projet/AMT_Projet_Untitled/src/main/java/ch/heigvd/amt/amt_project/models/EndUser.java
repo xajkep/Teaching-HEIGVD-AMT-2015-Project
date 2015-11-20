@@ -35,6 +35,8 @@ public class EndUser extends AbstractDomainModel<Long>{
     @OneToMany(mappedBy = "endUser", targetEntity=PointAwards.class)
     private List<PointAwards> pointAwards;
     
+    private long sumPoint;
+    
     public EndUser() {
         
     }
@@ -105,5 +107,11 @@ public class EndUser extends AbstractDomainModel<Long>{
     }
     
     
+    public long getSumPoint() {
+        return this.sumPoint;
+    }
     
+    public void setSumPoint(long sumPoint) {
+        this.sumPoint = sumPoint;
+    }
 }
