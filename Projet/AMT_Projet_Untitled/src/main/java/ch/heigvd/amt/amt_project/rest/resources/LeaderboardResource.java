@@ -26,7 +26,7 @@ public class LeaderboardResource {
     PointAwardsDAOLocal pointAwardsDAO;
     
     @GET
-    @Path(" /api/leaderboards/current")
+    @Path("/api/leaderboards/current")
     public LeaderboardDTO getLeaderboard(){
         return null;
     }
