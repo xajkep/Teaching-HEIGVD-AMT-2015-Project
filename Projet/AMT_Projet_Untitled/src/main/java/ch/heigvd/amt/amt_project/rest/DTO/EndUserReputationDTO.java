@@ -1,7 +1,5 @@
 package ch.heigvd.amt.amt_project.rest.DTO;
 
-import ch.heigvd.amt.amt_project.models.Badge;
-import static java.util.Collections.list;
 import java.util.List;
 
 /**
