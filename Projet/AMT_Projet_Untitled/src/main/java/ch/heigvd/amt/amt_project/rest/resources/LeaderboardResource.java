@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 /**
  *
@@ -26,7 +27,8 @@ public class LeaderboardResource {
     PointAwardsDAOLocal pointAwardsDAO;
     
     @GET
-    @Path("/api/leaderboards/current")
+    @Produces("application/json")
+    @Path("current")
     public LeaderboardDTO getLeaderboard(){
         return null;
     }
