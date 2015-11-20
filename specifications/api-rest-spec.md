@@ -91,17 +91,45 @@ GET /api/pointawards/id
 ~~~
 
 ## Post event
-Properties depends of event type
+Properties depends of event type, it could even have no property.
 
 POST /api/events/
 ~~~json
 {
-  "type": String,
+  "name": String,
   "timestamp": Date,
   "endUserId": String,
+  "properties":
     {
       "tag": String,
       "difficulty": String
     }
 }
 ~~~
+
+## Add an event type for the application
+POST /api/eventsManager/
+~~~json
+  {
+    "name": String,
+    "properties": {
+      "propertyA": String,
+      "propertyB": String
+    }
+  }
+~~~
+
+## Modify an event type
+PUT /api/eventsManager/{name}
+~~~json
+  {
+    "name": String,
+    "properties": {
+      "propertyA": String,
+      "propertyB": String
+    }
+  }
+~~~
+
+## Delete an event type
+DELETE /api/eventsManager/{name}
