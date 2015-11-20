@@ -1,5 +1,8 @@
 # API REST - Specifications
 
+## API key
+All requests uses the apiKey in the HTTP header "Authorization" in order to authenticate the application
+
 ## Get user badges
 
 GET /api/users/id/reputation
@@ -88,13 +91,12 @@ GET /api/pointawards/id
 ~~~
 
 ## Post event
-## Properties depends of event type, apikey is in the HTTP header authorisation
+Properties depends of event type
 
 POST /api/events/
 ~~~json
 {
   "type": String,
-  "apiKey": String,
   "timestamp": Date,
   "endUserId": String,
     {
