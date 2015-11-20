@@ -91,6 +91,7 @@ GET /api/pointawards/id
 ~~~
 
 ## Post event
+When an endUser make an action, an event is posted.
 Properties depends of event type, it could even have no property.
 
 POST /api/events/
@@ -112,6 +113,7 @@ POST /api/eventsManager/
 ~~~json
   {
     "name": String,
+    "action": String,
     "properties": {
       "propertyA": String,
       "propertyB": String
@@ -133,3 +135,13 @@ PUT /api/eventsManager/{name}
 
 ## Delete an event type
 DELETE /api/eventsManager/{name}
+
+## Add an action
+POST /api/actions/
+~~~json
+{
+  "name": String,
+  "nbPoints": Integer,
+  "badgeName": String
+}
+~~~
