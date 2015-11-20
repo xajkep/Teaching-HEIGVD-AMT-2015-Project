@@ -69,4 +69,23 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
             throw new BusinessDomainEntityNotFoundException();
         }
     }
+    
+    /**
+     * Get the TOP user order by their points
+     * @author xajkep
+     * @param appId
+     * @param numberOfUser
+     * @return 
+     */
+    public List<EndUser> getBestUsers(long appId, long numberOfUser) throws BusinessDomainEntityNotFoundException {
+        List<EndUser> results;
+        try {
+            results = (List<EndUser>) em.createNamedQuery("EndUser.getBestUsers")
+                    .setParameter("app", appId)
+                    .setParameter("numberOfUser", numberOfUser);
+            return results;
+        } catch (NoResultException e) {
+            throw new BusinessDomainEntityNotFoundException();
+        }
+    }
 }

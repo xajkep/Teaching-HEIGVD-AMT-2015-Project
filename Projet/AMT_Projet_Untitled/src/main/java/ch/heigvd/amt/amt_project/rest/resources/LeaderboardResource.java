@@ -4,6 +4,8 @@ import ch.heigvd.amt.amt_project.rest.DTO.EndUserReputationDTO;
 import ch.heigvd.amt.amt_project.rest.DTO.LeaderboardDTO;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -29,7 +31,12 @@ public class LeaderboardResource {
     @GET
     @Produces("application/json")
     @Path("current")
-    public LeaderboardDTO getLeaderboard(){
-        return null;
+    public List<LeaderboardDTO> getLeaderboard(){
+        List<LeaderboardDTO> results = new ArrayList<>();
+        
+        //endUserDAO.getBestUsers()
+        
+        
+        return results;
     }
 }
