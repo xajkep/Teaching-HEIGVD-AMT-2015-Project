@@ -1,8 +1,10 @@
 package ch.heigvd.amt.amt_project.models;
 
-import java.sql.Date;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import static javax.persistence.TemporalType.DATE;
 
 /**
  *
@@ -15,7 +17,8 @@ public class PointAwards extends AbstractDomainModel<Long>{
     private EndUser endUser;
     
     private long point;
-
+    
+    @Temporal(DATE)
     private Date date;
     
     private String reason;
