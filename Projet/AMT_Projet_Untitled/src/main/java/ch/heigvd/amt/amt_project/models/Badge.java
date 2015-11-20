@@ -7,7 +7,7 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author xajkep
+ * @author xajkep, mberthouzoz
  */
 @Entity
 public class Badge extends AbstractDomainModel<Long>{
@@ -16,14 +16,18 @@ public class Badge extends AbstractDomainModel<Long>{
     
     private String picture;
     
+    @ManyToOne
+    private Application app;
+    
     @OneToMany(mappedBy = "badge")
     private List<BadgeAward> badgeAwards;
     
     public Badge() {}
     
-    public Badge(String desc, String pic) {
+    public Badge(String desc, String pic, Application app) {
         this.description = desc;
         this.picture = pic;
+        this.app = app;
     }
 
     /**
@@ -66,6 +70,22 @@ public class Badge extends AbstractDomainModel<Long>{
      */
     public void setBadgeAwards(List<BadgeAward> badgeAwards) {
         this.badgeAwards = badgeAwards;
+    }
+    
+    /**
+     * 
+     * @return application
+     */
+    public Application getApp() {
+        return app;
+    }
+    
+    /**
+     * 
+     * @param app 
+     */
+    public void setApp(Application app) {
+        this.app = app;
     }
 
     
