@@ -44,6 +44,29 @@ public class UserResource {
 
         return toDTO(endUser);
     }
+    
+    @GET
+    @Path("{endUserID}/badges")
+    public List<BadgeDTO> getEndUserBadges(@PathParam("endUserID") long endUserID) {
+        EndUser endUser = endUsersDAO.findById(endUserID);
+        List<BadgeDTO> result = new ArrayList<>();
+
+        for (BadgeAward badgeAward : endUser.getBadgeAwards()) {
+                BadgeDTO badgeDTO = new BadgeDTO();
+                Badge badge = badgeAward.getBadge();
+                badgeDTO.setDescription(badge.getDescription());
+                badgeDTO.setPicture(badge.getPicture());
+
+                URI badgeHref = uriInfo
+                        .getAbsolutePathBuilder()
+                        .path(BadgeResource.class, "getBadge")
+                        .build(badge.getId());
+                badgeDTO.setHref(badgeHref);
+
+                result.add(badgeDTO);
+            }
+        return result;
+    }
 
     private EndUserReputationDTO toDTO(EndUser endUser) {
         try {
