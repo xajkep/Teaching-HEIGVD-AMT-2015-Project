@@ -17,6 +17,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -38,6 +39,7 @@ public class UserResource {
     }
 
     @GET
+    @Produces("application/json")
     @Path("{endUserID}/reputation")
     public EndUserReputationDTO getEndUserReputation(@PathParam("endUserID") long endUserID) {
         EndUser endUser = endUsersDAO.findById(endUserID);
@@ -69,6 +71,7 @@ public class UserResource {
     }
     
     @GET
+    @Produces("application/json")
     @Path("{endUserID}/badges")
     public List<BadgeDTO> getEndUserBadges(@PathParam("endUserID") long endUserID) {
         EndUser endUser = endUsersDAO.findById(endUserID);

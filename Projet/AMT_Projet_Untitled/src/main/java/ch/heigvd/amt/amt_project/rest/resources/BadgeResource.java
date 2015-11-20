@@ -19,7 +19,7 @@ import javax.ws.rs.core.UriInfo;
  * @author thsch
  */
 @Stateless
-@Path("/api/badges")
+@Path("badges")
 public class BadgeResource {
 
     @Context
