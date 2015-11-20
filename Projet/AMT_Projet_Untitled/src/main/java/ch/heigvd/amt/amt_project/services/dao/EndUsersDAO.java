@@ -77,12 +77,12 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
      * @param numberOfUser
      * @return 
      */
-    public List<EndUser> getBestUsers(long appId, long numberOfUser) throws BusinessDomainEntityNotFoundException {
+    public List<EndUser> getBestUsers(long appId, int numberOfUser) throws BusinessDomainEntityNotFoundException {
         List<EndUser> results;
         try {
             results = (List<EndUser>) em.createNamedQuery("EndUser.getBestUsers")
                     .setParameter("app", appId)
-                    .setParameter("numberOfUser", numberOfUser);
+                    .setMaxResults(numberOfUser);
             return results;
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();
