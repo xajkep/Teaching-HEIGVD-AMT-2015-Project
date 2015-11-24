@@ -1,7 +1,9 @@
 # API REST - Specifications
 
 ## API key
-All requests uses the apiKey in the HTTP header "Authorization" in order to authenticate the application
+
+> All requests uses the apiKey in the HTTP header "Authorization" in order to authenticate the application
+
 
 ## Get user badges
 
@@ -140,6 +142,7 @@ DELETE /api/eventsManager/{name}
 POST /api/rules/
 ~~~json
   {
+    "ruleId": Integer,
     "if":{
       "type": String,
       "properties":{
@@ -153,10 +156,11 @@ POST /api/rules/
   }
 ~~~
 
-### Example
+### Rule Example
 POST /api/rules/
 ~~~json
 {
+  "ruleId": 1,
   "if":{
     "type": "question",
     "properties":{
@@ -167,18 +171,5 @@ POST /api/rules/
     "action": "awardPoint",
     "nbPoints": 3
   }
-}
-
-~~~
-
-
-
-## Add an action
-POST /api/actions/
-~~~json
-{
-  "name": String,
-  "nbPoints": Integer,
-  "badgeName": String
 }
 ~~~
