@@ -98,6 +98,7 @@ POST /api/events/
 ~~~json
 {
   "name": String,
+  "type": String,
   "timestamp": Date,
   "endUserId": String,
   "properties":
@@ -109,11 +110,10 @@ POST /api/events/
 ~~~
 
 ## Add an event type for the application
-POST /api/eventsManager/
+POST /api/eventTypes/
 ~~~json
   {
     "name": String,
-    "action": String,
     "properties": {
       "propertyA": String,
       "propertyB": String
@@ -135,6 +135,43 @@ PUT /api/eventsManager/{name}
 
 ## Delete an event type
 DELETE /api/eventsManager/{name}
+
+## Rules
+POST /api/rules/
+~~~json
+  {
+    "if":{
+      "type": String,
+      "properties":{
+        "difficulty": String
+      }
+    },
+    "then": {
+      "action": String,
+      "nbPoints": Integer
+    }
+  }
+~~~
+
+### Example
+POST /api/rules/
+~~~json
+{
+  "if":{
+    "type": "question",
+    "properties":{
+      "difficulty": "hard"
+    }
+  },
+  "then": {
+    "action": "awardPoint",
+    "nbPoints": 3
+  }
+}
+
+~~~
+
+
 
 ## Add an action
 POST /api/actions/
