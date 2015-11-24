@@ -2,7 +2,9 @@
 
 ## API key
 
-> All requests uses the apiKey in the HTTP header "Authorization" in order to authenticate the application
+> All requests uses the apiKey in the HTTP header "Authorization" in order to authenticate the application.
+
+> Every rules and event types are bound to an application. If a client want to delete the rule number 35, we will use the apiKey to match the application and the rule.
 
 
 ## Get user badges
