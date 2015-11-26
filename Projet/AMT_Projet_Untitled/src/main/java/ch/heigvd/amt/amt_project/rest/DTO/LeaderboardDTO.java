@@ -6,8 +6,6 @@ import java.util.List;
  *
  * @author YounTheory
  */
-
-
 public class LeaderboardDTO {
     private String name;
     private long points;

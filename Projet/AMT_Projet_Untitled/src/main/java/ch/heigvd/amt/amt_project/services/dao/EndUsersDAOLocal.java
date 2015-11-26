@@ -19,5 +19,5 @@ public interface EndUsersDAOLocal extends IGenericDAO<EndUser, Long> {
     
     public long getPoints(long userId) throws BusinessDomainEntityNotFoundException;
     
-    public List<EndUser> getBestUsers(long appId, int numberOfUser) throws BusinessDomainEntityNotFoundException;
+    public List<EndUser> getBestUsers(String apiKey, int numberOfUser);
 }
