@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
+import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -10,7 +11,7 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author YounTheory
+ * @author YounTheory, mberthouzoz
  */
 @Stateless
 public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDAOLocal {
@@ -87,5 +88,17 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();
         }
+    }
+
+    @Override
+    public void assignBadgeAwardsToEndUser(List<BadgeAward> badges, EndUser endUser) {
+        for (BadgeAward badge : badges){
+            assignBadgeAwardsToEndUser(badge, endUser);
+        }
+    }
+
+    @Override
+    public void assignBadgeAwardsToEndUser(BadgeAward badge, EndUser endUser) {
+        endUser.getBadgeAwards().add(badge);
     }
 }
