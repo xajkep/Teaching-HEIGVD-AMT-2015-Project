@@ -6,6 +6,8 @@
 
 > Every rules and event types are bound to an application. If a client want to delete the rule number 35, we will use the apiKey to match the application and the rule.
 
+> If the apiKey is not specified or false, the server return an error 400 with a message (credential error for instance).
+
 
 ## Get user badges
 
@@ -97,11 +99,11 @@ GET /api/pointawards/id
 ## Post event
 When an endUser make an action, an event is posted.
 Properties depends of event type, it could even have no property.
+The event's name is it's ID.
 
 POST /api/events/
 ~~~json
 {
-  "name": String,
   "type": String,
   "timestamp": Date,
   "endUserId": String,
