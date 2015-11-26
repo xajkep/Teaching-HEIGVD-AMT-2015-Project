@@ -1,6 +1,7 @@
 package ch.heigvd.amt.amt_project.models;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,7 +20,7 @@ public class Badge extends AbstractDomainModel<Long>{
     @ManyToOne
     private Application app;
     
-    @OneToMany(mappedBy = "badge")
+    @OneToMany(mappedBy = "badge", cascade = CascadeType.PERSIST)
     private List<BadgeAward> badgeAwards;
     
     public Badge() {}

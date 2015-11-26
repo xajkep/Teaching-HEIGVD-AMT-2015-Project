@@ -2,6 +2,7 @@ package ch.heigvd.amt.amt_project.models;
 
 import java.sql.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -33,10 +34,10 @@ public class EndUser extends AbstractDomainModel<Long>{
     
     private Date date;
     
-    @OneToMany(mappedBy = "userRewarded", targetEntity=BadgeAward.class)
+    @OneToMany(mappedBy = "userRewarded", targetEntity=BadgeAward.class, cascade = CascadeType.PERSIST)
     private List<BadgeAward> badgeAwards;
     
-    @OneToMany(mappedBy = "endUser", targetEntity=PointAwards.class)
+    @OneToMany(mappedBy = "endUser", targetEntity=PointAwards.class, cascade = CascadeType.PERSIST)
     private List<PointAwards> pointAwards;
     
     private long sumPoint;

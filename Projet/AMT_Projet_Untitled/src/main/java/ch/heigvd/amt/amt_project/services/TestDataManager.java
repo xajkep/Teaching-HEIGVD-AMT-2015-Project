@@ -123,14 +123,14 @@ public class TestDataManager implements TestDataManagerLocal {
         /**
          * Set badge for enduser1
          */
-        EndUser enduser1 = endUsersDAO.findById(Integer.toUnsignedLong(1));
+        EndUser enduser1 = endUsersDAO.findById((long)1);
         BadgeAward badgeAward1 = new BadgeAward(badge1App1, enduser1, new Date(System.currentTimeMillis()));
         endUsersDAO.assignBadgeAwardsToEndUser(badgeAward1, enduser1);
 
         /**
          * Set badge for enduser30
          */
-        EndUser enduser30 = endUsersDAO.findById(Integer.toUnsignedLong(30));
+        EndUser enduser30 = endUsersDAO.findById((long)30);
         BadgeAward badgeAward2 = new BadgeAward(badge1App2, enduser30, new Date(System.currentTimeMillis()));
         endUsersDAO.assignBadgeAwardsToEndUser(badgeAward2, enduser30);
 
