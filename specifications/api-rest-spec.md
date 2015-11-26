@@ -128,7 +128,7 @@ POST /api/eventTypes/
 ~~~
 
 ## Modify an event type
-PUT /api/eventsManager/{name}
+PUT /api/eventsType/{name}
 ~~~json
   {
     "name": String,
@@ -140,13 +140,12 @@ PUT /api/eventsManager/{name}
 ~~~
 
 ## Delete an event type
-DELETE /api/eventsManager/{name}
+DELETE /api/eventsType/{name}
 
 ## Rules
 POST /api/rules/
 ~~~json
   {
-    "ruleId": Integer,
     "if":{
       "type": String,
       "properties":{
@@ -164,7 +163,6 @@ POST /api/rules/
 POST /api/rules/
 ~~~json
 {
-  "ruleId": 1,
   "if":{
     "type": "question",
     "properties":{
