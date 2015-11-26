@@ -1,7 +1,13 @@
 # API REST - Specifications
 
 ## API key
-All requests uses the apiKey in the HTTP header "Authorization" in order to authenticate the application
+
+> All requests uses the apiKey in the HTTP header "Authorization" in order to authenticate the application.
+
+> Every rules and event types are bound to an application. If a client want to delete the rule number 35, we will use the apiKey to match the application and the rule.
+
+> If the apiKey is not specified or false, the server return an error 400 with a message (credential error for instance).
+
 
 ## Get user badges
 
@@ -93,11 +99,12 @@ GET /api/pointawards/id
 ## Post event
 When an endUser make an action, an event is posted.
 Properties depends of event type, it could even have no property.
+The event's name is it's ID.
 
 POST /api/events/
 ~~~json
 {
-  "name": String,
+  "type": String,
   "timestamp": Date,
   "endUserId": String,
   "properties":
@@ -109,11 +116,10 @@ POST /api/events/
 ~~~
 
 ## Add an event type for the application
-POST /api/eventsManager/
+POST /api/eventTypes/
 ~~~json
   {
     "name": String,
-    "action": String,
     "properties": {
       "propertyA": String,
       "propertyB": String
@@ -136,12 +142,38 @@ PUT /api/eventsManager/{name}
 ## Delete an event type
 DELETE /api/eventsManager/{name}
 
-## Add an action
-POST /api/actions/
+## Rules
+POST /api/rules/
+~~~json
+  {
+    "ruleId": Integer,
+    "if":{
+      "type": String,
+      "properties":{
+        "difficulty": String
+      }
+    },
+    "then": {
+      "action": String,
+      "nbPoints": Integer
+    }
+  }
+~~~
+
+### Rule Example
+POST /api/rules/
 ~~~json
 {
-  "name": String,
-  "nbPoints": Integer,
-  "badgeName": String
+  "ruleId": 1,
+  "if":{
+    "type": "question",
+    "properties":{
+      "difficulty": "hard"
+    }
+  },
+  "then": {
+    "action": "awardPoint",
+    "nbPoints": 3
+  }
 }
 ~~~

@@ -23,4 +23,6 @@ public interface EndUsersDAOLocal extends IGenericDAO<EndUser, Long> {
     public void assignBadgeAwardsToEndUser(List<BadgeAward> badges,  EndUser endUser);
     
     public void assignBadgeAwardsToEndUser(BadgeAward badge, EndUser endUser);
+
+    public List<EndUser> getBestUsers(String apiKey, int numberOfUser);
 }
