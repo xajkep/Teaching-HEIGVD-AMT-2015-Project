@@ -61,13 +61,20 @@ public class BadgeResource {
         BadgeDTO dto = new BadgeDTO();
         Badge badge = badgesDAO.findById(badgeid);
         populateDTOfromEntity(badge, dto);
+        
+        URI badgeHref = uriInfo
+                    .getAbsolutePathBuilder()
+                    .path(BadgeResource.class, "getBadges")
+                    .build(badge.getId());
+        
+        dto.setHref(badgeHref);
+        
         return dto;
     }
 
     private void populateDTOfromEntity(Badge badge, BadgeDTO dto){
         dto.setDescription(badge.getDescription());
         dto.setPicture(badge.getPicture());
-        
     }
     
     
