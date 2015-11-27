@@ -19,13 +19,15 @@ import javax.persistence.OneToMany;
   @NamedQuery(name = "EndUser.getNumberOfUserDuringLastDays", query = "SELECT count(e) FROM EndUser e WHERE e.date > :date"),
   @NamedQuery(name = "EndUser.getNumberOfUserByApp", query = "SELECT count(e) FROM EndUser e WHERE e.app.id = :app"),
   @NamedQuery(name = "EndUser.getPoints", query = "SELECT SUM(p.point) FROM EndUser e INNER JOIN PointAwards p ON e.pointAwards = p.id WHERE e.id = :user"),
-  @NamedQuery(name = "EndUser.getBestUsers", query = ""
-          + "SELECT e, SUM(p.point) as sumPoint "
+/*  @NamedQuery(name = "EndUser.getBestUsers", query = "SELECT e.name, SUM(p.point) "
           + "FROM EndUser e INNER JOIN PointAwards p ON e.pointAwards = p.id "
           + "INNER JOIN ApiKey a ON a.app.id = e.app.id "
-          + "WHERE a.apiKey = :apikey ORDER BY sumPoint DESC"),
+          + "WHERE a.apiKey = :apikey ORDER BY SUM(p.point) DESC")
+  */
+        
+  @NamedQuery(name = "EndUser.getBestUsers1", query = "SELECT e.name FROM EndUser e WHERE e.app.key.apiKey = :apikey"),
+  @NamedQuery(name = "EndUser.getBestUsers", query = "SELECT e.name, SUM(p.point) FROM EndUser e, PointAwards p WHERE e.app.key.apiKey = :apikey AND p.endUser = e GROUP BY p.endUser.id")
 })
-
 public class EndUser extends AbstractDomainModel<Long>{
     @ManyToOne
     private Application app;
@@ -40,7 +42,6 @@ public class EndUser extends AbstractDomainModel<Long>{
     @OneToMany(mappedBy = "endUser", targetEntity=PointAwards.class, cascade = CascadeType.PERSIST)
     private List<PointAwards> pointAwards;
     
-    private long sumPoint;
     
     public EndUser() {
         
@@ -109,14 +110,5 @@ public class EndUser extends AbstractDomainModel<Long>{
 
     public void setPointAwards(List<PointAwards> pointAwards) {
         this.pointAwards = pointAwards;
-    }
-    
-    
-    public long getSumPoint() {
-        return this.sumPoint;
-    }
-    
-    public void setSumPoint(long sumPoint) {
-        this.sumPoint = sumPoint;
     }
 }

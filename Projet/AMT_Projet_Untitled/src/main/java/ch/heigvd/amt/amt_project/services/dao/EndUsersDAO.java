@@ -2,10 +2,14 @@ package ch.heigvd.amt.amt_project.services.dao;
 
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
+import ch.heigvd.amt.amt_project.rest.resources.LeaderboardResource;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
 
@@ -81,8 +85,8 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
      * @throws ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException 
      */
     @Override
-    public List<EndUser> getBestUsers(String apiKey, int numberOfUser) {
-        List<EndUser> results;
+    public List<Object[]> getBestUsers(String apiKey, int numberOfUser) {
+        List<Object[]> results = null;
         try {
             results = em.createNamedQuery("EndUser.getBestUsers")
                     .setParameter("apikey", apiKey)
@@ -90,6 +94,7 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
                     .getResultList();
             return results;
         } catch (Exception e) {
+            Logger.getLogger(LeaderboardResource.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
     }

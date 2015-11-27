@@ -3,6 +3,7 @@
   <persistence-unit name="ch.heigvd.amt_AMT_Projet_Untitled_war_1.0-SNAPSHOTPU" transaction-type="JTA">
     <jta-data-source>jdbc/AMT</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>

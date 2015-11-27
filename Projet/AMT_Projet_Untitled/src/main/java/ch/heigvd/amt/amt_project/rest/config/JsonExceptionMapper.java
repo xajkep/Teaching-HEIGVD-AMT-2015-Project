@@ -1,6 +1,8 @@
 package ch.heigvd.amt.amt_project.rest.config;
 
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -13,7 +15,16 @@ import javax.ws.rs.ext.Provider;
  * @author mberthouzoz
  */
 @Provider
-public class JsonExceptionMapper implements ExceptionMapper<NotFoundException> {
+public class JsonExceptionMapper implements ExceptionMapper<WebApplicationException> {
+
+    @Override
+    public Response toResponse(WebApplicationException e) {
+        return Response
+      .status(e.getResponse().getStatus())
+      .entity(new Body(e.getMessage()))
+      .type("application/json")
+      .build();
+    }
 
   private class Body {
     private String message;
@@ -26,15 +37,5 @@ public class JsonExceptionMapper implements ExceptionMapper<NotFoundException> {
       return message;
     }
   
-  }
-  
-  @Override
-  public Response toResponse(NotFoundException e) {
-    return Response
-      .status(404)
-      .entity(new Body(e.getMessage()))
-      .type("application/json")
-      .build();
-  }
-  
+  }  
 }
