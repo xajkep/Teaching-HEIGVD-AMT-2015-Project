@@ -1,11 +1,17 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.EndUser;
+import ch.heigvd.amt.amt_project.rest.dto.BadgeDTO;
 import ch.heigvd.amt.amt_project.rest.dto.LeaderboardDTO;
+import ch.heigvd.amt.amt_project.services.dao.BadgeAwardsDAO;
+import ch.heigvd.amt.amt_project.services.dao.BadgeAwardsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +40,10 @@ public class LeaderboardResource {
     @EJB
     PointAwardsDAOLocal pointAwardsDAO;
     
+    @EJB
+    BadgeAwardsDAOLocal badgeAwardsDAO;
+    
+    
     @Context
     private HttpServletResponse response;
     
@@ -54,16 +64,32 @@ public class LeaderboardResource {
         } else {
             try {
                 
+                /* get best users */
                 List<Object[]> users = endUserDAO.getBestUsers(apiKey, size);
 
                 for (Object[] o : users) {
                     LeaderboardDTO tmp = new LeaderboardDTO();
-                    tmp.setName((String) o[0]);
-                    tmp.setPoints((long) o[1]);
+                    tmp.setName((String) o[1]);
+                    tmp.setPoints((long) o[2]);
+                    
+                    /* get user badges */
+                    List<BadgeDTO> badges = new ArrayList<>();
+                    
+                    List<Object[]> badgesString = badgeAwardsDAO.getByUser((long) o[0]);
+                    for (Object[] s : badgesString) {
+                        BadgeDTO tmp2 = new BadgeDTO();
+                        tmp2.setPicture((String) s[0]);
+                        tmp2.setDescription((String) s[1]);
+                        badges.add(tmp2);
+                    }
+                    
+                    tmp.setBadges(badges);
+                            
                     results.add(tmp);
                 }
 
-            } catch (Exception ex) {
+            } catch (Exception e) {
+                Logger.getLogger(LeaderboardResource.class.getName()).log(Level.SEVERE, null, e);
                 throw new ServiceUnavailableException("No content available");
             }
         }

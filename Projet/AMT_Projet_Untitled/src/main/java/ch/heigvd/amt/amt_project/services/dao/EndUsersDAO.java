@@ -94,7 +94,7 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
                     .getResultList();
             return results;
         } catch (Exception e) {
-            Logger.getLogger(LeaderboardResource.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(EndUsersDAO.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
     }

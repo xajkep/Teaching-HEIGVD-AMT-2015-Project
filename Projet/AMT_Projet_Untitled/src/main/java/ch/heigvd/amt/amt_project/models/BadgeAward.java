@@ -3,6 +3,8 @@ package ch.heigvd.amt.amt_project.models;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -11,6 +13,9 @@ import javax.persistence.TemporalType;
  * @author xajkep
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "BadgeAward.getByUser", query = "SELECT b.badge.picture, b.badge.description FROM BadgeAward b WHERE b.userRewarded.id = :userid"),
+})
 public class BadgeAward extends AbstractDomainModel<Long>{
     
     @Temporal(TemporalType.DATE)
