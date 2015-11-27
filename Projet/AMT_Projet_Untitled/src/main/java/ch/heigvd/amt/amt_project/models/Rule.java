@@ -14,15 +14,18 @@ import javax.persistence.OneToMany;
 public class Rule extends AbstractDomainModel<Long>{
     @ManyToOne
     private EventType eventType;
+    /*
+    Il faut rajouter actionType qui peut être soit un actionbadge ou actionpoints
     @ManyToOne
     private ActionType actionType;
+    */
     @OneToMany
     private List<RuleProperties> properties;
 
-    public Rule(EventType eventType, ActionType actionType, List<RuleProperties> properties)
+    public Rule(EventType eventType, List<RuleProperties> properties)
     {
         this.eventType = eventType;
-        this.actionType = actionType;
+        //this.actionType = actionType;
         this.properties = properties;
     }
     /**
@@ -39,19 +42,6 @@ public class Rule extends AbstractDomainModel<Long>{
         this.eventType = eventType;
     }
 
-    /**
-     * @return the actionType
-     */
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    /**
-     * @param actionType the actionType to set
-     */
-    public void setActionType(ActionType actionType) {
-        this.actionType = actionType;
-    }
     
      /**
      * @return the properties
