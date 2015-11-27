@@ -57,13 +57,13 @@ public class PointAwardsResource {
     @GET
     @Produces("application/json")
     @Path("/{pointawardid}")
-    public PointAwardDTO getBadge(@PathParam("pointawardid") long pointawardid) {
+    public PointAwardDTO getPointAward(@PathParam("pointawardid") long pointawardid) {
         PointAwardDTO dto = new PointAwardDTO();
         PointAwards p = pointAwardsDAO.findById(pointawardid);
         
         URI href = uriInfo
                     .getAbsolutePathBuilder()
-                    .path(BadgeResource.class, "getBadges")
+                    .path(PointAwardsResource.class, "getPointAward")
                     .build(p.getId());
         
         dto.setHref(href);
