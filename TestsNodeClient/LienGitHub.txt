@@ -1,0 +1,1 @@
+https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-AMT-ConcurrentTransactions/tree/step2-really-validating-on-the-fly-account-creation

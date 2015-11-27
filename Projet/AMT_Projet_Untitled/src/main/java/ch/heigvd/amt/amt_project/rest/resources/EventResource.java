@@ -15,6 +15,8 @@ import javax.ws.rs.core.Response;
 @Path("events")
 public class EventResource {
 
+    @POST
+    @Consumes("application/json")
     public Response sendEvent(EventDTO event) {
         
         Response.ResponseBuilder builder = Response.ok();

@@ -1,7 +1,7 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.Badge;
-import ch.heigvd.amt.amt_project.rest.DTO.BadgeDTO;
+import ch.heigvd.amt.amt_project.rest.dto.BadgeDTO;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import java.net.URI;
 import java.util.ArrayList;

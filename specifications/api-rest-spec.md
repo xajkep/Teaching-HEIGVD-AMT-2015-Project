@@ -9,7 +9,7 @@
 > If the apiKey is not specified or false, the server return an error 400 with a message (credential error for instance).
 
 
-## Get user badges
+## Get user reputation
 
 GET /api/users/id/reputation
 
@@ -31,9 +31,7 @@ GET /api/leaderboards/current?numberOfUsers
 ~~~json
 {
   "users": [{
-    "id": String,
-    "firstname": String,
-    "lastname": String,
+    "name": String,
     "points": Integer,
     "badges": [{
         "id": String,
@@ -95,6 +93,9 @@ GET /api/pointawards/id
   "reason": String
 }
 ~~~
+----
+
+# Event
 
 ## Post event
 When an endUser make an action, an event is posted.
@@ -115,15 +116,15 @@ POST /api/events/
 }
 ~~~
 
+----
+
+# eventTypes
+
 ## Add an event type for the application
 POST /api/eventTypes/
 ~~~json
   {
-    "name": String,
-    "properties": {
-      "propertyA": String,
-      "propertyB": String
-    }
+    "name": String
   }
 ~~~
 
@@ -131,11 +132,7 @@ POST /api/eventTypes/
 PUT /api/eventsType/{name}
 ~~~json
   {
-    "name": String,
-    "properties": {
-      "propertyA": String,
-      "propertyB": String
-    }
+    "name": String
   }
 ~~~
 
