@@ -11,6 +11,9 @@ import javax.persistence.MappedSuperclass;
 public abstract class ActionType extends AbstractDomainModel<Long>{
     private String name;
     
+    public ActionType(String name) {
+        this.name = name;
+    }
 
     /**
      * @return the name

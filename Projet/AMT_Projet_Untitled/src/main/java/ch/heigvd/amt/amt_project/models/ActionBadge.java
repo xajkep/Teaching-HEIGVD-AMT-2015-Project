@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 public class ActionBadge extends ActionType{
     private Badge badge;
 
-    public ActionBadge(Badge badge)
-    {
+    public ActionBadge(Badge badge, String name) {
+        super(name);
         this.badge = badge;
     }
     /**

@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 public class ActionPoints extends ActionType {
     private long point;
 
-    public ActionPoints(long point)
-    {
+    public ActionPoints(long point, String name) {
+        super(name);
         this.point = point;
     }
     /**
