@@ -31,9 +31,7 @@ GET /api/leaderboards/current?numberOfUsers
 ~~~json
 {
   "users": [{
-    "id": String,
-    "firstname": String,
-    "lastname": String,
+    "name": String,
     "points": Integer,
     "badges": [{
         "id": String,
