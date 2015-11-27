@@ -16,7 +16,7 @@ import javax.ws.rs.core.UriInfo;
 
 /**
  *
- * @author thsch
+ * @author thsch, xajkep
  */
 @Stateless
 @Path("badges")
@@ -31,7 +31,7 @@ public class BadgeResource {
     @GET
     @Produces("application/json")
     @Path("")
-    public List<BadgeDTO> getBadge() {
+    public List<BadgeDTO> getBadges() {
         List<BadgeDTO> result = new ArrayList<>();
         List<Badge> badges = badgesDAO.findAll();
 
@@ -42,7 +42,7 @@ public class BadgeResource {
 
             URI badgeHref = uriInfo
                     .getAbsolutePathBuilder()
-                    .path(BadgeResource.class, "getBadge")
+                    .path(BadgeResource.class, "getBadges")
                     .build(badge.getId());
 
             dto.setHref(badgeHref);
