@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 @Entity
 public class ActionBadge extends ActionType{
     private Badge badge;
+    
+    public ActionBadge() {}
 
     public ActionBadge(Badge badge, String name) {
         super(name);

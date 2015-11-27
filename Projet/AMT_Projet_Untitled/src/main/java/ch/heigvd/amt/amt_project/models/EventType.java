@@ -14,6 +14,8 @@ public class EventType extends AbstractDomainModel<Long>{
     
     private String name;
     
+    public EventType() {}
+    
     public EventType(String name)
     {
         this.name = name;

@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 @Entity
 public class ActionPoints extends ActionType {
     private long point;
+    
+    public ActionPoints() {}
 
     public ActionPoints(long point, String name) {
         super(name);

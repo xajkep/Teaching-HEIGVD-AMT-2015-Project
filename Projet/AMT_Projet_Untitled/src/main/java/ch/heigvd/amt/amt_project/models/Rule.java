@@ -21,6 +21,8 @@ public class Rule extends AbstractDomainModel<Long>{
     */
     @OneToMany
     private List<RuleProperties> properties;
+    
+    public Rule() {}
 
     public Rule(EventType eventType, List<RuleProperties> properties)
     {

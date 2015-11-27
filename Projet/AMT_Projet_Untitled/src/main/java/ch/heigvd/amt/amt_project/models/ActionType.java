@@ -1,15 +1,17 @@
 package ch.heigvd.amt.amt_project.models;
 
+import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author YounTheory
  */
-
-@MappedSuperclass 
+@MappedSuperclass
 public abstract class ActionType extends AbstractDomainModel<Long>{
     private String name;
+    
+    public ActionType() {}
     
     public ActionType(String name) {
         this.name = name;
