@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
+import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -10,7 +11,7 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author YounTheory
+ * @author YounTheory, mberthouzoz
  */
 @Stateless
 public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDAOLocal {
@@ -73,19 +74,35 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
     /**
      * Get the TOP user order by their points
      * @author xajkep
+     * @param apiKey
      * @param appId
      * @param numberOfUser
      * @return 
+     * @throws ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException 
      */
-    public List<EndUser> getBestUsers(long appId, int numberOfUser) throws BusinessDomainEntityNotFoundException {
+    @Override
+    public List<EndUser> getBestUsers(String apiKey, int numberOfUser) {
         List<EndUser> results;
         try {
-            results = (List<EndUser>) em.createNamedQuery("EndUser.getBestUsers")
-                    .setParameter("app", appId)
-                    .setMaxResults(numberOfUser);
+            results = em.createNamedQuery("EndUser.getBestUsers")
+                    .setParameter("apikey", apiKey)
+                    .setMaxResults(numberOfUser)
+                    .getResultList();
             return results;
-        } catch (NoResultException e) {
-            throw new BusinessDomainEntityNotFoundException();
+        } catch (Exception e) {
+            return null;
         }
+    }
+
+    @Override
+    public void assignBadgeAwardsToEndUser(List<BadgeAward> badges, EndUser endUser) {
+        for (BadgeAward badge : badges){
+            assignBadgeAwardsToEndUser(badge, endUser);
+        }
+    }
+
+    @Override
+    public void assignBadgeAwardsToEndUser(BadgeAward badge, EndUser endUser) {
+        endUser.getBadgeAwards().add(badge);
     }
 }

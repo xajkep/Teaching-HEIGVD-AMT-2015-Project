@@ -6,8 +6,10 @@
 
 > Every rules and event types are bound to an application. If a client want to delete the rule number 35, we will use the apiKey to match the application and the rule.
 
+> If the apiKey is not specified or false, the server return an error 400 with a message (credential error for instance).
 
-## Get user badges
+
+## Get user reputation
 
 GET /api/users/id/reputation
 
@@ -93,15 +95,18 @@ GET /api/pointawards/id
   "reason": String
 }
 ~~~
+----
+
+# Event
 
 ## Post event
 When an endUser make an action, an event is posted.
 Properties depends of event type, it could even have no property.
+The event's name is it's ID.
 
 POST /api/events/
 ~~~json
 {
-  "name": String,
   "type": String,
   "timestamp": Date,
   "endUserId": String,
@@ -113,38 +118,33 @@ POST /api/events/
 }
 ~~~
 
+----
+
+# eventTypes
+
 ## Add an event type for the application
 POST /api/eventTypes/
 ~~~json
   {
-    "name": String,
-    "properties": {
-      "propertyA": String,
-      "propertyB": String
-    }
+    "name": String
   }
 ~~~
 
 ## Modify an event type
-PUT /api/eventsManager/{name}
+PUT /api/eventsType/{name}
 ~~~json
   {
-    "name": String,
-    "properties": {
-      "propertyA": String,
-      "propertyB": String
-    }
+    "name": String
   }
 ~~~
 
 ## Delete an event type
-DELETE /api/eventsManager/{name}
+DELETE /api/eventsType/{name}
 
 ## Rules
 POST /api/rules/
 ~~~json
   {
-    "ruleId": Integer,
     "if":{
       "type": String,
       "properties":{
@@ -162,7 +162,6 @@ POST /api/rules/
 POST /api/rules/
 ~~~json
 {
-  "ruleId": 1,
   "if":{
     "type": "question",
     "properties":{
