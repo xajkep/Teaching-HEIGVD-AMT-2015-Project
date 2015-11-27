@@ -30,7 +30,8 @@ public class BadgeResource {
 
     @GET
     @Produces("application/json")
-    public List<BadgeDTO> getBadges() {
+    @Path("")
+    public List<BadgeDTO> getBadge() {
         List<BadgeDTO> result = new ArrayList<>();
         List<Badge> badges = badgesDAO.findAll();
 
