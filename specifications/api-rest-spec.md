@@ -95,6 +95,9 @@ GET /api/pointawards/id
   "reason": String
 }
 ~~~
+----
+
+# Event
 
 ## Post event
 When an endUser make an action, an event is posted.
@@ -114,6 +117,10 @@ POST /api/events/
     }
 }
 ~~~
+
+----
+
+# eventTypes
 
 ## Add an event type for the application
 POST /api/eventTypes/
