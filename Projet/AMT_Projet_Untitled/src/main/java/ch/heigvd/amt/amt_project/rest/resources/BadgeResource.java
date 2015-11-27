@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -36,7 +37,7 @@ public class BadgeResource {
         List<Badge> badges = badgesDAO.findAll();
 
         for (Badge badge : badges) {
-            //Long id = badge.getId();
+            //Long id = b adge.getId();
             BadgeDTO dto = new BadgeDTO();
             populateDTOfromEntity(badge, dto);
 
@@ -52,13 +53,23 @@ public class BadgeResource {
 
         return result;
     }
-
-
+    
+    @GET
+    @Produces("application/json")
+    @Path("/{badgeid}")
+    public BadgeDTO getBadge(@PathParam("badgeid") long badgeid) {
+        BadgeDTO dto = new BadgeDTO();
+        Badge badge = badgesDAO.findById(badgeid);
+        populateDTOfromEntity(badge, dto);
+        return dto;
+    }
 
     private void populateDTOfromEntity(Badge badge, BadgeDTO dto){
         dto.setDescription(badge.getDescription());
         dto.setPicture(badge.getPicture());
         
     }
+    
+    
     
 }
