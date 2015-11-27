@@ -9,7 +9,7 @@
 > If the apiKey is not specified or false, the server return an error 400 with a message (credential error for instance).
 
 
-## Get user badges
+## Get user reputation
 
 GET /api/users/id/reputation
 
