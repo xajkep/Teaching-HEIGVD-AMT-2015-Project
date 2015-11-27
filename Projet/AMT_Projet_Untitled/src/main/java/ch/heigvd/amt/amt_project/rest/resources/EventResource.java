@@ -1,6 +1,6 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
-import ch.heigvd.amt.amt_project.rest.dto.EventTypeDTO;
+import ch.heigvd.amt.amt_project.rest.dto.EventDTO;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -15,7 +15,9 @@ import javax.ws.rs.core.Response;
 @Path("events")
 public class EventResource {
 
-    public Response sendEvent(EventTypeDTO event) {
+    @POST
+    @Consumes("application/json")
+    public Response sendEvent(EventDTO event) {
         
         Response.ResponseBuilder builder = Response.ok();
         
