@@ -1,24 +1,18 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.EndUser;
-import ch.heigvd.amt.amt_project.rest.DTO.EndUserReputationDTO;
-import ch.heigvd.amt.amt_project.rest.DTO.LeaderboardDTO;
-import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
+import ch.heigvd.amt.amt_project.rest.dto.LeaderboardDTO;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;

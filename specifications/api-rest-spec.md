@@ -126,11 +126,7 @@ POST /api/events/
 POST /api/eventTypes/
 ~~~json
   {
-    "name": String,
-    "properties": {
-      "propertyA": String,
-      "propertyB": String
-    }
+    "name": String
   }
 ~~~
 
@@ -138,11 +134,7 @@ POST /api/eventTypes/
 PUT /api/eventsType/{name}
 ~~~json
   {
-    "name": String,
-    "properties": {
-      "propertyA": String,
-      "propertyB": String
-    }
+    "name": String
   }
 ~~~
 
