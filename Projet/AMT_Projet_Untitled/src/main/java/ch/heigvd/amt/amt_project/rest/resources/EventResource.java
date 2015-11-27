@@ -1,6 +1,6 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
-import ch.heigvd.amt.amt_project.rest.DTO.EventTypeDTO;
+import ch.heigvd.amt.amt_project.rest.dto.EventTypeDTO;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
