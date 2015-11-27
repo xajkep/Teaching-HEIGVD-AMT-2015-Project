@@ -1,14 +1,14 @@
-package ch.heigvd.amt.amt_project.rest.dto;
+package ch.heigvd.amt.amt_project.rest.DTO;
 
 import java.util.List;
 
 /**
  *
- * @author mberthouzoz
+ * @author mberthouzoz, yountheory
  */
-public class EventDTO {
+public class EventTypeDTO {
     private String name;
-    private List<EventPropertiesDTO> properties;
+    private List<EventTypePropertiesDTO> properties;
 
     /**
      * @return the name
@@ -27,27 +27,27 @@ public class EventDTO {
     /**
      * @return the properties
      */
-    public List<EventPropertiesDTO> getProperties() {
+    public List<EventTypePropertiesDTO> getProperties() {
         return properties;
     }
 
     /**
      * @param properties the properties to set
      */
-    public void setProperties(List<EventPropertiesDTO> properties) {
+    public void setProperties(List<EventTypePropertiesDTO> properties) {
         this.properties = properties;
     }
      /**
      * @param propertie the propertie to add
      */
-    public void addPropertie(EventPropertiesDTO propertie) {
+    public void addPropertie(EventTypePropertiesDTO propertie) {
         this.properties.add(propertie);
     }
     
     /**
      * @param propertie the propertie to delete
      */
-    public void removePropertie(EventPropertiesDTO propertie) {
+    public void removePropertie(EventTypePropertiesDTO propertie) {
         this.properties.remove(propertie);
     }
 }

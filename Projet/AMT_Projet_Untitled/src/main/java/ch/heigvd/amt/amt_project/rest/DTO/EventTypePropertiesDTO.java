@@ -1,4 +1,3 @@
-
 package ch.heigvd.amt.amt_project.rest.DTO;
 
 /**
@@ -7,9 +6,10 @@ package ch.heigvd.amt.amt_project.rest.DTO;
  */
 
 
-public class EventPropertiesDTO {
+public class EventTypePropertiesDTO {
     private String name;
     private String value;
+
 
     /**
      * @return the name
