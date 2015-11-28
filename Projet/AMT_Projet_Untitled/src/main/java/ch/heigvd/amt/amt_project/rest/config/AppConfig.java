@@ -48,6 +48,7 @@ public class AppConfig extends Application {
         resources.add(ch.heigvd.amt.amt_project.rest.resources.LeaderboardResource.class);
         resources.add(ch.heigvd.amt.amt_project.rest.resources.PointAwardsResource.class);
         resources.add(ch.heigvd.amt.amt_project.rest.resources.UserResource.class);
+        resources.add(ch.heigvd.amt.amt_project.web.filters.RestFilter.class);
     }
 
 }

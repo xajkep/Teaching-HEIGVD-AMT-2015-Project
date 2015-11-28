@@ -43,7 +43,7 @@ public class BadgeResource {
 
             URI badgeHref = uriInfo
                     .getAbsolutePathBuilder()
-                    .path(BadgeResource.class, "getBadges")
+                    .path(BadgeResource.class, "getBadge")
                     .build(badge.getId());
 
             dto.setHref(badgeHref);
@@ -62,12 +62,9 @@ public class BadgeResource {
         Badge badge = badgesDAO.findById(badgeid);
         populateDTOfromEntity(badge, dto);
         
-        URI badgeHref = uriInfo
-                    .getAbsolutePathBuilder()
-                    .path(BadgeResource.class, "getBadges")
-                    .build(badge.getId());
+        URI href = uriInfo.getRequestUri();
         
-        dto.setHref(badgeHref);
+        dto.setHref(href);
         
         return dto;
     }

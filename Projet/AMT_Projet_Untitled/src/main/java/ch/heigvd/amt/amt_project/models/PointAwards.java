@@ -3,14 +3,20 @@ package ch.heigvd.amt.amt_project.models;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
 
 /**
  *
- * @author Michaël
+ * @author Michaël, xajkep
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "PointAwards.findByApikey", query = "SELECT p FROM PointAwards p WHERE p.endUser.app.key.apiKey = :apikey"),
+    @NamedQuery(name = "PointAwards.findByIdAndApikey", query = "SELECT p FROM PointAwards p WHERE p.id = :pointawardid AND p.endUser.app.key.apiKey = :apikey"),
+})
 public class PointAwards extends AbstractDomainModel<Long>{
    
     @ManyToOne
