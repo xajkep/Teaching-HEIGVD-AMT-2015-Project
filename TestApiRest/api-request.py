@@ -65,6 +65,8 @@ with conn:
     for r in rows:
         apikeys.append(r[1])
 
+    apikeys.append("FAKE-API-KEY")
+
     for apikey in apikeys:
         print "[+] Testing with apikey: %s" % apikey
         for p in PATHS:
@@ -73,17 +75,21 @@ with conn:
             jsonResponse = json.loads(r.text)
             verbose(jsonResponse)
 
-            if len(jsonResponse) > 0 and 'href' in jsonResponse[0].keys():
-                print "[+] Reach all href link"
-
-                for j in jsonResponse:
-
-                    if (checkSingle(j['href'], j)):
-                        verbose(j['href']+ " [MATCH]")
-                    else:
-                        error(j['href']+ " [DOESNT MATCH]")
-
             print "[%s] %i result(s)\n" % (colored(r.status_code, 'blue'), len(jsonResponse))
+
+            if r.status_code == 200:
+                if len(jsonResponse) > 0 and 'href' in jsonResponse[0].keys():
+                    print "[+] Reach all href link"
+
+                    for j in jsonResponse:
+
+                        if (checkSingle(j['href'], j)):
+                            verbose(j['href']+ " [MATCH]")
+                        else:
+                            error(j['href']+ " [DOESNT MATCH]")
+            else:
+                print jsonResponse
+
 
     print "\n[+] %i features tested with %i different apikeys " % (len(PATHS), len(apikeys))
     print " | %i error(s) during the tests" % ERROR_COUNTER
