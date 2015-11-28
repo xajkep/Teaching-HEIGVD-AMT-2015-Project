@@ -1,5 +1,7 @@
 package ch.heigvd.amt.amt_project.web.filters;
 
+import ch.heigvd.amt.amt_project.services.dao.ApiKeysDAOLocal;
+import javax.ejb.EJB;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -20,6 +22,9 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class RestFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
+    @EJB
+    private ApiKeysDAOLocal apiKeysDAO;
+    
     public RestFilter() {}
     
     @Override
@@ -29,6 +34,8 @@ public class RestFilter implements ContainerRequestFilter, ContainerResponseFilt
         // Bad request
         if (apikey == "" || apikey == null) {
             throw new BadRequestException("Apikey is missing");
+        } else if(!apiKeysDAO.exists(apikey)) {
+            throw new NotAuthorizedException("This apikey doesn't exist");
         }
         
     }

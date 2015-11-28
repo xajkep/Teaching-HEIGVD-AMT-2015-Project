@@ -5,9 +5,9 @@ import javax.ejb.Local;
 
 /**
  *
- * @author YounTheory
+ * @author YounTheory, xajkep
  */
 @Local
 public interface ApiKeysDAOLocal extends IGenericDAO<ApiKey, Long>{
-    
+    public boolean exists(String apikey);
 }

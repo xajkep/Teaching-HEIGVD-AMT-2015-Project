@@ -8,7 +8,7 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author mberthouzoz
+ * @author mberthouzoz, xajkep
  */
 @Stateless
 public class PointAwardsDAO extends GenericDAO<PointAwards, Long> implements PointAwardsDAOLocal {

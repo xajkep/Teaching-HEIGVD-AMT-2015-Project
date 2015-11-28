@@ -2,13 +2,18 @@ package ch.heigvd.amt.amt_project.models;
 
 import java.util.UUID;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
  *
- * @author YounTheory, mberthouzoz
+ * @author YounTheory, mberthouzoz, xajkep
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "ApiKey.exists", query = "SELECT a FROM ApiKey a WHERE a.apiKey = :apikey"),
+})
 public class ApiKey extends AbstractDomainModel<Long>{
     @OneToOne
     private Application app;
