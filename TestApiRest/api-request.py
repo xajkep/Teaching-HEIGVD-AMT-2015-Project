@@ -7,8 +7,8 @@ Test the API with all apikey
 
 Features tested:
     + leaderboard
-    + pointawards
-    + badges
+    + getPointAwards & getPointAward
+    + getBadge & getBadges
 
 Usage: python api-request.py [-v | --verbose]
 """
