@@ -49,7 +49,7 @@ GET /api/badges
 ~~~json
 {
   [{
-    "id": String,
+    "href": String,
     "picture": String,
     "description": String
   }]
@@ -62,7 +62,7 @@ GET /api/badges/id
 
 ~~~json
 {
-  "id": String,
+  "href": String,
   "picture": String,
   "description": String
 }
@@ -75,7 +75,7 @@ GET /api/pointawards
 ~~~json
 {
   [{
-    "id": String,
+    "href": String,
     "numberOfPoints": Integer,
     "reason": String
   }]
@@ -88,7 +88,7 @@ GET /api/pointawards/id
 
 ~~~json
 {
-  "id": String,
+  "href": String,
   "numberOfPoints": Integer,
   "reason": String
 }
