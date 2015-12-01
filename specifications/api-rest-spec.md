@@ -6,7 +6,9 @@
 
 > Every rules and event types are bound to an application. If a client want to delete the rule number 35, we will use the apiKey to match the application and the rule.
 
-> If the apiKey is not specified or false, the server return an error 400 with a message (credential error for instance).
+> If the apiKey is not specified or empty, the server return an error 401 with a message "Apikey is missing".
+
+> If the apiKey doesn't exist, the server return an error 401 with message "This apikey doesn't exist"
 
 
 ## Get user reputation
