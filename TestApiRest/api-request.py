@@ -8,7 +8,7 @@ Test the API with all apikey
 Features tested:
     + leaderboard
     + getPointAwards & getPointAward
-    + getBadge & getBadges
+    + getBadge, getBadges & add
 
 Usage: python api-request.py [-v | --verbose]
 """
@@ -43,11 +43,35 @@ def error(s):
     ERROR_COUNTER += 1
     print "[%s] %s" % (colored('e', "red"), colored(s, "red"))
 
-def req(url):
+def get(url):
     return requests.get(url, headers={'Authorization':apikey})
 
+def post(url, payload):
+    verbose("POST %s" % url)
+    verbose("payload: %s" % payload)
+
+    headers = {'Authorization':apikey, 'Content-Type':'application/json'}
+    r = requests.post(url, headers=headers, data=payload)
+
+    verbose("http header: %s" % headers)
+    verbose("http status: %i" % r.status_code)
+    verbose("content: %s" % r.content)
+    return r
+
+def put(url, payload):
+    verbose("PUT %s" % url)
+    verbose("payload: %s" % payload)
+
+    headers = {'Authorization':apikey, 'Content-Type':'application/json'}
+    r = requests.put(url, headers=headers, data=payload)
+
+    verbose("http header: %s" % headers)
+    verbose("http status: %i" % r.status_code)
+    verbose("content: %s" % r.content)
+    return r
+
 def checkSingle(href, jsonEntity):
-    r = req(href)
+    r = get(href)
     content = r.text
     verbose("GET "+ j['href'] + " ["+str(r.status_code)+"]")
     verbose(content)
@@ -55,6 +79,7 @@ def checkSingle(href, jsonEntity):
 
 
 apikeys = []
+global apikey
 
 conn = MySQLdb.connect(DB_HOST, DB_USER, DB_PASS, DB_NAME)
 
@@ -65,19 +90,23 @@ with conn:
     for r in rows:
         apikeys.append(r[1])
 
-    apikeys.append("FAKE-API-KEY")
+    #apikeys.append("FAKE-API-KEY")
 
-    for apikey in apikeys:
+    for a in apikeys:
+        apikey = a
+
         print "[+] Testing with apikey: %s" % apikey
+
         for p in PATHS:
             print "[+] GET %s" % ('/api'+p)
-            r = req(URL+p)
+            r = get(URL+p)
             jsonResponse = json.loads(r.text)
             verbose(jsonResponse)
 
             print "[%s] %i result(s)\n" % (colored(r.status_code, 'blue'), len(jsonResponse))
 
             if r.status_code == 200:
+                #print jsonResponse
                 if len(jsonResponse) > 0 and 'href' in jsonResponse[0].keys():
                     print "[+] Reach all href link"
 
@@ -89,6 +118,16 @@ with conn:
                             error(j['href']+ " [DOESNT MATCH]")
             else:
                 print jsonResponse
+
+
+
+        for p in ["/badges"]:
+            r = post(URL+p, '{"href": "", "picture": "urlbadge3", "description": "Description 3 badge app2"}')
+            j = json.loads(r.text)
+            j['picture'] = "nouvelleadresse"
+            put(j['href'], json.dumps(j))
+
+
 
 
     print "\n[+] %i features tested with %i different apikeys " % (len(PATHS), len(apikeys))
