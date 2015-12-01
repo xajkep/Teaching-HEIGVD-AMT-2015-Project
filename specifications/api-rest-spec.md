@@ -6,8 +6,21 @@
 
 > Every rules and event types are bound to an application. If a client want to delete the rule number 35, we will use the apiKey to match the application and the rule.
 
-> If the apiKey is not specified or false, the server return an error 400 with a message (credential error for instance).
+> If the apiKey is not specified or empty, the server return an error 401 with a message "Apikey is missing".
 
+> If the apiKey doesn't exist, the server return an error 401 with message "This apikey doesn't exist"
+
+## GET requests
+
+> All GET requests should return HTTP 200 status code
+
+## POST requests
+
+> All POST requests should return HTTP 201 status code
+
+## PUT requests
+
+> All PUT requests should return HTTP 200 status code
 
 ## Get user reputation
 
@@ -68,6 +81,28 @@ GET /api/badges/id
 }
 ~~~
 
+## Add a new badge
+
+POST /api/badges
+
+~~~json
+{
+  "picture": String,
+  "description": String
+}
+~~~
+
+## Edit an existant badge
+
+PUT /api/badges/{id}
+
+~~~json
+{
+  "picture": String,
+  "description": String
+}
+~~~
+
 ## Get all point awards
 
 GET /api/pointawards
@@ -93,6 +128,29 @@ GET /api/pointawards/id
   "reason": String
 }
 ~~~
+
+## Add a new pointAward
+
+POST /api/pointawards
+
+~~~json
+{
+  "numberOfPoints": Integer,
+  "reason": String
+}
+~~~
+
+## Edit an existant pointAward
+
+PUT /api/pointawards/{id}
+
+~~~json
+{
+  "numberOfPoints": Integer,
+  "reason": String
+}
+~~~
+
 ----
 
 # Event
