@@ -26,6 +26,50 @@
 
 > All DELETE requests should return HTTP 200 status code
 
+## Get all users
+
+GET /api/users
+~~~json
+{
+  "users": [{
+    "href": String,
+    "name": String
+  }]
+}
+~~~
+
+## Get one user
+
+GET /api/users/{id}
+~~~json
+{
+  "href": String,
+  "name": String
+}
+~~~
+
+## Add a new user
+
+POST /api/users/{id}
+~~~json
+{
+  "name": String
+}
+~~~
+
+## Edit an existant user
+
+PUT /api/users/{id}
+~~~json
+{
+  "name": String
+}
+~~~
+
+## Delete an existant user
+
+DELETE /api/users/{id}
+
 ## Get user reputation
 
 GET /api/users/id/reputation
