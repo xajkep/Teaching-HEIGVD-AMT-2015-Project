@@ -29,7 +29,7 @@ GET /api/users/id/reputation
 ~~~json
 {
   "badges": [{
-      "id": String,
+      "href": String,
       "picture": String,
       "description": String
     }],
@@ -47,7 +47,7 @@ GET /api/leaderboards/current?numberOfUsers
     "name": String,
     "points": Integer,
     "badges": [{
-        "id": String,
+        "href": String,
         "picture": String,
         "description": String
       }]
