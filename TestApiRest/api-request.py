@@ -97,6 +97,7 @@ with conn:
 
         print "[+] Testing with apikey: %s" % apikey
 
+        # GET tests
         for p in PATHS:
             print "[+] GET %s" % ('/api'+p)
             r = get(URL+p)
@@ -120,12 +121,24 @@ with conn:
                 print jsonResponse
 
 
-
-        for p in ["/badges"]:
-            r = post(URL+p, '{"href": "", "picture": "urlbadge3", "description": "Description 3 badge app2"}')
+        # POST & PUT tests
+        P = ["/badges", "/pointawards"]
+        OBJECTS = [
+            '{"href": "", "picture": "urlbadge3", "description": "Description 3 badge app2"}',
+            '{"href": "", "reason": "THIS IS SPARTA", "numberOfPoints": 100}'
+        ]
+        KEYS = [
+            'picture',
+            "reason"
+        ]
+        i = 0
+        for p in P:
+            r = post(URL+p, OBJECTS[i])
             j = json.loads(r.text)
-            j['picture'] = "nouvelleadresse"
+            j[KEYS[i]] = "modification ICI"
             put(j['href'], json.dumps(j))
+
+            i+=1
 
 
 
