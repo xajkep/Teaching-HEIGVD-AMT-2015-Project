@@ -40,7 +40,6 @@ public class PointAwardsResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("")
     public List<PointAwardDTO> getPointAwards(
             @HeaderParam("Authorization") String apiKey) {
         List<PointAwardDTO> pointAwardsDTO = new ArrayList<>();
@@ -94,7 +93,6 @@ public class PointAwardsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("")
     public Response add(
             PointAwardDTO dto,
             @HeaderParam("Authorization") String apiKey) {
