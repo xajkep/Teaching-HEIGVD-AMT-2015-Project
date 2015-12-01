@@ -22,6 +22,10 @@
 
 > All PUT requests should return HTTP 200 status code
 
+## DELETE requests
+
+> All DELETE requests should return HTTP 200 status code
+
 ## Get user reputation
 
 GET /api/users/id/reputation
@@ -103,6 +107,10 @@ PUT /api/badges/{id}
 }
 ~~~
 
+## Remove an existant badge
+
+DELETE /api/badges/{id}
+
 ## Get all point awards
 
 GET /api/pointawards
@@ -150,6 +158,10 @@ PUT /api/pointawards/{id}
   "reason": String
 }
 ~~~
+
+## Remove an existant pointAward
+
+DELETE /api/pointawards/{id}
 
 ----
 
