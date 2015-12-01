@@ -6,9 +6,15 @@
 Test the API with all apikey
 
 Features tested:
-    + leaderboard
-    + getPointAwards & getPointAward
-    + getBadge, getBadges & add
+    + GET requests
+        + leaderboard
+        + getPointAwards, getPointAward
+        + getBadge, getBadges
+        + getUsers, getUsers
+    + POST, PUT & DELETE requests
+        + add/edit/delete badges
+        + add/edit/delete pointawards
+        + add/edit/delete users
 
 Usage: python api-request.py [-v | --verbose]
 """
@@ -21,27 +27,20 @@ from termcolor import colored
 
 URL = "http://localhost:8080/AMT_Projet_Untitled/api"
 
-PATHS = [
-    "/leaderboard/current",
-    "/pointawards",
-    "/badges"
-]
-
 DB_HOST = "localhost"
 DB_USER = "amt"
 DB_PASS = "amt"
 DB_NAME = "amt"
 
 VERBOSE = len(sys.argv) == 2 and sys.argv[1] in ['-v', '--verbose']
-ERROR_COUNTER = 0
 
 def verbose(s):
     if VERBOSE:
         print "[%s] %s" % (colored('v', "magenta"), colored(s, "white"))
 
 def error(s):
-    ERROR_COUNTER += 1
     print "[%s] %s" % (colored('e', "red"), colored(s, "red"))
+    exit()
 
 def get(url):
     verbose("GET %s" % url)
@@ -90,6 +89,21 @@ def put(url, payload):
 
     return r
 
+def delete(url):
+    verbose("DELETE %s" % url)
+
+    headers = {'Authorization':apikey}
+    r = requests.delete(url, headers=headers)
+
+    verbose("http header: %s" % headers)
+    verbose("http status: %i" % r.status_code)
+    verbose("content: %s" % r.content)
+
+    if r.status_code != 200:
+        error("http status: %i" % r.status_code)
+
+    return r
+
 def checkSingle(href, jsonEntity):
     r = get(href)
     content = r.text
@@ -118,6 +132,12 @@ with conn:
         print "[+] Testing with apikey: %s" % apikey
 
         # GET tests
+        PATHS = [
+            "/leaderboard/current",
+            "/pointawards",
+            "/badges",
+            "/users"
+        ]
         for p in PATHS:
             r = get(URL+p)
             jsonResponse = json.loads(r.text)
@@ -142,26 +162,31 @@ with conn:
 
 
         # POST & PUT tests
-        P = ["/badges", "/pointawards"]
+        P = ["/badges", "/pointawards", "/users"]
         OBJECTS = [
-            '{"href": "", "picture": "urlbadge3", "description": "Description 3 badge app2"}',
-            '{"href": "", "reason": "THIS IS SPARTA", "numberOfPoints": 100}'
+            '{"picture": "urlbadge3", "description": "Description 3 badge app2"}',
+            '{"reason": "THIS IS SPARTA", "numberOfPoints": 100}',
+            '{"name" : "SuperUSER"}',
         ]
         KEYS = [
             'picture',
-            "reason"
+            'reason',
+            'name',
         ]
         i = 0
         for p in P:
             r = post(URL+p, OBJECTS[i])
             j = json.loads(r.text)
             j[KEYS[i]] = "modification ICI"
-            put(j['href'], json.dumps(j))
+            r = put(j['href'], json.dumps(j))
+
+            if json.loads(r.content)[KEYS[i]] != "modification ICI":
+                error("Fail to edit %s" % j['href'])
+
+            delete(j['href'])
 
             i+=1
 
 
 
-
-    print "\n[+] %i features tested with %i different apikeys " % (len(PATHS)+len(P)*2, len(apikeys))
-    print " | %i error(s) during the tests" % ERROR_COUNTER
+    print "\n[+] %i features tested with %i apikeys " % (len(PATHS)+len(P)*3, len(apikeys))
