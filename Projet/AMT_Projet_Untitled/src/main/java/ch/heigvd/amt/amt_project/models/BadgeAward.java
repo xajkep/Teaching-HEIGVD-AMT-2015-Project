@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "BadgeAward.getByUser", query = "SELECT b.badge.picture, b.badge.description FROM BadgeAward b WHERE b.userRewarded.id = :userid"),
+    @NamedQuery(name = "BadgeAward.getByUser", query = "SELECT b.badge.id, b.badge.picture, b.badge.description FROM BadgeAward b WHERE b.userRewarded.id = :userid"),
 })
 public class BadgeAward extends AbstractDomainModel<Long>{
     

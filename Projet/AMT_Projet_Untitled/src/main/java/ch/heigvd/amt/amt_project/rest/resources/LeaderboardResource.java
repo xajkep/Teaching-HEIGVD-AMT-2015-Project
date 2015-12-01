@@ -8,6 +8,7 @@ import ch.heigvd.amt.amt_project.services.dao.BadgeAwardsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,6 +25,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 /**
  *
@@ -43,6 +45,8 @@ public class LeaderboardResource {
     @EJB
     BadgeAwardsDAOLocal badgeAwardsDAO;
     
+    @Context
+    private UriInfo uriInfo;
     
     @Context
     private HttpServletResponse response;
@@ -74,8 +78,16 @@ public class LeaderboardResource {
                 List<Object[]> badgesString = badgeAwardsDAO.getByUser((long) o[0]);
                 for (Object[] s : badgesString) {
                     BadgeDTO tmp2 = new BadgeDTO();
-                    tmp2.setPicture((String) s[0]);
-                    tmp2.setDescription((String) s[1]);
+                    
+                    URI badgeURI = uriInfo
+                        .getAbsolutePathBuilder()
+                        .path(BadgeResource.class, "getBadge")
+                        .build((long) s[0]);
+                    
+                    tmp2.setHref(badgeURI);
+                    tmp2.setPicture((String) s[1]);
+                    tmp2.setDescription((String) s[2]);
+                    
                     badges.add(tmp2);
                 }
 
