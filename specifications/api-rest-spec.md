@@ -10,6 +10,17 @@
 
 > If the apiKey doesn't exist, the server return an error 401 with message "This apikey doesn't exist"
 
+## GET requests
+
+> All GET requests should return HTTP 200 status code
+
+## POST requests
+
+> All POST requests should return HTTP 201 status code
+
+## PUT requests
+
+> All PUT requests should return HTTP 200 status code
 
 ## Get user reputation
 
