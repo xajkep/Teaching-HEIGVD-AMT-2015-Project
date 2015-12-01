@@ -7,17 +7,20 @@ import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -35,7 +38,7 @@ public class PointAwardsResource {
     UriInfo uriInfo;
     
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("")
     public List<PointAwardDTO> getPointAwards(
             @HeaderParam("Authorization") String apiKey) {
@@ -69,7 +72,7 @@ public class PointAwardsResource {
     }
     
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{pointawardid}")
     public PointAwardDTO getPointAward(
             @HeaderParam("Authorization") String apiKey, 
@@ -90,6 +93,68 @@ public class PointAwardsResource {
         dto.setReason(p.getReason());
         
         return dto;
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("")
+    public Response add(
+            PointAwardDTO dto,
+            @HeaderParam("Authorization") String apiKey) {
+    
+        PointAwards p = new PointAwards();
+        p.setPoint(dto.getNumberOfPoints());
+        p.setReason(dto.getReason());
+        
+        pointAwardsDAO.create(p);
+        
+        URI pointURI = uriInfo
+                .getBaseUriBuilder()
+                .path(PointAwardsResource.class)
+                .path(PointAwardsResource.class, "getPointAward")
+                .build(p.getId());
+        
+        System.out.println(pointURI);
+        
+        dto.setHref(pointURI);
+        
+        return Response.status(Response.Status.CREATED).entity(dto).build();
+    }
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{pointawardid}")
+    public Response edit(
+            PointAwardDTO dto,
+            @HeaderParam("Authorization") String apiKey, 
+            @PathParam("pointawardid") long pointawardid) {
+    
+        // 2do check apikey
+        PointAwards p = pointAwardsDAO.findById(pointawardid);
+        
+        if (dto.getNumberOfPoints() > 0) {
+            p.setPoint(dto.getNumberOfPoints());
+        } else {
+            dto.setNumberOfPoints(p.getPoint());
+        }
+        
+        if (dto.getReason() != "") {
+            p.setReason(dto.getReason());
+        } else {
+            dto.setReason(p.getReason());
+        }
+        
+        URI pointURI = uriInfo
+                .getBaseUriBuilder()
+                .path(PointAwardsResource.class)
+                .path(PointAwardsResource.class, "getPointAward")
+                .build(p.getId());
+        
+        dto.setHref(pointURI);
+        
+        return Response.status(Response.Status.OK).entity(dto).build();
     }
    
 }
