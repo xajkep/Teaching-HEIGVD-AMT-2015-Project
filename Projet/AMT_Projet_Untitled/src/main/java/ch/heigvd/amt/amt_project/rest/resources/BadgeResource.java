@@ -2,6 +2,7 @@ package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
+import ch.heigvd.amt.amt_project.models.PointAwards;
 import ch.heigvd.amt.amt_project.rest.dto.BadgeDTO;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -148,6 +150,19 @@ public class BadgeResource {
         
         return Response.status(Response.Status.OK).entity(dto).build();
     }
+    
+    
+    @DELETE
+    @Path("/{badgeid}")
+    public Response delete(
+        @PathParam("badgeid") long badgeid) {
+        
+        Badge b = badgesDAO.findById(badgeid);
+        badgesDAO.delete(b);
+        
+        return Response.status(Response.Status.OK).build();
+    }
+    
 
     private void populateDTOfromEntity(Badge badge, BadgeDTO dto){
         dto.setDescription(badge.getDescription());
