@@ -44,7 +44,19 @@ def error(s):
     print "[%s] %s" % (colored('e', "red"), colored(s, "red"))
 
 def get(url):
-    return requests.get(url, headers={'Authorization':apikey})
+    verbose("GET %s" % url)
+
+    headers = {'Authorization':apikey}
+    r = requests.get(url, headers=headers)
+
+    verbose("http header: %s" % headers)
+    verbose("http status: %i" % r.status_code)
+    verbose("content: %s" % r.content)
+
+    if r.status_code != 200:
+        error("http status: %i" % r.status_code)
+
+    return r
 
 def post(url, payload):
     verbose("POST %s" % url)
@@ -56,6 +68,10 @@ def post(url, payload):
     verbose("http header: %s" % headers)
     verbose("http status: %i" % r.status_code)
     verbose("content: %s" % r.content)
+
+    if r.status_code != 201:
+        error("http status: %i" % r.status_code)
+
     return r
 
 def put(url, payload):
@@ -68,6 +84,10 @@ def put(url, payload):
     verbose("http header: %s" % headers)
     verbose("http status: %i" % r.status_code)
     verbose("content: %s" % r.content)
+
+    if r.status_code != 200:
+        error("http status: %i" % r.status_code)
+
     return r
 
 def checkSingle(href, jsonEntity):
@@ -99,17 +119,16 @@ with conn:
 
         # GET tests
         for p in PATHS:
-            print "[+] GET %s" % ('/api'+p)
             r = get(URL+p)
             jsonResponse = json.loads(r.text)
             verbose(jsonResponse)
 
-            print "[%s] %i result(s)\n" % (colored(r.status_code, 'blue'), len(jsonResponse))
+            print "[%s] %i result(s)" % (colored(r.status_code, 'blue'), len(jsonResponse))
 
             if r.status_code == 200:
                 #print jsonResponse
                 if len(jsonResponse) > 0 and 'href' in jsonResponse[0].keys():
-                    print "[+] Reach all href link"
+                    print " |- Reach all href link"
 
                     for j in jsonResponse:
 
@@ -119,6 +138,7 @@ with conn:
                             error(j['href']+ " [DOESNT MATCH]")
             else:
                 print jsonResponse
+            print ""
 
 
         # POST & PUT tests
@@ -143,5 +163,5 @@ with conn:
 
 
 
-    print "\n[+] %i features tested with %i different apikeys " % (len(PATHS), len(apikeys))
+    print "\n[+] %i features tested with %i different apikeys " % (len(PATHS)+len(P)*2, len(apikeys))
     print " | %i error(s) during the tests" % ERROR_COUNTER
