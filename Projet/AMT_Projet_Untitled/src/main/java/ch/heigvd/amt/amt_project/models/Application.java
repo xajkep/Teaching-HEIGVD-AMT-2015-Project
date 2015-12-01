@@ -15,7 +15,8 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
-  @NamedQuery(name = "Application.findAllByUserId", query = "SELECT a FROM Application a WHERE a.creator.id = :user"),
+    @NamedQuery(name = "Application.findAllByUserId", query = "SELECT a FROM Application a WHERE a.creator.id = :user"),
+    @NamedQuery(name = "Application.findByApikey", query = "SELECT a FROM Application a WHERE a.key.apiKey = :apikey"),
 })
 public class Application extends AbstractDomainModel<Long> {
     

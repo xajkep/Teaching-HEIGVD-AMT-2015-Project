@@ -6,7 +6,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author mberthouzoz
+ * @author mberthouzoz, xajkep
  */
 @Local
 public interface ApplicationsDAOLocal extends IGenericDAO<Application, Long>{
@@ -16,4 +16,6 @@ public interface ApplicationsDAOLocal extends IGenericDAO<Application, Long>{
     public void enable(Application app);
     
     public List<Application> findAllByUserId(long id) throws BusinessDomainEntityNotFoundException;
+    
+    public Application findByApikey(String apikey) throws BusinessDomainEntityNotFoundException;
 }

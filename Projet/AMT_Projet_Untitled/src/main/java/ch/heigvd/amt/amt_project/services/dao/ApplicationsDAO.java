@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 /**
  * Data Access Object for Application
  *
- * @author mberthouzoz
+ * @author mberthouzoz, xajkep
  */
 @Stateless
 public class ApplicationsDAO extends GenericDAO<Application, Long> implements ApplicationsDAOLocal {
@@ -39,6 +39,17 @@ public class ApplicationsDAO extends GenericDAO<Application, Long> implements Ap
             results = em.createNamedQuery("Application.findAllByUserId")
                     .setParameter("user", userId).getResultList();
             return results;
+        } catch (NoResultException e) {
+            throw new BusinessDomainEntityNotFoundException();
+        }
+    }
+    
+    public Application findByApikey(String apikey) throws BusinessDomainEntityNotFoundException {
+        Application result;
+        try {
+            result = (Application) em.createNamedQuery("Application.findByApikey")
+                    .setParameter("apikey", apikey).getSingleResult();
+            return result;
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();
         }
