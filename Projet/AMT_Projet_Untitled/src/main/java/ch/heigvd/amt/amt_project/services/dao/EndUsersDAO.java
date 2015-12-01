@@ -90,7 +90,6 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
      * @param appId
      * @param numberOfUser
      * @return 
-     * @throws ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException 
      */
     @Override
     public List<Object[]> getBestUsers(String apiKey, int numberOfUser) {
@@ -117,5 +116,19 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
     @Override
     public void assignBadgeAwardsToEndUser(BadgeAward badge, EndUser endUser) {
         endUser.getBadgeAwards().add(badge);
+    }
+
+    @Override
+    public EndUser findByName(String name, long appId) throws BusinessDomainEntityNotFoundException {
+        EndUser result;
+        try {
+            result = (EndUser) em.createNamedQuery("EndUser.findByName")
+                    .setParameter("app", appId)
+                    .setParameter("name", name)
+                    .getSingleResult();
+            return result;
+        } catch (NoResultException e) {
+            throw new BusinessDomainEntityNotFoundException();
+        }
     }
 }

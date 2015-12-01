@@ -2,7 +2,9 @@ package ch.heigvd.amt.amt_project.rest.dto;
 
 import ch.heigvd.amt.amt_project.models.EndUser;
 import ch.heigvd.amt.amt_project.models.RuleProperties;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 
 
 /**
@@ -11,9 +13,9 @@ import java.util.Date;
  */
 public class EventDTO {
     private String type;    
-    private Date timestamp;
-    private EndUser enduserId;
-    private RuleProperties properties;
+    private String timestamp;
+    private String enduser;
+    private HashMap<String, String> properties = new HashMap<>();
 
     public String getType() {
         return type;
@@ -23,27 +25,27 @@ public class EventDTO {
         this.type = type;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
-    public EndUser getEnduserId() {
-        return enduserId;
+    public String getEnduser() {
+        return enduser;
     }
 
-    public void setEnduserId(EndUser enduserId) {
-        this.enduserId = enduserId;
+    public void setEnduser(String enduser) {
+        this.enduser = enduser;
     }
 
-    public RuleProperties getProperties() {
+    public HashMap<String, String> getProperties() {
         return properties;
     }
 
-    public void setProperties(RuleProperties properties) {
+    public void setProperties(HashMap<String, String> properties) {
         this.properties = properties;
     }
 }

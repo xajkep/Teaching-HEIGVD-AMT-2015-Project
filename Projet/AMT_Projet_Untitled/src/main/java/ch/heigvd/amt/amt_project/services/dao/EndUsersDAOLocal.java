@@ -28,4 +28,6 @@ public interface EndUsersDAOLocal extends IGenericDAO<EndUser, Long> {
     public void assignBadgeAwardsToEndUser(BadgeAward badge, EndUser endUser);
 
     public List<Object[]> getBestUsers(String apiKey, int numberOfUser);
+
+    public EndUser findByName(String name, long appId) throws BusinessDomainEntityNotFoundException;
 }

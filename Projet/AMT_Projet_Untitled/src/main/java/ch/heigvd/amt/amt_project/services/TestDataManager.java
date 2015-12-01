@@ -81,6 +81,7 @@ public class TestDataManager implements TestDataManagerLocal {
          */
         System.out.println("Generate Applications");
         Application app1 = applicationsDAO.createAndReturnManagedEntity(new Application("app1", "testapp1", apiKeysDAO.createAndReturnManagedEntity(new ApiKey()), true, toto));
+        System.out.println(app1.getKey().getApiKey());
         Application app2 = applicationsDAO.createAndReturnManagedEntity(new Application("app2", "testapp2", apiKeysDAO.createAndReturnManagedEntity(new ApiKey()), true, bob));
         Application app3 = applicationsDAO.createAndReturnManagedEntity(new Application("app3", "testapp3", apiKeysDAO.createAndReturnManagedEntity(new ApiKey()), true, toto));
         Application app4 = applicationsDAO.createAndReturnManagedEntity(new Application("app4", "testapp4", apiKeysDAO.createAndReturnManagedEntity(new ApiKey()), true, toto));
