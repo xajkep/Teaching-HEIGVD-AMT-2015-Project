@@ -68,6 +68,28 @@ GET /api/badges/id
 }
 ~~~
 
+## Add a new badge
+
+POST /api/badges
+
+~~~json
+{
+  "picture": String,
+  "description": String
+}
+~~~
+
+## Edit an existant badge
+
+PUT /api/badges/{id}
+
+~~~json
+{
+  "picture": String,
+  "description": String
+}
+~~~
+
 ## Get all point awards
 
 GET /api/pointawards
@@ -93,6 +115,29 @@ GET /api/pointawards/id
   "reason": String
 }
 ~~~
+
+## Add a new pointAward
+
+POST /api/pointawards
+
+~~~json
+{
+  "numberOfPoints": Integer,
+  "reason": String
+}
+~~~
+
+## Edit an existant pointAward
+
+PUT /api/pointawards/{id}
+
+~~~json
+{
+  "numberOfPoints": Integer,
+  "reason": String
+}
+~~~
+
 ----
 
 # Event
