@@ -151,7 +151,6 @@ public class BadgeResource {
         return Response.status(Response.Status.OK).entity(dto).build();
     }
     
-    
     @DELETE
     @Path("/{badgeid}")
     public Response delete(
@@ -168,7 +167,4 @@ public class BadgeResource {
         dto.setDescription(badge.getDescription());
         dto.setPicture(badge.getPicture());
     }
-    
-    
-    
 }

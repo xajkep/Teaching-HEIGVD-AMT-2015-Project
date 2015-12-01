@@ -15,11 +15,19 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author YounTheory, mberthouzoz
+ * @author YounTheory, mberthouzoz, xajkep
  */
 @Stateless
 public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDAOLocal {
-            
+    
+    public List<EndUser> findByApikey(String apikey) {
+        List<EndUser> results;
+        results = em.createNamedQuery("EndUser.findByApikey")
+                .setParameter("apikey", apikey)
+                .getResultList();
+        return results;
+    }
+    
     @Override
     public List<EndUser> findByApp(long appId, long userId, int pageSize, int pageIndex) throws BusinessDomainEntityNotFoundException {
         List<EndUser> results;
