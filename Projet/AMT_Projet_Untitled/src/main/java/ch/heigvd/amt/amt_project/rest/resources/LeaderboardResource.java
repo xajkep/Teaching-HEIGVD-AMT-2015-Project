@@ -59,39 +59,33 @@ public class LeaderboardResource {
         
         List<LeaderboardDTO> results = new ArrayList<>();
         
-        if(apiKey == null) {
-            throw new NotAuthorizedException("");
-        } else {
-            try {
-                
-                /* get best users */
-                List<Object[]> users = endUserDAO.getBestUsers(apiKey, size);
+        try {
+            /* get best users */
+            List<Object[]> users = endUserDAO.getBestUsers(apiKey, size);
 
-                for (Object[] o : users) {
-                    LeaderboardDTO tmp = new LeaderboardDTO();
-                    tmp.setName((String) o[1]);
-                    tmp.setPoints((long) o[2]);
-                    
-                    /* get user badges */
-                    List<BadgeDTO> badges = new ArrayList<>();
-                    
-                    List<Object[]> badgesString = badgeAwardsDAO.getByUser((long) o[0]);
-                    for (Object[] s : badgesString) {
-                        BadgeDTO tmp2 = new BadgeDTO();
-                        tmp2.setPicture((String) s[0]);
-                        tmp2.setDescription((String) s[1]);
-                        badges.add(tmp2);
-                    }
-                    
-                    tmp.setBadges(badges);
-                            
-                    results.add(tmp);
+            for (Object[] o : users) {
+                LeaderboardDTO tmp = new LeaderboardDTO();
+                tmp.setName((String) o[1]);
+                tmp.setPoints((long) o[2]);
+
+                /* get user badges */
+                List<BadgeDTO> badges = new ArrayList<>();
+
+                List<Object[]> badgesString = badgeAwardsDAO.getByUser((long) o[0]);
+                for (Object[] s : badgesString) {
+                    BadgeDTO tmp2 = new BadgeDTO();
+                    tmp2.setPicture((String) s[0]);
+                    tmp2.setDescription((String) s[1]);
+                    badges.add(tmp2);
                 }
 
-            } catch (Exception e) {
-                Logger.getLogger(LeaderboardResource.class.getName()).log(Level.SEVERE, null, e);
-                throw new ServiceUnavailableException("No content available");
+                tmp.setBadges(badges);
+
+                results.add(tmp);
             }
+
+        } catch (Exception e) {
+            throw new ServiceUnavailableException("No content available");
         }
         
         return results;
