@@ -124,7 +124,6 @@ public class BadgeResource {
         @PathParam("badgeid") long badgeid, 
         @HeaderParam("Authorization") String apiKey) {
         
-        // 2do check apikey
         Badge badge = badgesDAO.findById(badgeid);
         
         if (dto.getDescription() != "") {

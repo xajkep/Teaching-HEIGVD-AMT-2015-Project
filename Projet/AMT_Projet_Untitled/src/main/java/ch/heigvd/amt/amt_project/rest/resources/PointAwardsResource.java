@@ -78,15 +78,10 @@ public class PointAwardsResource {
             @HeaderParam("Authorization") String apiKey, 
             @PathParam("pointawardid") long pointawardid) {
         PointAwardDTO dto = new PointAwardDTO();
-        PointAwards p;
-        try {
-            p = pointAwardsDAO.findByIdAndApikey(pointawardid, apiKey);
-        } catch (BusinessDomainEntityNotFoundException ex) {
-            throw new ServiceUnavailableException("No content available");
-        }
+        
+        PointAwards p = pointAwardsDAO.findById(pointawardid);
         
         URI href = uriInfo.getRequestUri();
-        
         
         dto.setHref(href);
         dto.setNumberOfPoints(p.getPoint());
@@ -131,7 +126,6 @@ public class PointAwardsResource {
             @HeaderParam("Authorization") String apiKey, 
             @PathParam("pointawardid") long pointawardid) {
     
-        // 2do check apikey
         PointAwards p = pointAwardsDAO.findById(pointawardid);
         
         if (dto.getNumberOfPoints() > 0) {
