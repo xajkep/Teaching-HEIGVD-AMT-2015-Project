@@ -1,6 +1,5 @@
 package ch.heigvd.amt.amt_project.models;
 
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 
 /**
