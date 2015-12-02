@@ -2,7 +2,6 @@ package ch.heigvd.amt.amt_project.services.dao;
 
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
-import java.util.HashMap;
 import java.util.List;
 import javax.ejb.Local;
 
