@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * This class implements the Filter interface defined in the Servlet API. A
@@ -38,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Olivier Liechti (olivier.liechti@heig-vd.ch)
  */
 public class SecurityFilter implements Filter {
-    
+
     @EJB
     private ApplicationsDAOLocal applicationsDAO;
     @EJB
@@ -46,88 +47,88 @@ public class SecurityFilter implements Filter {
     @EJB
     private EndUsersDAOLocal endUsersDAO;
 
-  /**
-   *
-   * @param request The servlet request we are processing
-   * @param response The servlet response we are creating
-   * @param chain The filter chain we are processing
-   *
-   * @exception IOException if an input/output error occurs
-   * @exception ServletException if a servlet error occurs
-   */
-  @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-    HttpServletRequest httpRequest = (HttpServletRequest) request;
-    String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
-
-    /*
-     * Let's apply a white list access policy. By default, we will authorize access to the target URI on
-     * if the user has been authenticated.
+    /**
+     *
+     * @param request The servlet request we are processing
+     * @param response The servlet response we are creating
+     * @param chain The filter chain we are processing
+     *
+     * @exception IOException if an input/output error occurs
+     * @exception ServletException if a servlet error occurs
      */
-    boolean isTargetUrlProtected = true;
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-    /*
-     * If the target URL is static content or if it is the authentication servlet, then we grant access event
-     * if the user has not been authenticated.
-     */
-    if (path.startsWith("/static/")) {
-      isTargetUrlProtected = false;
-    } else if (path.startsWith("/api/")) {
-      isTargetUrlProtected = false;
-    } else if ("/auth".equals(path)) {
-      isTargetUrlProtected = false;
-    } else {
-      request.setAttribute("targetUrl", path);
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
+
+        /*
+         * Let's apply a white list access policy. By default, we will authorize access to the target URI on
+         * if the user has been authenticated.
+         */
+        boolean isTargetUrlProtected = true;
+
+        /*
+         * If the target URL is static content or if it is the authentication servlet, then we grant access event
+         * if the user has not been authenticated.
+         */
+        if (path.startsWith("/static/")) {
+            isTargetUrlProtected = false;
+        } else if (path.startsWith("/api/")) {
+            isTargetUrlProtected = false;
+        } else if ("/auth".equals(path)) {
+            isTargetUrlProtected = false;
+        } else {
+            request.setAttribute("targetUrl", path);
+        }
+
+        /*
+         * If the user has been authenticated before, then the AuthenticationServlet has placed
+         * an object (in this case a String) in the HTTP session. We can retrieve it.
+         */
+        Account user = (Account) httpRequest.getSession().getAttribute("user");
+        if (user == null && isTargetUrlProtected) {
+            System.out.println(path);
+            /*
+             * The user has not been authenticated and tries to access a protected resource,
+             * we display the login page (and interrupt the request processing pipeline).
+             */
+
+            // For reach register page
+            if (path.startsWith("/pages/account") && httpRequest.getParameter("action").equals("new")) {
+                chain.doFilter(request, response);
+            } else {
+                try {
+                    /* Stats */
+                    request.setAttribute("numberOfAccount", accountsDAO.count());
+                    request.setAttribute("numberOfApplication", applicationsDAO.count());
+                    request.setAttribute("numberOfUserDuringLast30Days", endUsersDAO.getNumberOfUserDuringLast30Days());
+
+                    request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+                } catch (BusinessDomainEntityNotFoundException ex) {
+                    Logger.getLogger(SecurityFilter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            /*
+             * We authorize the access, so we can tell the request processing pipeline to
+             * continue its work.
+             */
+            chain.doFilter(request, response);
+            /*
+             * Here, we could inspect and manipulate the response and its way back to the
+             * client. In this case, we don't have anything to do.
+             */
+        }
+
     }
 
-    /*
-     * If the user has been authenticated before, then the AuthenticationServlet has placed
-     * an object (in this case a String) in the HTTP session. We can retrieve it.
-     */
-    Account user = (Account) httpRequest.getSession().getAttribute("user");
-    if (user == null && isTargetUrlProtected) {
-      System.out.println(path);
-      /*
-       * The user has not been authenticated and tries to access a protected resource,
-       * we display the login page (and interrupt the request processing pipeline).
-       */
-        
-      // For reach register page
-      if (path.startsWith("/pages/account") && httpRequest.getParameter("action").equals("new")) {
-          chain.doFilter(request, response);
-      } else {
-          try {
-              /* Stats */
-              request.setAttribute("numberOfAccount", accountsDAO.count());
-              request.setAttribute("numberOfApplication", applicationsDAO.count());
-              request.setAttribute("numberOfUserDuringLast30Days", endUsersDAO.getNumberOfUserDuringLast30Days());
-              
-              request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
-          } catch (BusinessDomainEntityNotFoundException ex) {
-              Logger.getLogger(SecurityFilter.class.getName()).log(Level.SEVERE, null, ex);
-          }
-      }
-    } else {
-      /*
-       * We authorize the access, so we can tell the request processing pipeline to
-       * continue its work.
-       */
-      chain.doFilter(request, response);
-      /*
-       * Here, we could inspect and manipulate the response and its way back to the
-       * client. In this case, we don't have anything to do.
-       */
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
     }
 
-  }
-
-  @Override
-  public void init(FilterConfig filterConfig) throws ServletException {
-  }
-
-  @Override
-  public void destroy() {
-  }
+    @Override
+    public void destroy() {
+    }
 
 }

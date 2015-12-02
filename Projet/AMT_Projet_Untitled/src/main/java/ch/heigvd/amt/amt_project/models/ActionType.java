@@ -1,13 +1,12 @@
 package ch.heigvd.amt.amt_project.models;
 
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author YounTheory
  */
-@MappedSuperclass
+@Entity
 public abstract class ActionType extends AbstractDomainModel<Long>{
     private String name;
     
@@ -29,7 +28,5 @@ public abstract class ActionType extends AbstractDomainModel<Long>{
      */
     public void setName(String name) {
         this.name = name;
-    }
-    
-    
+    }   
 }
