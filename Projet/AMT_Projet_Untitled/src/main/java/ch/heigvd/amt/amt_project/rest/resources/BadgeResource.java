@@ -2,7 +2,6 @@ package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
-import ch.heigvd.amt.amt_project.models.PointAwards;
 import ch.heigvd.amt.amt_project.rest.dto.BadgeDTO;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
