@@ -21,6 +21,7 @@ var http = require('http');
  */
 http.globalAgent.maxSockets = 1;
 var apikey = "";
+var addRuleURL = "/api/rules";
 var NumberOfRequestsPerEndUser = 30;
 
 /* OLI
@@ -48,6 +49,8 @@ function logTransaction(stats, transaction) {
 	stats[transaction.endUserId] = accountStats;
 }
 
+
+//DEPRECATED TO DELETE ------------------
 // Add event type called when a user answer a question on /api/eventTypes/
 var addEasyQuestionEvent = {
   "name": "answerQuestion",
@@ -69,6 +72,7 @@ var addHardQuestionEvent = {
     "difficulty": "hard"
   }
 }
+// --------------------------------
 
 // add rules on /api/rules
 
@@ -238,10 +242,16 @@ function checkValues(callback){
 } // End of checkValues
 
 // This function has to create the rules as we suppose that we start with a brand new application.
-function initialize(callback){
-	
+// Data will be "addRuleQuestionEasy" for instance.
+function initialize(data, url){
+	console.log("\n\n==========================================");
+	console.log("Adding new rule: "+ data.if.type + " ...");
+	console.log("------------------------------------------");
+	getRequestPOST(data, url);
 }
-
+initialize(addRuleQuestionEasy, addRuleURL);
+initialize(addRuleQuestionMedium, addRuleURL);
+initialize(addRuleQuestionHard, addRuleURL);
 
 async.series([
   postTransactionRequestsInParalell,
