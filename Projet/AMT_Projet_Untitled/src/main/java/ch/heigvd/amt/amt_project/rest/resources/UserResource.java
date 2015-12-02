@@ -144,7 +144,6 @@ public class UserResource {
         
         return Response.status(Response.Status.OK).build();
     }
-
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
