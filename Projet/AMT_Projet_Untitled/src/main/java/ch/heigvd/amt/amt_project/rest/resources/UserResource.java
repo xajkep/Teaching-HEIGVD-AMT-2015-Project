@@ -124,7 +124,7 @@ public class UserResource {
         @PathParam("userid") long userid) {
         EndUser e = endUsersDAO.findById(userid);
         
-        if (dto.getName() != "") {
+        if (!dto.getName().equals("")) {
             e.setName(dto.getName());
         } else {
             dto.setName(e.getName());

@@ -125,13 +125,13 @@ public class BadgeResource {
         
         Badge badge = badgesDAO.findById(badgeid);
         
-        if (dto.getDescription() != "") {
+        if (!dto.getDescription().equals("")) {
             badge.setDescription(dto.getDescription());
         } else {
             dto.setDescription(badge.getDescription());
         }
         
-        if (dto.getPicture() != "") {
+        if (!dto.getPicture().equals("")) {
             badge.setPicture(dto.getPicture());
         } else {
             dto.setPicture(badge.getPicture());
