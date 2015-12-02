@@ -1,10 +1,20 @@
 /*
+ * Group: Berthouzoz, Schowing, Widmer & Zuckschwerdt
+ * File: client.js
+ * Objective: Test the concurrency gestion of the gamification platform.
+ *
+ * Details:
  * This program goal is to test the behaviour of the application with multiple paralell requests.
  * This "client" will send multiple events to the gamification platform in order to increase the
  * amount of points / badges of a client and then will ask the client how many points he has.
  *
  * If the number of points are not equals on both sides (this node application and in the gamification platfomr)
  * there is a problem (probably concurrency).
+ *
+ * IMPORTANT: + Empty the database before testing. It's supposed that the users you will create are brand new ones.
+ *						+ The event gives ONE point to the user and is compared to the number of event sent. If you change
+ *						  the event (from eventEasy to hard for instance) you will have to change the comparison in the
+ *							checkValues's function.
  *
  */
 var Client = require('node-rest-client').Client;
@@ -14,17 +24,21 @@ var async = require('async');
 
 var http = require('http');
 
-/* OLI
+/* OLI (c)
  * This is a very important parameter: it defines how many sockets can be opened at the same time. In other
  * words, if it is equal to 1, then requests will be sent one by one (no concurrency on the server because
  * of this test client). The higher the number, the higher the concurrency.
  */
 http.globalAgent.maxSockets = 5;
 var apikey = "";
+var baseURL = "http://localhost:8080/AMT_Projet_Untitled/";
 var addRuleURL = "/api/rules";
 var NumberOfRequestsPerEndUser = 30;
 
-/* OLI
+// We'll test with 10 users so we need IDs ! Here's ten 100% random IDs:
+var endUserNames["End0_Amber", "End1_Blond", "End2_Dark", "End3_YesItsBeer", "End4_Fag", "End5_Smith", "End6_JamesBond", "End7_JamesBrown", "End8_Sacha", "End9_Olivier"];
+
+/* OLI (c)
  * This map keeps track of the transactions posted by the client,
  * even if they result in an error (for instance if two parallel requests try to create a new account).
  * In this case, the client is informed that the transaction has failed and it would be his responsibility
@@ -32,7 +46,7 @@ var NumberOfRequestsPerEndUser = 30;
  */
 var submittedStats = {}
 
-/* OLI
+/* OLI (c)
  * This map keeps track of the transactions posted by the client, but only if the server has confirmed
  * their processing with a successful status code.
  * In this case, the client can assume that the transaction has been successfully processed.
@@ -120,7 +134,7 @@ var addRuleQuestionEasy = {
 // Name correspond à l'ID
 var eventEasy = {
   "type": "answerQuestion",
-  "timestamp": new Date();,
+  "timestamp": new Date().toISOString();,
   "endUserId": endUserId,
   "properties":
     {
@@ -154,7 +168,7 @@ function getRequestPOST(data, url) {
     logTransaction(submittedStats, requestData.data);
     console.log("POST " + url + requestData.data);
 
-    var req = client.post("http://localhost:8080/AMT_Project/" + url, requestData, function(data, response) {
+    var req = client.post(baseURL + url, requestData, function(data, response) {
   			var error = null;
   			var result = {
   				requestData: requestData,
@@ -191,7 +205,7 @@ for (var j = 0; j < 10; j++){
 
     // The event
     var data = eventEasy;
-    data.endUserId = j;
+    data.endUserId = endUserNames[j];
     endUserRequests.push(
       getRequestPOST(data, url);
     );
@@ -228,7 +242,7 @@ function checkValues(callback){
   // Points for user 0 to 9
   var userPointsOnServer[];
   for (var i = 0; i < 10; i++){
-    client.get("http://localhost:8080/AMT_Project/api/users/" + userId + "/reputation", requestData, function(data, response){
+    client.get(baseURL + "api/users/" + userId + "/reputation", requestData, function(data, response){
       // push in userPointsOnServer the number of points for each user
       userPointsOnServer.push(data.points);
       // The number of points is supposed to be equal to the NumberOfRequestsPerEndUser
@@ -249,9 +263,9 @@ function initialize(data, url){
 	console.log("------------------------------------------");
 	getRequestPOST(data, url);
 }
-initialize(addRuleQuestionEasy, addRuleURL);
-initialize(addRuleQuestionMedium, addRuleURL);
-initialize(addRuleQuestionHard, addRuleURL);
+initialize(addRuleQuestionEasy, baseURL + addRuleURL);
+initialize(addRuleQuestionMedium, baseURL + addRuleURL);
+initialize(addRuleQuestionHard, baseURL + addRuleURL);
 
 async.series([
   postTransactionRequestsInParalell,
