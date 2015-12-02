@@ -2,7 +2,6 @@ package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
-import ch.heigvd.amt.amt_project.models.PointAwards;
 import ch.heigvd.amt.amt_project.rest.dto.BadgeDTO;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
@@ -126,13 +125,13 @@ public class BadgeResource {
         
         Badge badge = badgesDAO.findById(badgeid);
         
-        if (dto.getDescription() != "") {
+        if (!dto.getDescription().equals("")) {
             badge.setDescription(dto.getDescription());
         } else {
             dto.setDescription(badge.getDescription());
         }
         
-        if (dto.getPicture() != "") {
+        if (!dto.getPicture().equals("")) {
             badge.setPicture(dto.getPicture());
         } else {
             dto.setPicture(badge.getPicture());

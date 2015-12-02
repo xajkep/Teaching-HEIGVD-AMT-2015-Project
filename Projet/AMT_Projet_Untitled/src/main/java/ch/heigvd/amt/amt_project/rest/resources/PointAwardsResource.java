@@ -133,7 +133,7 @@ public class PointAwardsResource {
             dto.setNumberOfPoints(p.getPoint());
         }
         
-        if (dto.getReason() != "") {
+        if (!dto.getReason().equals("")) {
             p.setReason(dto.getReason());
         } else {
             dto.setReason(p.getReason());

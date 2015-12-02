@@ -1,7 +1,6 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
 import ch.heigvd.amt.amt_project.models.PointAwards;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;

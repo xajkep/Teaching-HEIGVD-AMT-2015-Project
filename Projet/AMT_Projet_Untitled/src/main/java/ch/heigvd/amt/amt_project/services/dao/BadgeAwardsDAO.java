@@ -1,6 +1,5 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
-import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import java.util.List;
 import java.util.logging.Level;

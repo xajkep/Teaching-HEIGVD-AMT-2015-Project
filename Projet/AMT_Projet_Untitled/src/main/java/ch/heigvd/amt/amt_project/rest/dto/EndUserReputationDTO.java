@@ -6,8 +6,6 @@ import java.util.List;
  *
  * @author thsch, mberthouzoz
  */
-
-
 public class EndUserReputationDTO {
     
     private long points;

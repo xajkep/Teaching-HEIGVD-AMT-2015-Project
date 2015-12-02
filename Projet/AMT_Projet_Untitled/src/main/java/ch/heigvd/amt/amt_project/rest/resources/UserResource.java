@@ -124,7 +124,7 @@ public class UserResource {
         @PathParam("userid") long userid) {
         EndUser e = endUsersDAO.findById(userid);
         
-        if (dto.getName() != "") {
+        if (!dto.getName().equals("")) {
             e.setName(dto.getName());
         } else {
             dto.setName(e.getName());
@@ -142,7 +142,6 @@ public class UserResource {
         
         return Response.status(Response.Status.OK).build();
     }
-
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)

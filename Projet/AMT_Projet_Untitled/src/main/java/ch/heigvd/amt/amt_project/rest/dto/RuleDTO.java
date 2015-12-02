@@ -6,8 +6,6 @@ import java.util.List;
  *
  * @author YounTheory
  */
-
-
 public class RuleDTO {
     private List<RulePropertiesDTO> properties;
     private EventTypeDTO eventType;

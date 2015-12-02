@@ -1,18 +1,13 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
-import ch.heigvd.amt.amt_project.models.EndUser;
 import ch.heigvd.amt.amt_project.rest.dto.BadgeDTO;
 import ch.heigvd.amt.amt_project.rest.dto.LeaderboardDTO;
-import ch.heigvd.amt.amt_project.services.dao.BadgeAwardsDAO;
 import ch.heigvd.amt.amt_project.services.dao.BadgeAwardsDAOLocal;
-import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletResponse;

@@ -1,7 +1,5 @@
 package ch.heigvd.amt.amt_project.rest.dto;
 
-import java.util.List;
-
 /**
  *
  * @author mberthouzoz, yountheory

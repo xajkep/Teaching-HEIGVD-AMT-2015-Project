@@ -1,3 +1,12 @@
+/*
+ * This program goal is to test the behaviour of the application with multiple paralell requests.
+ * This "client" will send multiple events to the gamification platform in order to increase the
+ * amount of points / badges of a client and then will ask the client how many points he has.
+ *
+ * If the number of points are not equals on both sides (this node application and in the gamification platfomr)
+ * there is a problem (probably concurrency).
+ *
+ */
 var Client = require('node-rest-client').Client;
 var client = new Client();
 var async = require('async');
@@ -5,7 +14,7 @@ var async = require('async');
 
 var http = require('http');
 
-/*
+/* OLI
  * This is a very important parameter: it defines how many sockets can be opened at the same time. In other
  * words, if it is equal to 1, then requests will be sent one by one (no concurrency on the server because
  * of this test client). The higher the number, the higher the concurrency.
@@ -14,7 +23,7 @@ http.globalAgent.maxSockets = 1;
 var apikey = "";
 var NumberOfRequestsPerEndUser = 30;
 
-/*
+/* OLI
  * This map keeps track of the transactions posted by the client,
  * even if they result in an error (for instance if two parallel requests try to create a new account).
  * In this case, the client is informed that the transaction has failed and it would be his responsibility
@@ -22,7 +31,7 @@ var NumberOfRequestsPerEndUser = 30;
  */
 var submittedStats = {}
 
-/*
+/* OLI
  * This map keeps track of the transactions posted by the client, but only if the server has confirmed
  * their processing with a successful status code.
  * In this case, the client can assume that the transaction has been successfully processed.
@@ -31,14 +40,12 @@ var processedStats = {};
 
 
 function logTransaction(stats, transaction) {
-	var accountStats = stats[transaction.accountId] || {
-		accountId: transaction.accountId,
-		numberOfTransactions: 0,
-		balance: 0
+	var accountStats = stats[transaction.endUserId] || {
+		EndUserId: transaction.endUserId,
+		numberOfTransactions: 0
 	};
 	accountStats.numberOfTransactions += 1;
-	accountStats.balance += transaction.amount;
-	stats[transaction.accountId] = accountStats;
+	stats[transaction.endUserId] = accountStats;
 }
 
 // Add event type called when a user answer a question on /api/eventTypes/
@@ -123,6 +130,8 @@ var eventEasy = {
 
 function getRequestPOST(data, url) {
   return function(callback) {
+
+		// Request headers and data
     var requestData = {
       headers:{
         "Content-Type": "application/json",
@@ -162,16 +171,16 @@ function getRequestPOST(data, url) {
 
   		req.on('responseTimeout',function(res){
   		    console.log('response has expired');
-
   		});
   }
-};
+}; // End of getRequestPOST
+
 
 // Table for End user events
 var endUserRequests[];
-// For endUser 1 to 9 (it's their IDs)
+// For endUser 0 to 9 (it's their IDs)
 for (var j = 0; j < 10; j++){
-  // X requests per endUser that will add 1 point each 
+  // X requests per endUser that will add 1 point each
   for (var i = 0; i < NumberOfRequestsPerEndUser; i++) {
 
     var url = '/api/events';
@@ -226,8 +235,13 @@ function checkValues(callback){
       }
     });
   }
+} // End of checkValues
 
+// This function has to create the rules as we suppose that we start with a brand new application.
+function initialize(callback){
+	
 }
+
 
 async.series([
   postTransactionRequestsInParalell,

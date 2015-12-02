@@ -2,10 +2,8 @@ package ch.heigvd.amt.amt_project.services.dao;
 
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
-import ch.heigvd.amt.amt_project.rest.resources.LeaderboardResource;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;

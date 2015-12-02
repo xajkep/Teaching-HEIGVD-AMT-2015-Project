@@ -3,7 +3,6 @@ package ch.heigvd.amt.amt_project.web.controllers;
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
-import ch.heigvd.amt.amt_project.services.dao.EndUsersDAO;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.io.IOException;
 import java.util.logging.Level;
