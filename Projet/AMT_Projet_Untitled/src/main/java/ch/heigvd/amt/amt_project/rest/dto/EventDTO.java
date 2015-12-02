@@ -1,9 +1,5 @@
 package ch.heigvd.amt.amt_project.rest.dto;
 
-import ch.heigvd.amt.amt_project.models.EndUser;
-import ch.heigvd.amt.amt_project.models.RuleProperties;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 
 

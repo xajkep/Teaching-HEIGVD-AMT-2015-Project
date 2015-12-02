@@ -4,8 +4,6 @@ package ch.heigvd.amt.amt_project.rest.dto;
  *
  * @author YounTheory
  */
-
-
 public class RulePropertiesDTO {
     private String name;
     private String value;
