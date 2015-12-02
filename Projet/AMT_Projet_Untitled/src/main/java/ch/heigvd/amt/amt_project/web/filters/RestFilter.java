@@ -31,9 +31,11 @@ public class RestFilter implements ContainerRequestFilter, ContainerResponseFilt
         String apikey = requestContext.getHeaderString("Authorization");
         
         // Bad request
-        if (apikey == "" || apikey == null) {
+        if (apikey.equals("") || apikey == null) {
+            System.out.println("apikey == \"\" || apikey == null");
             throw new BadRequestException("Apikey is missing");
         } else if(!apiKeysDAO.exists(apikey)) {
+            System.out.println("!apiKeysDAO.exists(apikey) : " + apikey);
             throw new NotAuthorizedException("This apikey doesn't exist");
         }
         

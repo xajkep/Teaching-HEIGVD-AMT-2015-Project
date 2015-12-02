@@ -53,7 +53,6 @@ public class UserResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("")
     public List<EndUserDTO> getUsers(
         @HeaderParam("Authorization") String apikey) {
         List<EndUserDTO> results = new ArrayList<>();
@@ -93,7 +92,6 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("")
     public Response add(
             EndUserDTO dto,
             @HeaderParam("Authorization") String apikey) {
