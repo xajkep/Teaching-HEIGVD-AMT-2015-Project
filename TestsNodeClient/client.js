@@ -25,7 +25,12 @@ var async = require('async');
 
 
 var http = require('http');
+
+// Chance is used to generate random names
 var chance = require('chance');
+
+// Mysql is used to fetch an apiKey
+var mysql = require('mysql');
 
 /* OLI (c)
  * This is a very important parameter: it defines how many sockets can be opened at the same time. In other
@@ -40,9 +45,16 @@ var addBadgeURL = "/api/badges";
 var NumberOfRequestsPerEndUser = 30;
 var numberOfUser = 10;
 
-// To update !
-// We'll test with 10 users so we need IDs ! Here's ten 100% random IDs:
+// MySql Credentials IMPORTANT
+var mysqlDatabase = "amt";
+var mysqlUser = "amt";
+var mysqlPassword = "amt";
+
+// There is random number generation now ! This can be usefull anyway so we'll keep those names a moment.
+// We'll test with 10 users so we need IDs ! Here's ten 100% not random IDs:
 var endUserNamesFix["End0_Amber", "End1_Blond", "End2_Dark", "End3_YesItsBeer", "End4_Fag", "End5_Smith", "End6_JamesBond", "End7_JamesBrown", "End8_Sacha", "End9_Olivier"];
+
+// This is used only if we work on a not empty database, the rest of the code using it is commented below.
 var endUserPointsBeforeTest[];
 
 /* OLI (c)
@@ -67,6 +79,36 @@ for (var i = 0; i < numberOfUser; i++){
 }
 console.log("Table of random Users: " + endUserNamesRandom);
 
+// Connection to the database to fetch the apiKey of app1 (auto generated test app)
+var connection = mysql.createConnection(
+    {
+      host     : 'localhost',
+      user     : 'amt',
+      password : 'amt',
+      database : 'amt',
+    }
+);
+
+connection.connect();
+
+var queryString = 'SELECT apikey FROM application INNER JOIN apikey WHERE application.KEY_ID = apikey.ID ';
+
+connection.query(queryString, function(err, rows, fields) {
+    if (err) throw err;
+
+ 		// Normaly there is only one row
+    for (var i in rows) {
+        console.log('Post Titles: ', rows[i]);
+				apikey = rows[i];
+    }
+});
+
+connection.end();
+
+
+
+
+// Function to log the tranctions
 function logTransaction(stats, transaction) {
 	var accountStats = stats[transaction.endUserId] || {
 		EndUserId: transaction.endUserId,
@@ -206,7 +248,7 @@ for (var j = 0; j < numberOfUser; j++){
 
     // The event
     var data = eventEasy;
-    data.endUserId = endUserNamesFix[j];
+    data.endUserId = endUserNamesRandom[j];
     endUserRequests.push(
       getRequestPOST(data, url);
     );
@@ -280,6 +322,8 @@ initialize(addBadge2, baseURL + addBadgeURL);
 
 //===========================================================//
 
+// Code to fetch the number of points of a user before testing. Not used now
+// but it can be usefull later.
 /*
 // If uncommented, add + endUserPointsBeforeTest[i] in checkValues
 // Get the number of points before the test (database don't nead to be empty)
