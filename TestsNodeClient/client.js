@@ -12,6 +12,8 @@
  * there is a problem (probably concurrency).
  *
  * IMPORTANT: + Empty the database before testing. It's supposed that the users you will create are brand new ones.
+ 								This will be usefull when the first events will be sent. Indeed, if two events from an unexisting
+								user arrive at the same time, there could be concurrency problems during the creation of the user.
  *						+ The event gives ONE point to the user and is compared to the number of event sent. If you change
  *						  the event (from eventEasy to hard for instance) you will have to change the comparison in the
  *							checkValues's function.
@@ -23,6 +25,7 @@ var async = require('async');
 
 
 var http = require('http');
+var chance = require('chance');
 
 /* OLI (c)
  * This is a very important parameter: it defines how many sockets can be opened at the same time. In other
@@ -33,10 +36,14 @@ http.globalAgent.maxSockets = 5;
 var apikey = "";
 var baseURL = "http://localhost:8080/AMT_Projet_Untitled/";
 var addRuleURL = "/api/rules";
+var addBadgeURL = "/api/badges";
 var NumberOfRequestsPerEndUser = 30;
+var numberOfUser = 10;
 
+// To update !
 // We'll test with 10 users so we need IDs ! Here's ten 100% random IDs:
-var endUserNames["End0_Amber", "End1_Blond", "End2_Dark", "End3_YesItsBeer", "End4_Fag", "End5_Smith", "End6_JamesBond", "End7_JamesBrown", "End8_Sacha", "End9_Olivier"];
+var endUserNamesFix["End0_Amber", "End1_Blond", "End2_Dark", "End3_YesItsBeer", "End4_Fag", "End5_Smith", "End6_JamesBond", "End7_JamesBrown", "End8_Sacha", "End9_Olivier"];
+var endUserPointsBeforeTest[];
 
 /* OLI (c)
  * This map keeps track of the transactions posted by the client,
@@ -53,6 +60,12 @@ var submittedStats = {}
  */
 var processedStats = {};
 
+// Generate random usernames with Chance
+var endUserNamesRandom[];
+for (var i = 0; i < numberOfUser; i++){
+	endUserNames.push(chance.first());
+}
+console.log("Table of random Users: " + endUserNamesRandom);
 
 function logTransaction(stats, transaction) {
 	var accountStats = stats[transaction.endUserId] || {
@@ -61,32 +74,19 @@ function logTransaction(stats, transaction) {
 	};
 	accountStats.numberOfTransactions += 1;
 	stats[transaction.endUserId] = accountStats;
+};
+
+// add badges on /api/badges
+
+var addBadge1 = {
+  "picture": "/path/picture1",
+  "description": "Badge1"
 }
 
-
-//DEPRECATED TO DELETE ------------------
-// Add event type called when a user answer a question on /api/eventTypes/
-var addEasyQuestionEvent = {
-  "name": "answerQuestion",
-  "properties": {
-    "difficulty": "easy"
-  }
+var addBadge2 = {
+  "picture": "/path/picture2",
+  "description": "Badge2"
 }
-
-var addMediumQuestionEvent = {
-  "name": "answerQuestion",
-  "properties": {
-    "difficulty": "medium"
-  }
-}
-
-var addHardQuestionEvent = {
-  "name": "answerQuestion",
-  "properties": {
-    "difficulty": "hard"
-  }
-}
-// --------------------------------
 
 // add rules on /api/rules
 
@@ -143,8 +143,8 @@ var eventEasy = {
     }
 }
 
+//===========================================================//
 
-// Request data
 
 function getRequestPOST(data, url) {
   return function(callback) {
@@ -192,12 +192,13 @@ function getRequestPOST(data, url) {
   		});
   }
 }; // End of getRequestPOST
+//===========================================================//
 
 
 // Table for End user events
 var endUserRequests[];
 // For endUser 0 to 9 (it's their IDs)
-for (var j = 0; j < 10; j++){
+for (var j = 0; j < numberOfUser; j++){
   // X requests per endUser that will add 1 point each
   for (var i = 0; i < NumberOfRequestsPerEndUser; i++) {
 
@@ -205,12 +206,14 @@ for (var j = 0; j < 10; j++){
 
     // The event
     var data = eventEasy;
-    data.endUserId = endUserNames[j];
+    data.endUserId = endUserNamesFix[j];
     endUserRequests.push(
       getRequestPOST(data, url);
     );
   }
 }
+//===========================================================//
+
 
 function postTransactionRequestsInParalell(callback){
   console.log("\n\n==========================================");
@@ -229,6 +232,8 @@ function postTransactionRequestsInParalell(callback){
     callback(null, endUserRequests.length + " transactions POSTs have been sent " + numberOfUnsuccessfulResponses + " have failed ");
   });
 };
+//===========================================================//
+
 
 function checkValues(callback){
   console.log("\n\n==========================================");
@@ -239,24 +244,28 @@ function checkValues(callback){
       "Accept": "application/json"
     }
   };
-  // Points for user 0 to 9
+  // Points for each users
+	// ATTENTION Fix the url !! -> problem with i
   var userPointsOnServer[];
-  for (var i = 0; i < 10; i++){
-    client.get(baseURL + "api/users/" + userId + "/reputation", requestData, function(data, response){
+  for (var i = 0; i < numberOfUser; i++){
+    client.get(baseURL + "api/users/" + i + "/reputation", requestData, function(data, response){
       // push in userPointsOnServer the number of points for each user
       userPointsOnServer.push(data.points);
-      // The number of points is supposed to be equal to the NumberOfRequestsPerEndUser
-      // The eventEasy makes the endUser to earn 1 point.
+      // The number of points given en this test is supposed to be equal to the NumberOfRequestsPerEndUser
+      // The eventEasy makes the endUser to earn 1 point according to the rule.
       console.log("Points for user " + i + ": " + data.points);
-      if(data.points !== NumberOfRequestsPerEndUser){
+      if(data.points !== NumberOfRequestsPerEndUser {
         console.log("Error: The number of points is " + data.points + " and should be " + NumberOfRequestsPerEndUser);
       }
     });
   }
-} // End of checkValues
+}; // End of checkValues
+//===========================================================//
+
 
 // This function has to create the rules as we suppose that we start with a brand new application.
 // Data will be "addRuleQuestionEasy" for instance.
+// We use this function to add badges too
 function initialize(data, url){
 	console.log("\n\n==========================================");
 	console.log("Adding new rule: "+ data.if.type + " ...");
@@ -266,7 +275,39 @@ function initialize(data, url){
 initialize(addRuleQuestionEasy, baseURL + addRuleURL);
 initialize(addRuleQuestionMedium, baseURL + addRuleURL);
 initialize(addRuleQuestionHard, baseURL + addRuleURL);
+initialize(addBadge1, baseURL + addBadgeURL);
+initialize(addBadge2, baseURL + addBadgeURL);
 
+//===========================================================//
+
+/*
+// If uncommented, add + endUserPointsBeforeTest[i] in checkValues
+// Get the number of points before the test (database don't nead to be empty)
+console.log("\n\n==========================================");
+console.log("Get the initial number of points for users 0-9");
+console.log("------------------------------------------");
+var requestData = {
+	headers:{
+		"Accept": "application/json"
+	}
+};
+for (var i = 0; i < 10; i++){
+
+	client.get(baseURL + "api/users/" + i + "/reputation", requestData, function(data, response){
+		// push in endUserPointsBeforeTest the number of points for each user
+		if(response.statusCode >= 200 || response.statusCode < 300){
+			console.log("Initial points for user " + i + ": " + data.points);
+			endUserPointsBeforeTest.push(data.points);
+		}else{
+			console.log("User probably doesn't exist, setting points to 0");
+			endUserPointsBeforeTest.push(0);
+		}
+	});
+}
+*/
+//===========================================================//
+
+// Send the requests in paralell with async:
 async.series([
   postTransactionRequestsInParalell,
   checkValues
@@ -277,3 +318,4 @@ async.series([
 	//console.log(err);
 	console.log(results);
 });
+//===========================================================//

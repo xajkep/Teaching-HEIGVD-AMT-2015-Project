@@ -1,0 +1,14 @@
+{
+  "name": "test_client",
+  "version": "1.0.0",
+  "description": "client de test pour la gamification api",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chance": "^0.8.0"
+  }
+}
