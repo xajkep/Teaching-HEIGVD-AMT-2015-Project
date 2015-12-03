@@ -109,7 +109,7 @@ GET /api/badges
 
 ~~~json
 {
-  [{
+  "badges":[{
     "href": String,
     "picture": String,
     "description": String
@@ -161,7 +161,7 @@ GET /api/pointawards
 
 ~~~json
 {
-  [{
+  "pointawards":[{
     "href": String,
     "numberOfPoints": Integer,
     "reason": String
