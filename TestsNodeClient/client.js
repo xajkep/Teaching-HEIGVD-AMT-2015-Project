@@ -77,7 +77,7 @@ var endUserNamesRandom[];
 for (var i = 0; i < numberOfUser; i++){
 	endUserNames.push(chance.first());
 }
-console.log("Table of random Users: " + endUserNamesRandom);
+console.log("Table of " + numberOfUser + " random users created: " + endUserNamesRandom);
 
 // Connection to the database to fetch the apiKey of app1 (auto generated test app)
 var connection = mysql.createConnection(
@@ -91,21 +91,19 @@ var connection = mysql.createConnection(
 
 connection.connect();
 
-var queryString = 'SELECT apikey FROM application INNER JOIN apikey WHERE application.KEY_ID = apikey.ID ';
+var queryString = 'SELECT apikey FROM application INNER JOIN apikey ON application.KEY_ID = apikey.ID ';
 
 connection.query(queryString, function(err, rows, fields) {
     if (err) throw err;
 
  		// Normaly there is only one row
     for (var i in rows) {
-        console.log('Post Titles: ', rows[i]);
+        console.log('Post Titles: ', rows[i]); //.fields[0]
 				apikey = rows[i];
     }
 });
 
 connection.end();
-
-
 
 
 // Function to log the tranctions
