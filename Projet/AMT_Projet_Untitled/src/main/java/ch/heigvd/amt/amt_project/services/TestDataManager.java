@@ -67,6 +67,9 @@ public class TestDataManager implements TestDataManagerLocal {
     
     @EJB
     ActionPointsDAOLocal actionPointsDAO;
+    
+    @EJB
+    EventTypesDAOLocal eventTypesDAO;
 
     @Override
     public void generateTestData() {
@@ -110,9 +113,9 @@ public class TestDataManager implements TestDataManagerLocal {
         System.out.println("Generate Rule for app1");
         List<RuleProperties> properties = new ArrayList<>();
         properties.add(rulePropertiesDAO.createAndReturnManagedEntity(new RuleProperties("Tag", "Java")));
-        
+        EventType et = eventTypesDAO.createAndReturnManagedEntity(new EventType("Question", app1));
         ActionType at = actionPointsDAO.createAndReturnManagedEntity(new ActionPoints(5, "Low"));        
-        rulesDAO.create(new Rule(new EventType("Question", app1), properties, at));
+        rulesDAO.create(new Rule(et, properties, at));
         
         /**
          * Generate endUser

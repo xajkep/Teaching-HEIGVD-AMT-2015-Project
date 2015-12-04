@@ -20,8 +20,7 @@ public class RuleProperties extends AbstractDomainModel<Long>{
     
     public RuleProperties() {}
     
-    public RuleProperties(String name, String value)
-    {
+    public RuleProperties(String name, String value) {
         this.name = name;
         this.value = value;
     }
