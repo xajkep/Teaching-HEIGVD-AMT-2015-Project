@@ -7,7 +7,7 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author YounTheory
+ * @author YounTheory, xajkep
  */
 
 @Entity
@@ -19,15 +19,36 @@ public class Rule extends AbstractDomainModel<Long>{
     private ActionType actionType;
 
     @OneToMany
-    private List<RuleProperties> properties;
+    private List<RuleProperties> eventProperties;
+    
+    @OneToMany
+    private List<RuleProperties> actionProperties;
+
+    public List<RuleProperties> getEventProperties() {
+        return eventProperties;
+    }
+
+    public void setEventProperties(List<RuleProperties> eventProperties) {
+        this.eventProperties = eventProperties;
+    }
+
+    public List<RuleProperties> getActionProperties() {
+        return actionProperties;
+    }
+
+    public void setActionProperties(List<RuleProperties> actionProperties) {
+        this.actionProperties = actionProperties;
+    }
     
     public Rule() {}
 
-    public Rule(EventType eventType, List<RuleProperties> properties, ActionType actionType) {
+    public Rule(EventType eventType, List<RuleProperties> eventProperties, ActionType actionType, List<RuleProperties> actionProperties) {
         this.eventType = eventType;
         this.actionType = actionType;
-        this.properties = properties;
+        this.eventProperties = eventProperties;
+        this.actionProperties = actionProperties;
     }
+    
     /**
      * @return the eventType
      */
@@ -56,19 +77,5 @@ public class Rule extends AbstractDomainModel<Long>{
      */
     public void setActionType(ActionType actionType) {
         this.actionType = actionType;
-    }
-    
-     /**
-     * @return the properties
-     */
-    public List<RuleProperties> getProperties() {
-        return properties;
-    }
-
-    /**
-     * @param properties the properties to set
-     */
-    public void setProperties(List<RuleProperties> properties) {
-        this.properties = properties;
     }
 }
