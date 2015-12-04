@@ -49,11 +49,12 @@ public class BadgeResource {
         List<BadgeDTO> result = new ArrayList<>();
         List<Badge> badges = badgesDAO.findAll();
 
+        // reach all badges
         for (Badge badge : badges) {
-            //Long id = b adge.getId();
             BadgeDTO dto = new BadgeDTO();
             populateDTOfromEntity(badge, dto);
-
+            
+            // Build href link to get specified badge
             URI badgeHref = uriInfo
                     .getAbsolutePathBuilder()
                     .path(BadgeResource.class, "getBadge")
@@ -75,6 +76,7 @@ public class BadgeResource {
         Badge badge = badgesDAO.findById(badgeid);
         populateDTOfromEntity(badge, dto);
         
+        // href link is the requested uri
         URI href = uriInfo.getRequestUri();
         
         dto.setHref(href);
@@ -101,6 +103,7 @@ public class BadgeResource {
         
         badgesDAO.create(badge);
         
+        // Build href link to get the badge
         URI badgeURI = uriInfo
                 .getBaseUriBuilder()
                 .path(BadgeResource.class)
@@ -125,6 +128,7 @@ public class BadgeResource {
         
         Badge badge = badgesDAO.findById(badgeid);
         
+        // Check if the description/picture are passed in the json
         if (!dto.getDescription().equals("")) {
             badge.setDescription(dto.getDescription());
         } else {
@@ -137,6 +141,7 @@ public class BadgeResource {
             dto.setPicture(badge.getPicture());
         }
         
+        // Build the href link to one badge
         URI badgeURI = uriInfo
                 .getBaseUriBuilder()
                 .path(BadgeResource.class)
@@ -153,6 +158,7 @@ public class BadgeResource {
     public Response delete(
         @PathParam("badgeid") long badgeid) {
         
+        // Search the badge by given id, and delete it
         Badge b = badgesDAO.findById(badgeid);
         badgesDAO.delete(b);
         
