@@ -77,19 +77,19 @@ public class UserResource {
     @Path("/{endUserName}")
     public EndUserDTO getUser(
             @PathParam("endUserName") String endUserName,
-            @HeaderParam("Authorization") String apikey) {        
-        
+            @HeaderParam("Authorization") String apikey) {
+
         try {
             Long appId = applicationsDAO.findByApikey(apikey).getId();
             EndUser e = endUsersDAO.findByName(endUserName, appId);
             EndUserDTO dto = new EndUserDTO();
-            
+
             dto.setName(e.getName());
             dto.setHref(uriInfo.getRequestUri());
-            
+
             return dto;
         } catch (BusinessDomainEntityNotFoundException ex) {
-            return null;
+            throw new ServiceUnavailableException("No content available");
         }
     }
 
@@ -138,7 +138,7 @@ public class UserResource {
 
             return Response.status(Response.Status.OK).entity(dto).build();
         } catch (BusinessDomainEntityNotFoundException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            throw new ServiceUnavailableException("No content available");
         }
     }
 
@@ -153,7 +153,7 @@ public class UserResource {
 
             return Response.status(Response.Status.OK).build();
         } catch (BusinessDomainEntityNotFoundException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            throw new ServiceUnavailableException("No content available");
         }
     }
 
@@ -186,9 +186,8 @@ public class UserResource {
             }
             return dto;
         } catch (BusinessDomainEntityNotFoundException ex) {
-            Logger.getLogger(UserResource.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ServiceUnavailableException("No content available");
         }
-        return null;
     }
 
     @GET
@@ -217,7 +216,7 @@ public class UserResource {
             }
             return result;
         } catch (BusinessDomainEntityNotFoundException ex) {
-            return null;
+            throw new ServiceUnavailableException("No content available");
         }
     }
 }
