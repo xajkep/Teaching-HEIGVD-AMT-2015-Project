@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
+import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
@@ -99,14 +100,26 @@ public class UserResource {
     public Response add(
             EndUserDTO dto,
             @HeaderParam("Authorization") String apikey) {
+        
+        
+        
         EndUser e = new EndUser();
         e.setName(dto.getName());
 
         // set the application of the enduser
+        Application app = null;
         try {
-            e.setApp(applicationsDAO.findByApikey(apikey));
+            app = applicationsDAO.findByApikey(apikey);
+            e.setApp(app);
         } catch (BusinessDomainEntityNotFoundException ex) {
             throw new ServiceUnavailableException("No content available");
+        }
+        
+        // Check if the user already exists
+        try {
+            endUsersDAO.findByName(apikey, app.getId());
+        } catch (BusinessDomainEntityNotFoundException ex) {
+            throw new ServiceUnavailableException("This user already exists");
         }
 
         endUsersDAO.create(e);
