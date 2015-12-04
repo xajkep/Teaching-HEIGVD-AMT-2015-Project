@@ -30,12 +30,10 @@
 
 GET /api/users
 ~~~json
-{
-  "users": [{
+[{
     "href": String,
     "name": String
-  }]
-}
+}]
 ~~~
 
 ## Get one user
@@ -90,17 +88,15 @@ GET /api/users/id/reputation
 GET /api/leaderboards/current?numberOfUsers
 
 ~~~json
-{
-  "users": [{
-    "name": String,
-    "points": Integer,
-    "badges": [{
-        "href": String,
-        "picture": String,
-        "description": String
-      }]
-  }]
-}
+[{
+  "name": String,
+  "points": Integer,
+  "badges": [{
+      "href": String,
+      "picture": String,
+      "description": String
+    }]
+}]
 ~~~
 
 ## Get all badges
@@ -108,13 +104,11 @@ GET /api/leaderboards/current?numberOfUsers
 GET /api/badges
 
 ~~~json
-{
-  "badges":[{
-    "href": String,
-    "picture": String,
-    "description": String
-  }]
-}
+[{
+  "href": String,
+  "picture": String,
+  "description": String
+}]
 ~~~
 
 ## Get one badge
@@ -160,13 +154,11 @@ DELETE /api/badges/{id}
 GET /api/pointawards
 
 ~~~json
-{
-  "pointawards":[{
-    "href": String,
-    "numberOfPoints": Integer,
-    "reason": String
-  }]
-}
+[{
+  "href": String,
+  "numberOfPoints": Integer,
+  "reason": String
+}]
 ~~~
 
 ## Get one point award
