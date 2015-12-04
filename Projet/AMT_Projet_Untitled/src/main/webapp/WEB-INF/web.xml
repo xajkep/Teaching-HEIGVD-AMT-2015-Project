@@ -8,15 +8,6 @@
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-   
-    <filter>
-       <filter-name>RestFilter</filter-name>
-       <filter-class>ch.heigvd.amt.amt_project.web.filters.RestFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>RestFilter</filter-name>
-        <url-pattern>/api/*</url-pattern>
-    </filter-mapping>
  
     <servlet>
         <servlet-name>AuthenticationServlet</servlet-name>
