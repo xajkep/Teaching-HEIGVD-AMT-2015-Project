@@ -1,6 +1,9 @@
 package ch.heigvd.amt.amt_project.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
@@ -8,15 +11,21 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@NamedQueries({
+  @NamedQuery(name = "EventType.findByName", query = "SELECT e FROM EventType e WHERE e.app.id = :app AND e.name = :name"),
+})
 public class EventType extends AbstractDomainModel<Long>{
     
     private String name;
     
+    @ManyToOne
+    private Application app;
+    
     public EventType() {}
     
-    public EventType(String name)
-    {
+    public EventType(String name, Application app) {
         this.name = name;
+        this.app = app;
     }
 
     /**
@@ -33,5 +42,20 @@ public class EventType extends AbstractDomainModel<Long>{
         this.name = name;
     }
     
+    /**
+     * 
+     * @return app Application
+     */
+    public Application getApp() {
+        return app;
+    }
+
+    /**
+     * 
+     * @param app Application
+     */
+    public void setApp(Application app) {
+        this.app = app;
+    }
     
 }

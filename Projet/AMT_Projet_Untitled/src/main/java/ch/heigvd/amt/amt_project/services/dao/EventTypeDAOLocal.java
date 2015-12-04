@@ -9,5 +9,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface EventTypeDAOLocal extends IGenericDAO<EventType, Long> {
+
+    public EventType findByName(String type, Long appId) throws BusinessDomainEntityNotFoundException;
     
 }

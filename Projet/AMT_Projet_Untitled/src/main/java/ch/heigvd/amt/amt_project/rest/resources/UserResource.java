@@ -44,21 +44,21 @@ public class UserResource {
 
     @EJB
     EndUsersDAOLocal endUsersDAO;
-    
+
     @EJB
     ApplicationsDAOLocal applicationsDAO;
 
     public UserResource() {
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<EndUserDTO> getUsers(
-        @HeaderParam("Authorization") String apikey) {
+            @HeaderParam("Authorization") String apikey) {
         List<EndUserDTO> results = new ArrayList<>();
-        
+
         List<EndUser> endUsers = endUsersDAO.findByApikey(apikey);
-        
+
         for (EndUser e : endUsers) {
             EndUserDTO dto = new EndUserDTO();
             dto.setName(e.getName());
@@ -68,27 +68,31 @@ public class UserResource {
                     .build(e.getId()));
             results.add(dto);
         }
-        
+
         return results;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{enduserid}")
+    @Path("/{endUserName}")
     public EndUserDTO getUser(
-        @PathParam("enduserid") long enduserid,
-        @HeaderParam("Authorization") String apikey) {
-    
-        EndUserDTO dto = new EndUserDTO();
+            @PathParam("endUserName") String endUserName,
+            @HeaderParam("Authorization") String apikey) {        
         
-        EndUser e = endUsersDAO.findById(enduserid);
-        
-        dto.setName(e.getName());        
-        dto.setHref(uriInfo.getRequestUri());
-       
-        return dto;
+        try {
+            Long appId = applicationsDAO.findByApikey(apikey).getId();
+            EndUser e = endUsersDAO.findByName(endUserName, appId);
+            EndUserDTO dto = new EndUserDTO();
+            
+            dto.setName(e.getName());
+            dto.setHref(uriInfo.getRequestUri());
+            
+            return dto;
+        } catch (BusinessDomainEntityNotFoundException ex) {
+            return null;
+        }
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -97,59 +101,71 @@ public class UserResource {
             @HeaderParam("Authorization") String apikey) {
         EndUser e = new EndUser();
         e.setName(dto.getName());
-        
+
         // set the application of the enduser
         try {
             e.setApp(applicationsDAO.findByApikey(apikey));
         } catch (BusinessDomainEntityNotFoundException ex) {
             throw new ServiceUnavailableException("No content available");
         }
-        
+
         endUsersDAO.create(e);
-        
+
         dto.setHref(uriInfo
-                    .getAbsolutePathBuilder()
-                    .path(UserResource.class, "getUser")
-                    .build(e.getId()));
-        
+                .getAbsolutePathBuilder()
+                .path(UserResource.class, "getUser")
+                .build(e.getId()));
+
         return Response.status(Response.Status.CREATED).entity(dto).build();
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{userid}")
+    @Path("/{endUserName}")
     public Response edit(
-        EndUserDTO dto,
-        @PathParam("userid") long userid) {
-        EndUser e = endUsersDAO.findById(userid);
-        
-        if (!dto.getName().equals("")) {
-            e.setName(dto.getName());
-        } else {
-            dto.setName(e.getName());
+            EndUserDTO dto,
+            @PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
+        try {
+            Long appId = applicationsDAO.findByApikey(apikey).getId();
+            EndUser e = endUsersDAO.findByName(endUserName, appId);
+
+            if (!dto.getName().equals("")) {
+                e.setName(dto.getName());
+            } else {
+                dto.setName(e.getName());
+            }
+
+            return Response.status(Response.Status.OK).entity(dto).build();
+        } catch (BusinessDomainEntityNotFoundException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        
-        return Response.status(Response.Status.OK).entity(dto).build();
     }
-    
+
     @DELETE
-    @Path("/{userid}")
+    @Path("/{endUserName}")
     public Response delete(
-            @PathParam("userid") long userid) {
-        EndUser e = endUsersDAO.findById(userid);
-        endUsersDAO.delete(e);
-        
-        return Response.status(Response.Status.OK).build();
+            @PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
+        try {
+            Long appId = applicationsDAO.findByApikey(apikey).getId();
+            EndUser e = endUsersDAO.findByName(endUserName, appId);
+            endUsersDAO.delete(e);
+
+            return Response.status(Response.Status.OK).build();
+        } catch (BusinessDomainEntityNotFoundException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("{endUserID}/reputation")
-    public EndUserReputationDTO getEndUserReputation(@PathParam("endUserID") long endUserID) {
-        EndUser endUser = endUsersDAO.findById(endUserID);
+    @Path("{endUserName}/reputation")
+    public EndUserReputationDTO getEndUserReputation(@PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
 
-         try {
+        try {
+            Long appId = applicationsDAO.findByApikey(apikey).getId();
+            EndUser endUser = endUsersDAO.findByName(endUserName, appId);
+
             EndUserReputationDTO dto = new EndUserReputationDTO();
             dto.setPoints(endUsersDAO.getPoints(endUser.getId()));
             List<BadgeDTO> badgeList = new ArrayList<>();
@@ -174,15 +190,18 @@ public class UserResource {
         }
         return null;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("{endUserID}/badges")
-    public List<BadgeDTO> getEndUserBadges(@PathParam("endUserID") long endUserID) {
-        EndUser endUser = endUsersDAO.findById(endUserID);
-        List<BadgeDTO> result = new ArrayList<>();
+    @Path("{endUserName}/badges")
+    public List<BadgeDTO> getEndUserBadges(@PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
 
-        for (BadgeAward badgeAward : endUser.getBadgeAwards()) {
+        try {
+            Long appId = applicationsDAO.findByApikey(apikey).getId();
+            EndUser endUser = endUsersDAO.findByName(endUserName, appId);
+            List<BadgeDTO> result = new ArrayList<>();
+
+            for (BadgeAward badgeAward : endUser.getBadgeAwards()) {
                 BadgeDTO badgeDTO = new BadgeDTO();
                 Badge badge = badgeAward.getBadge();
                 badgeDTO.setDescription(badge.getDescription());
@@ -196,6 +215,9 @@ public class UserResource {
 
                 result.add(badgeDTO);
             }
-        return result;
+            return result;
+        } catch (BusinessDomainEntityNotFoundException ex) {
+            return null;
+        }
     }
 }

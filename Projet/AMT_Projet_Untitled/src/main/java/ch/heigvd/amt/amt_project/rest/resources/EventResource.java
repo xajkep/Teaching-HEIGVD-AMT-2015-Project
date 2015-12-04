@@ -2,6 +2,7 @@ package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.EndUser;
+import ch.heigvd.amt.amt_project.models.EventType;
 import ch.heigvd.amt.amt_project.rest.dto.EventDTO;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
@@ -62,6 +63,15 @@ public class EventResource {
         } catch (BusinessDomainEntityNotFoundException ex) {
             endUser = endUserDAO.createAndReturnManagedEntity(new EndUser(app, endUserName, date));
         }
+        EventType eventType = null;
+        String eventTypeName = event.getType();
+        try {
+            eventType = eventTypeDAO.findByName(eventTypeName, appId);
+        } catch (BusinessDomainEntityNotFoundException ex) {
+            eventType = eventTypeDAO.createAndReturnManagedEntity(new EventType(eventTypeName, app));
+        }
+        
+        event.getType()
         
         /*for (Entry<String, String> entry : event.getProperties().entrySet()) {
             System.out.println("Key: " + entry.getKey() + " value: " + entry.getValue());
