@@ -27,7 +27,8 @@ var async = require('async');
 var http = require('http');
 
 // Chance is used to generate random names
-var chance = require('chance');
+var Chance = require('chance');
+var chance = new Chance();
 
 // Mysql is used to fetch an apiKey
 var mysql = require('mysql');
@@ -52,10 +53,10 @@ var mysqlPassword = "amt";
 
 // There is random number generation now ! This can be usefull anyway so we'll keep those names a moment.
 // We'll test with 10 users so we need IDs ! Here's ten 100% not random IDs:
-var endUserNamesFix["End0_Amber", "End1_Blond", "End2_Dark", "End3_YesItsBeer", "End4_Fag", "End5_Smith", "End6_JamesBond", "End7_JamesBrown", "End8_Sacha", "End9_Olivier"];
+var endUserNamesFix = ["End0_Amber", "End1_Blond", "End2_Dark", "End3_YesItsBeer", "End4_Fag", "End5_Smith", "End6_JamesBond", "End7_JamesBrown", "End8_Sacha", "End9_Olivier"];
 
 // This is used only if we work on a not empty database, the rest of the code using it is commented below.
-var endUserPointsBeforeTest[];
+var endUserPointsBeforeTest = [];
 
 /* OLI (c)
  * This map keeps track of the transactions posted by the client,
@@ -73,41 +74,47 @@ var submittedStats = {}
 var processedStats = {};
 
 // Generate random usernames with Chance
-var endUserNamesRandom[];
+var endUserNamesRandom = [];
 for (var i = 0; i < numberOfUser; i++){
-	endUserNames.push(chance.first());
+	endUserNamesRandom.push(chance.first());
 }
 console.log("Table of " + numberOfUser + " random users created: " + endUserNamesRandom);
 
-// Connection to the database to fetch the apiKey of app1 (auto generated test app)
-var connection = mysql.createConnection(
-    {
-      host     : 'localhost',
-      user     : 'amt',
-      password : 'amt',
-      database : 'amt',
-    }
-);
 
-connection.connect();
+function getApiKey(notifyApiKeyHasBeenFetched){
+	// Connection to the database to fetch the apiKey of app1 (auto generated test app)
+	console.log("Getting apikey...");
+	var connection = mysql.createConnection(
+	    {
+	      host     : 'localhost',
+	      user     : 'amt',
+	      password : 'amt',
+	      database : 'amt',
+	    }
+	);
 
-var queryString = 'SELECT apikey FROM application INNER JOIN apikey ON application.KEY_ID = apikey.ID ';
+	connection.connect();
 
-connection.query(queryString, function(err, rows, fields) {
-    if (err) throw err;
+	var queryString = 'SELECT apikey FROM application INNER JOIN apikey ON application.KEY_ID = apikey.ID WHERE application.name = \"app1\"';
 
- 		// Normaly there is only one row
-    for (var i in rows) {
-        console.log('Post Titles: ', rows[i]); //.fields[0]
-				apikey = rows[i];
-    }
-});
+	connection.query(queryString, function(err, rows, fields) {
+	    if (err) throw err;
 
-connection.end();
+	 		// Normaly there is only one row
+	    for (var i in rows) {
+	        console.log('Got apikey: ', rows[i].apikey); //.fields[0]
+					apikey = rows[i].apikey;
+	    }
+			notifyApiKeyHasBeenFetched(null, "API key have been fetched");
+	});
+
+	connection.end();
+}
+
 
 
 // Function to log the tranctions
-function logTransaction(stats, transaction) {
+/*function logTransaction(stats, transaction) {
 	var accountStats = stats[transaction.endUserId] || {
 		EndUserId: transaction.endUserId,
 		numberOfTransactions: 0
@@ -115,78 +122,87 @@ function logTransaction(stats, transaction) {
 	accountStats.numberOfTransactions += 1;
 	stats[transaction.endUserId] = accountStats;
 };
+*/
 
 // add badges on /api/badges
 
 var addBadge1 = {
-  "picture": "/path/picture1",
-  "description": "Badge1"
+  picture: "/path/picture1",
+  description: "Badge1"
 }
 
 var addBadge2 = {
-  "picture": "/path/picture2",
-  "description": "Badge2"
+  picture: "/path/picture2",
+  description: "Badge2"
 }
 
 // add rules on /api/rules
 
 var addRuleQuestionHard = {
-  "if":{
-    "type": "answerQuestion",
-    "properties":{
+  condition:{
+    type: "answerQuestion",
+    properties:{
       "difficulty": "hard"
     }
   },
-  "then": {
-    "action": "awardPoint",
-    "nbPoints": 3
+  action: {
+    type: "awardPoint",
+    properties:{
+			"nbPoints":"3"
+		}
   }
 }
 
 var addRuleQuestionMedium = {
-  "if":{
-    "type": "answerQuestion",
-    "properties":{
+  condition:{
+    type: "answerQuestion",
+    properties:{
       "difficulty": "medium"
     }
   },
-  "then": {
-    "action": "awardPoint",
-    "nbPoints": 2
+  action: {
+    type: "awardPoint",
+    properties:{
+			"nbPoints":"2"
+		}
   }
 }
 
+
 var addRuleQuestionEasy = {
-  "if":{
-    "type": "answerQuestion",
-    "properties":{
+  condition:{
+    type: "answerQuestion",
+    properties:{
       "difficulty": "easy"
     }
   },
-  "then": {
-    "action": "awardPoint",
-    "nbPoints": 1
+  action: {
+    type: "awardPoint",
+    properties:{
+			"nbPoints":"1"
+		}
   }
 }
 
 // POST event according to a user
 
 // Name correspond à l'ID
+var endUserId = "";
 var eventEasy = {
-  "type": "answerQuestion",
-  "timestamp": new Date().toISOString();,
-  "endUserId": endUserId,
-  "properties":
+  type: "answerQuestion",
+  timestamp: new Date().toISOString(),
+  endUser: endUserId,
+  properties:
     {
-      "tag": "java",
-      "difficulty": "easy"
+      tag: "java",
+      difficulty: "easy"
     }
 }
 
 //===========================================================//
 
 
-function getRequestPOST(data, url) {
+function getRequestPOST(data, url, callback) {
   return function(callback) {
 
 		// Request headers and data
@@ -205,8 +221,8 @@ function getRequestPOST(data, url) {
       }
     };
 
-    logTransaction(submittedStats, requestData.data);
-    console.log("POST " + url + requestData.data);
+    //logTransaction(submittedStats, requestData.data);
+    console.log("POST " + url + JSON.stringify(requestData.data));
 
     var req = client.post(baseURL + url, requestData, function(data, response) {
   			var error = null;
@@ -234,24 +250,30 @@ function getRequestPOST(data, url) {
 }; // End of getRequestPOST
 //===========================================================//
 
-
 // Table for End user events
-var endUserRequests[];
-// For endUser 0 to 9 (it's their IDs)
-for (var j = 0; j < numberOfUser; j++){
-  // X requests per endUser that will add 1 point each
-  for (var i = 0; i < NumberOfRequestsPerEndUser; i++) {
+var endUserRequests = [];
+function tableOfRequests(callback){
 
-    var url = '/api/events';
+	// For endUser 0 to 9 (it's their IDs)
+	for (var j = 0; j < numberOfUser; j++){
+	  // X requests per endUser that will add 1 point each
+	  for (var i = 0; i < NumberOfRequestsPerEndUser; i++) {
 
-    // The event
-    var data = eventEasy;
-    data.endUserId = endUserNamesRandom[j];
-    endUserRequests.push(
-      getRequestPOST(data, url);
-    );
-  }
+	    var url = '/api/events';
+
+	    // The event
+	    var data = eventEasy;
+	    data.endUser = endUserNamesRandom[j];
+			console.log(JSON.stringify(data));
+	    endUserRequests.push(
+	      getRequestPOST(data, baseURL + url)
+	    );
+	  }
+	}
+	callback();
 }
+
+
 //===========================================================//
 
 
@@ -260,13 +282,14 @@ function postTransactionRequestsInParalell(callback){
 	console.log("POSTing transaction requests in parallel");
 	console.log("------------------------------------------");
   var numberOfUnsuccessfulResponses = 0;
-  async.paralell(endUserRequests, function(err, results){
+  async.parallel(endUserRequests, function(err, results){
     for (var i = 0; i < endUserRequests.length; i++){
-      if(endUserRequests[i].response.statusCode < 200 || endUserRequests[i].response.statusCode >= 300){
-        console.log("Result " + i + ": " + endUserRequests[i].response.statusCode);
+      if(results[i].response.statusCode < 200 || results[i].response.statusCode >= 300){
+        console.log("Result " + i + ": " + results[i].response.statusCode);
         numberOfUnsuccessfulResponses++;
       } else {
-        logTransaction(processedStats, endUserRequests[i].requestData.data);
+        //logTransaction(processedStats, endUserRequests[i].requestData);
+				console.log("Posting succeed");
       }
     }
     callback(null, endUserRequests.length + " transactions POSTs have been sent " + numberOfUnsuccessfulResponses + " have failed ");
@@ -285,18 +308,19 @@ function checkValues(callback){
     }
   };
   // Points for each users
-	// ATTENTION Fix the url !! -> problem with i
-  var userPointsOnServer[];
+  var userPointsOnServer = [];
   for (var i = 0; i < numberOfUser; i++){
-    client.get(baseURL + "api/users/" + i + "/reputation", requestData, function(data, response){
+		console.log("User to check: " + endUserNamesRandom[i]);
+    client.get(baseURL + "api/users/" + endUserNamesRandom[i] + "/reputation", requestData, function(data, response){
       // push in userPointsOnServer the number of points for each user
       userPointsOnServer.push(data.points);
       // The number of points given en this test is supposed to be equal to the NumberOfRequestsPerEndUser
       // The eventEasy makes the endUser to earn 1 point according to the rule.
-      console.log("Points for user " + i + ": " + data.points);
-      if(data.points !== NumberOfRequestsPerEndUser {
+      console.log("Points for user " + endUserNamesRandom[i] + ": " + data.points);
+      if(data.points !== NumberOfRequestsPerEndUser) {
         console.log("Error: The number of points is " + data.points + " and should be " + NumberOfRequestsPerEndUser);
       }
+			console.log(response.statusCode);
     });
   }
 }; // End of checkValues
@@ -306,17 +330,42 @@ function checkValues(callback){
 // This function has to create the rules as we suppose that we start with a brand new application.
 // Data will be "addRuleQuestionEasy" for instance.
 // We use this function to add badges too
-function initialize(data, url){
+function initialize(data, url, callback){
 	console.log("\n\n==========================================");
-	console.log("Adding new rule: "+ data.if.type + " ...");
+	console.log("Adding new rule or badge: " + JSON.stringify(data) + " ...");
 	console.log("------------------------------------------");
-	getRequestPOST(data, url);
+	return getRequestPOST(data, url, callback);
 }
-initialize(addRuleQuestionEasy, baseURL + addRuleURL);
-initialize(addRuleQuestionMedium, baseURL + addRuleURL);
-initialize(addRuleQuestionHard, baseURL + addRuleURL);
-initialize(addBadge1, baseURL + addBadgeURL);
-initialize(addBadge2, baseURL + addBadgeURL);
+
+var rulesAndBadgesRequests = [];
+function initialisation(notifyInitHasBeenDone){
+	console.log("\n\n==========================================");
+	console.log("POSTing rules and badges initialisation requests in parallel");
+	console.log("------------------------------------------");
+
+	// Ajout des fonctions POST au tableau
+	rulesAndBadgesRequests.push(initialize(addRuleQuestionEasy, baseURL + addRuleURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addRuleQuestionMedium, baseURL + addRuleURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addRuleQuestionHard, baseURL + addRuleURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addBadge1, baseURL + addBadgeURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addBadge2, baseURL + addBadgeURL, notifyInitHasBeenDone));
+
+	async.parallel(rulesAndBadgesRequests, function(err, results){
+		var failed = 0;
+		for (var i = 0; i < rulesAndBadgesRequests.length; i++){
+      if(results[i].response.statusCode < 200 || results[i].response.statusCode >= 300){
+        console.log("Result " + i + ": " + results[i].response.statusCode);
+				failed++;
+      } else {
+        //logTransaction(processedStats, endUserRequests[i].requestData);
+				console.log("Posting succeed");
+      }
+    }
+    notifyInitHasBeenDone(null, rulesAndBadgesRequests.length + " transactions POSTs have been sent " + failed + " have failed ");
+	});
+
+}
+
 
 //===========================================================//
 
@@ -349,8 +398,11 @@ for (var i = 0; i < 10; i++){
 */
 //===========================================================//
 
-// Send the requests in paralell with async:
+// Send the requests in series with async:
 async.series([
+	getApiKey,
+	initialisation,
+	tableOfRequests,
   postTransactionRequestsInParalell,
   checkValues
 ], function(err, results) {
