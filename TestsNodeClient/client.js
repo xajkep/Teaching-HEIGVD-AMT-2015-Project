@@ -111,19 +111,6 @@ function getApiKey(notifyApiKeyHasBeenFetched){
 	connection.end();
 }
 
-
-
-// Function to log the tranctions
-/*function logTransaction(stats, transaction) {
-	var accountStats = stats[transaction.endUserId] || {
-		EndUserId: transaction.endUserId,
-		numberOfTransactions: 0
-	};
-	accountStats.numberOfTransactions += 1;
-	stats[transaction.endUserId] = accountStats;
-};
-*/
-
 // add badges on /api/badges
 
 var addBadge1 = {
@@ -186,7 +173,6 @@ var addRuleQuestionEasy = {
 
 // POST event according to a user
 
-// Name correspond à l'ID
 var endUserId = "";
 var eventEasy = {
   type: "answerQuestion",
@@ -201,14 +187,12 @@ var eventEasy = {
 
 //===========================================================//
 
-
+// This function return the functions that will send the requests (events)
 function getRequestPOST(data, url, callback) {
 	console.log("Prepare a POST request for user " + data.endUser);
 	var capturedData = JSON.parse(JSON.stringify(data));
 
   return function(callback) {
-
-
 		// Request headers and data
     var requestData = {
       headers:{
@@ -256,6 +240,8 @@ function getRequestPOST(data, url, callback) {
 
 // Table for End user events
 var endUserRequests = [];
+
+// This function build the table of functions that we will execute in parallel later
 function tableOfRequests(callback){
 
 	// For endUser 0 to 9 (it's their IDs)
@@ -274,15 +260,14 @@ function tableOfRequests(callback){
 	    );
 	  }
 	}
-	console.log("---------------------------------");
-	//console.log("Table of requests \n" + endUserRequests);
 	callback();
-}
+}// End of tableOfRequests
 
 
 //===========================================================//
 
-
+// This function executes the functions in endUserRequests
+// Eachone of those functions sent their request, all of this in parallel.
 function postTransactionRequestsInParalell(callback){
   console.log("\n\n==========================================");
 	console.log("POSTing transaction requests in parallel");
@@ -303,7 +288,8 @@ function postTransactionRequestsInParalell(callback){
 };
 //===========================================================//
 
-
+// This function get the number of points from the server and compare them to
+// the points sent. If users are new ones, values must be the same.
 function checkValues(callback){
   console.log("\n\n==========================================");
 	console.log("Comparing client-side and server-side stats");
@@ -372,42 +358,14 @@ function initialisation(notifyInitHasBeenDone){
     }
     notifyInitHasBeenDone(null, rulesAndBadgesRequests.length + " transactions POSTs have been sent " + failed + " have failed ");
 	});
-
-}
+} // End of initialisation
 
 
 //===========================================================//
-
-// Code to fetch the number of points of a user before testing. Not used now
-// but it can be usefull later.
-/*
-// If uncommented, add + endUserPointsBeforeTest[i] in checkValues
-// Get the number of points before the test (database don't nead to be empty)
-console.log("\n\n==========================================");
-console.log("Get the initial number of points for users 0-9");
-console.log("------------------------------------------");
-var requestData = {
-	headers:{
-		"Accept": "application/json"
-	}
-};
-for (var i = 0; i < 10; i++){
-
-	client.get(baseURL + "api/users/" + i + "/reputation", requestData, function(data, response){
-		// push in endUserPointsBeforeTest the number of points for each user
-		if(response.statusCode >= 200 || response.statusCode < 300){
-			console.log("Initial points for user " + i + ": " + data.points);
-			endUserPointsBeforeTest.push(data.points);
-		}else{
-			console.log("User probably doesn't exist, setting points to 0");
-			endUserPointsBeforeTest.push(0);
-		}
-	});
-}
-*/
+// Time to test !!!!!
 //===========================================================//
 
-// Send the requests in series with async:
+// Execute in series with async:
 async.series([
 	getApiKey,
 	initialisation,
