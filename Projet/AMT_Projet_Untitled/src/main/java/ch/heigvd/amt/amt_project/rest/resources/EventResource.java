@@ -120,7 +120,7 @@ public class EventResource {
                         ActionPoints ap = (ActionPoints) r.getActionType();
                         pointAwardsDAO.create(new PointAwards(endUser, ap.getPoints(), null));
                         break;
-                    case "ActionBage":
+                    case "ActionBagde":
                         ActionBadge ab = (ActionBadge) r.getActionType();
                         badgeAwardsDAO.create(new BadgeAward(ab.getBadge(), endUser, date));
                 }
