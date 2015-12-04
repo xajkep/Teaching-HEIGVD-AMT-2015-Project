@@ -3,6 +3,7 @@ package ch.heigvd.amt.amt_project.models;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -18,10 +19,10 @@ import javax.persistence.OneToMany;
     @NamedQuery(name="Rule.findByEventType", query = "SELECT r FROM Rule r WHERE r.eventType = :eventType")
 })
 public class Rule extends AbstractDomainModel<Long>{
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private EventType eventType;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private ActionType actionType;
 
     @OneToMany(cascade = CascadeType.PERSIST)

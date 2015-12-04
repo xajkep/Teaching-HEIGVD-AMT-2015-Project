@@ -60,13 +60,16 @@ public class RuleResource {
         
         /* Set event and action type */
         Application app = null;
+        EventType eventType = null;
         try {
             app = applicationDAO.findByApikey(apikey);
-            eventTypesDAO.findByName(
+            eventType = eventTypesDAO.findByName(
                     dto.getCondition().getType(), app.getId());
         } catch (BusinessDomainEntityNotFoundException ex) {
-            eventTypesDAO.create(new EventType(dto.getCondition().getType(), app));
+            eventType = eventTypesDAO.createAndReturnManagedEntity(new EventType(dto.getCondition().getType(), app));
         }
+        
+        rule.setEventType(eventType);
         
         
         /* Recover event properties from the DTO */
@@ -82,7 +85,6 @@ public class RuleResource {
         }
         
         rule.setEventProperties(conditionPropertiesList);
-        System.out.println(dto.getAction().getType());
         /* Action type */
         switch(dto.getAction().getType()) {
             case "AwardPoints":
