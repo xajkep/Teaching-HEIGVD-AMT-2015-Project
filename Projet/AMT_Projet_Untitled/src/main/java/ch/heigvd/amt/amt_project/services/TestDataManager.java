@@ -112,7 +112,7 @@ public class TestDataManager implements TestDataManagerLocal {
          */
         System.out.println("Generate Rule for app1");
         List<RuleProperties> properties = new ArrayList<>();
-        properties.add(rulePropertiesDAO.createAndReturnManagedEntity(new RuleProperties("Tag", "Java")));
+        properties.add(rulePropertiesDAO.createAndReturnManagedEntity(new RuleProperties("tag", "java")));
         EventType et = eventTypesDAO.createAndReturnManagedEntity(new EventType("Question", app1));
         ActionType at = actionPointsDAO.createAndReturnManagedEntity(new ActionPoints(5, "Low"));        
         rulesDAO.create(new Rule(et, properties, at));

@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Rule.findByEventTyp", query = "SELECT r FROM Rule r WHERE r.eventType = :eventType")
+    @NamedQuery(name="Rule.findByEventType", query = "SELECT r FROM Rule r WHERE r.eventType = :eventType")
 })
 public class Rule extends AbstractDomainModel<Long>{
     @ManyToOne
