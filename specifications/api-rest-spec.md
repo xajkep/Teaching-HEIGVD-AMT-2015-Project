@@ -260,12 +260,16 @@ POST /api/rules/
     "if":{
       "type": String,
       "properties":{
-        "difficulty": String
+        "name": String,
+        "value": String
       }
     },
     "then": {
       "action": String,
-      "nbPoints": Integer
+      "properties": {
+        "name": String,
+        "value": String
+      }
     }
   }
 ~~~
@@ -277,12 +281,16 @@ POST /api/rules/
   "if":{
     "type": "question",
     "properties":{
-      "difficulty": "hard"
+      "name": "difficulty",
+      "value": "hard"
     }
   },
   "then": {
     "action": "awardPoint",
-    "nbPoints": 3
+    "properties":{
+      "name": "nbPoints",
+      "value": "3"
+    }
   }
 }
 ~~~
