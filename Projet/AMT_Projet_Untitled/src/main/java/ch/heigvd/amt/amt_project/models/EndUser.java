@@ -26,7 +26,7 @@ import javax.persistence.UniqueConstraint;
   @NamedQuery(name = "EndUser.getBestUsers", query = "SELECT e.id, e.name, SUM(p.point) FROM EndUser e, PointAwards p WHERE e.app.key.apiKey = :apikey AND p.endUser = e GROUP BY p.endUser.id"),
 })
 @Table(uniqueConstraints=
-           @UniqueConstraint(columnNames = {"app", "name"})) 
+           @UniqueConstraint(columnNames = {"app_id", "name"})) 
 public class EndUser extends AbstractDomainModel<Long>{
     @ManyToOne
     private Application app;

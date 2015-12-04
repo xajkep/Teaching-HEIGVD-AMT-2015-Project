@@ -65,7 +65,7 @@ public class UserResource {
             dto.setHref(uriInfo
                     .getAbsolutePathBuilder()
                     .path(UserResource.class, "getUser")
-                    .build(e.getId()));
+                    .build(e.getName()));
             results.add(dto);
         }
 
@@ -114,7 +114,7 @@ public class UserResource {
         dto.setHref(uriInfo
                 .getAbsolutePathBuilder()
                 .path(UserResource.class, "getUser")
-                .build(e.getId()));
+                .build(e.getName()));
 
         return Response.status(Response.Status.CREATED).entity(dto).build();
     }
@@ -164,10 +164,15 @@ public class UserResource {
 
         try {
             Long appId = applicationsDAO.findByApikey(apikey).getId();
+            System.out.println("appID" + appId);
+            System.out.println("endUserName" + endUserName);
             EndUser endUser = endUsersDAO.findByName(endUserName, appId);
+            System.out.println("endUser" + endUser.getId());
 
             EndUserReputationDTO dto = new EndUserReputationDTO();
-            dto.setPoints(endUsersDAO.getPoints(endUser.getId()));
+            Long points = endUsersDAO.getPoints(endUser.getId());
+            System.out.println("points : " + points);
+            dto.setPoints(points);
             List<BadgeDTO> badgeList = new ArrayList<>();
 
             for (BadgeAward badgeAward : endUser.getBadgeAwards()) {
