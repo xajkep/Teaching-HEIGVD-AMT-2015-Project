@@ -38,7 +38,7 @@ GET /api/users
 
 ## Get one user
 
-GET /api/users/{id}
+GET /api/users/{name}
 ~~~json
 {
   "href": String,
@@ -48,7 +48,7 @@ GET /api/users/{id}
 
 ## Add a new user
 
-POST /api/users/{id}
+POST /api/users/{name}
 ~~~json
 {
   "name": String
@@ -57,7 +57,7 @@ POST /api/users/{id}
 
 ## Edit an existant user
 
-PUT /api/users/{id}
+PUT /api/users/{name}
 ~~~json
 {
   "name": String
@@ -66,7 +66,7 @@ PUT /api/users/{id}
 
 ## Delete an existant user
 
-DELETE /api/users/{id}
+DELETE /api/users/{name}
 
 ## Get user reputation
 
@@ -282,3 +282,6 @@ POST /api/rules/
   }
 }
 ~~~
+
+### Remove a rule
+DELETE /api/rules/{id}
