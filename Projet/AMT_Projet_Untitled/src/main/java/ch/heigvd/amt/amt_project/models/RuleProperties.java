@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Rule.findByValueAndName", query = "SELECT r FROM Rule r WHERE r.value = :value AND r.name = :name")
+    @NamedQuery(name="RuleProperties.findByValueAndName", query = "SELECT r FROM RuleProperties r WHERE r.value = :value AND r.name = :name")
 })
 public class RuleProperties extends AbstractDomainModel<Long>{
     
