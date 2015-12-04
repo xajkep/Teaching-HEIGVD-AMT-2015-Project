@@ -107,13 +107,13 @@ public class EventResource {
             List<RuleProperties> ruleProperties = new ArrayList<>();
             for (Entry<String, String> entry : event.getProperties().entrySet()) {
                 try {
-                    ruleProperties.add(rulePropertiesDAO.findByValueAndName(entry.getKey(), entry.getValue()));
+                    ruleProperties.add(rulePropertiesDAO.findByValueAndName(entry.getValue(), entry.getKey()));
                 } catch (BusinessDomainEntityNotFoundException ex) {
                     throw new ServiceUnavailableException("Propertie not exists : " + entry.getKey() + " " + entry.getValue());
                 }
             }
 
-            List<Rule> rules = rulesDAO.findByPropertiesAndEventType(ruleProperties, eventTypeName);
+            List<Rule> rules = rulesDAO.findByPropertiesAndEventType(ruleProperties, eventType);
 
             for (Rule r : rules) {
                 switch (r.getActionType().getClass().getSimpleName()) {
