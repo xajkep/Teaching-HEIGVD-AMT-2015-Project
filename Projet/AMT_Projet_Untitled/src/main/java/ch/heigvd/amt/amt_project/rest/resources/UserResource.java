@@ -77,16 +77,16 @@ public class UserResource {
     @Path("/{endUserName}")
     public EndUserDTO getUser(
             @PathParam("endUserName") String endUserName,
-            @HeaderParam("Authorization") String apikey) {        
-        
+            @HeaderParam("Authorization") String apikey) {
+
         try {
             Long appId = applicationsDAO.findByApikey(apikey).getId();
             EndUser e = endUsersDAO.findByName(endUserName, appId);
             EndUserDTO dto = new EndUserDTO();
-            
+
             dto.setName(e.getName());
             dto.setHref(uriInfo.getRequestUri());
-            
+
             return dto;
         } catch (BusinessDomainEntityNotFoundException ex) {
             throw new ServiceUnavailableException("No content available");
