@@ -264,7 +264,7 @@ POST /api/rules/
   }
 ~~~
 
-### Rule Example
+### Rule Examples
 POST /api/rules/
 ~~~json
 {
@@ -275,9 +275,27 @@ POST /api/rules/
     }
   },
   "action": {
-    "type": "awardPoint",
+    "type": "AwardPoints",
     "properties":{
       "nbPoints": "3"
+    }
+  }
+}
+~~~
+
+POST /api/rules/
+~~~json
+{
+  "condition":{
+    "type": "question",
+    "properties":{
+      "difficulty": "hard"
+    }
+  },
+  "action": {
+    "type": "AwardBadge",
+    "properties":{
+      "badgeId": "2"
     }
   }
 }
