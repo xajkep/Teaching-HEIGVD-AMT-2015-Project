@@ -17,7 +17,7 @@ public class RulePropertiesDAO extends GenericDAO<RuleProperties, Long> implemen
             result = (RuleProperties) em.createNamedQuery("RuleProperties.findByValueAndName")
                     .setParameter("value", value)
                     .setParameter("name", name)
-                    .getResultList();
+                    .getSingleResult();
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();
         }
