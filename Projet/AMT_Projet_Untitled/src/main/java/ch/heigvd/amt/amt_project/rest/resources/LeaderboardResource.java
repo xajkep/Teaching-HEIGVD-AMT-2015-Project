@@ -26,7 +26,6 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author xajkep
  */
-
 @Stateless
 @Path("leaderboard")
 public class LeaderboardResource {
@@ -54,6 +53,7 @@ public class LeaderboardResource {
             @DefaultValue("10") @QueryParam("size") int size)
             throws NotAuthorizedException, ServiceUnavailableException {
         
+        // we only want positive integer
         if(size <= 0) { size = 10; }
         
         List<LeaderboardDTO> results = new ArrayList<>();
@@ -74,6 +74,7 @@ public class LeaderboardResource {
                 for (Object[] s : badgesString) {
                     BadgeDTO tmp2 = new BadgeDTO();
                     
+                    // Build href link to get one badge
                     URI badgeURI = uriInfo
                         .getAbsolutePathBuilder()
                         .path(BadgeResource.class, "getBadge")
