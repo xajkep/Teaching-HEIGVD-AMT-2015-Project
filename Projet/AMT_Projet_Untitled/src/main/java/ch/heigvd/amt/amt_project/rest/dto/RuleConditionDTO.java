@@ -7,14 +7,14 @@ import java.util.HashMap;
  * @author xajkep
  */
 public class RuleConditionDTO {
-    private EventTypeDTO type;
+    private String type;
     private HashMap<String, String> properties = new HashMap<>();
 
-    public EventTypeDTO getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(EventTypeDTO type) {
+    public void setType(String type) {
         this.type = type;
     }
 

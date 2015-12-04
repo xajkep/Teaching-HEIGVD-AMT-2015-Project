@@ -7,14 +7,14 @@ import java.util.HashMap;
  * @author xajkep
  */
 public class RuleActionDTO {
-    private ActionTypeDTO type;
+    private String type;
     private HashMap<String, String> properties = new HashMap<>();
 
-    public ActionTypeDTO getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(ActionTypeDTO type) {
+    public void setType(String type) {
         this.type = type;
     }
 

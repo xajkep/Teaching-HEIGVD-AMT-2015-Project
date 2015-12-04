@@ -1,6 +1,7 @@
 package ch.heigvd.amt.amt_project.models;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -23,7 +24,7 @@ public class Rule extends AbstractDomainModel<Long>{
     @ManyToOne
     private ActionType actionType;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<RuleProperties> eventProperties;
    
     public List<RuleProperties> getEventProperties() {

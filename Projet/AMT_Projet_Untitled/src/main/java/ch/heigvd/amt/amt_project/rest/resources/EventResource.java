@@ -115,18 +115,23 @@ public class EventResource {
 
             List<Rule> rules = rulesDAO.findByPropertiesAndEventType(ruleProperties, eventType);
 
-            for (Rule r : rules) {
-                switch (r.getActionType().getClass().getSimpleName()) {
-                    case "ActionPoints":
-                        ActionPoints ap = (ActionPoints) r.getActionType();
-                        pointAwardsDAO.create(new PointAwards(endUser, ap.getPoints(), null));
-                        break;
-                    case "ActionBagde":
-                        ActionBadge ab = (ActionBadge) r.getActionType();
-                        badgeAwardsDAO.create(new BadgeAward(ab.getBadge(), endUser, date));
+            if (rules.size() > 0) {
+                for (Rule r : rules) {
+                    switch (r.getActionType().getClass().getSimpleName()) {
+                        case "ActionPoints":
+                            ActionPoints ap = (ActionPoints) r.getActionType();
+                            pointAwardsDAO.create(new PointAwards(endUser, ap.getPoints(), null));
+                            break;
+                        case "ActionBadge":
+                            ActionBadge ab = (ActionBadge) r.getActionType();
+                            badgeAwardsDAO.create(new BadgeAward(ab.getBadge(), endUser, date));
+                    }
                 }
+
+                builder = Response.ok();
+            } else {
+                throw new ServiceUnavailableException("No rules available for this request");
             }
-            builder = Response.ok();
 
             return builder.build();
         } catch (BusinessDomainEntityNotFoundException ex) {

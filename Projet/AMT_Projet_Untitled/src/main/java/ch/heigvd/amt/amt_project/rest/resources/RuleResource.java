@@ -2,7 +2,9 @@ package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.ActionBadge;
 import ch.heigvd.amt.amt_project.models.ActionPoints;
+import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.Badge;
+import ch.heigvd.amt.amt_project.models.EventType;
 import ch.heigvd.amt.amt_project.models.Rule;
 import ch.heigvd.amt.amt_project.models.RuleProperties;
 import ch.heigvd.amt.amt_project.rest.dto.RuleDTO;
@@ -57,12 +59,13 @@ public class RuleResource {
         Rule rule = new Rule();
         
         /* Set event and action type */
+        Application app = null;
         try {
+            app = applicationDAO.findByApikey(apikey);
             eventTypesDAO.findByName(
-                    dto.getCondition().getType().getName(),
-                    applicationDAO.findByApikey(apikey).getId());
+                    dto.getCondition().getType(), app.getId());
         } catch (BusinessDomainEntityNotFoundException ex) {
-            throw new ServiceUnavailableException("No content available");
+            eventTypesDAO.create(new EventType(dto.getCondition().getType(), app));
         }
         
         
@@ -81,7 +84,7 @@ public class RuleResource {
         rule.setEventProperties(conditionPropertiesList);
         
         /* Action type */
-        switch(dto.getAction().getType().getName()) {
+        switch(dto.getAction().getType()) {
             case "ActionPoints":
                 ActionPoints action = new ActionPoints();
                 action.setName("ActionPoints");
