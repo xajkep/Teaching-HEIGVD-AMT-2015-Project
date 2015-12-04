@@ -1,12 +1,17 @@
 package ch.heigvd.amt.amt_project.models;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
- * @author YounTheory
+ * @author YounTheory, xajkep
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "ActionType.findByName", query = "SELECT a FROM ActionType a WHERE a.name = :name")
+})
 public abstract class ActionType extends AbstractDomainModel<Long>{
     private String name;
     

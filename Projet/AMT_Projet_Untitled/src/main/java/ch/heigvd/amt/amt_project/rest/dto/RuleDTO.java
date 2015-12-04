@@ -1,25 +1,26 @@
 package ch.heigvd.amt.amt_project.rest.dto;
 
-import java.util.List;
-
 /**
  *
- * @author YounTheory
+ * @author xajkep
  */
-public class RuleDTO {
-    private List<RulePropertiesDTO> properties;
-    private EventTypeDTO eventType;
-    /**
-     * @return the properties
-     */
-    public List<RulePropertiesDTO> getProperties() {
-        return properties;
+public class RuleDTO {    
+    private RuleConditionDTO condition;
+    private RuleActionDTO action;
+
+    public RuleConditionDTO getCondition() {
+        return condition;
     }
 
-    /**
-     * @param properties the properties to set
-     */
-    public void setProperties(List<RulePropertiesDTO> properties) {
-        this.properties = properties;
+    public void setCondition(RuleConditionDTO condition) {
+        this.condition = condition;
+    }
+
+    public RuleActionDTO getAction() {
+        return action;
+    }
+
+    public void setAction(RuleActionDTO action) {
+        this.action = action;
     }
 }
