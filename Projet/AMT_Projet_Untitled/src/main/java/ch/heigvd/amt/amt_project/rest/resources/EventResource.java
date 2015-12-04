@@ -71,8 +71,6 @@ public class EventResource {
             eventType = eventTypeDAO.createAndReturnManagedEntity(new EventType(eventTypeName, app));
         }
         
-        event.getType()
-        
         /*for (Entry<String, String> entry : event.getProperties().entrySet()) {
             System.out.println("Key: " + entry.getKey() + " value: " + entry.getValue());
         }*/
