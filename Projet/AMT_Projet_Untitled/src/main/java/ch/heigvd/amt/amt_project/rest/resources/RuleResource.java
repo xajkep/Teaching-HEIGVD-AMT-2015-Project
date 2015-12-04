@@ -1,10 +1,15 @@
 package ch.heigvd.amt.amt_project.rest.resources;
 
+import ch.heigvd.amt.amt_project.models.ActionBadge;
+import ch.heigvd.amt.amt_project.models.ActionPoints;
+import ch.heigvd.amt.amt_project.models.ActionType;
+import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.Rule;
 import ch.heigvd.amt.amt_project.models.RuleProperties;
 import ch.heigvd.amt.amt_project.rest.dto.RuleDTO;
 import ch.heigvd.amt.amt_project.services.dao.ActionTypesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EventTypesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.RulesDAOLocal;
@@ -47,6 +52,9 @@ public class RuleResource {
     @EJB
     ApplicationsDAOLocal applicationDAO;
     
+    @EJB
+    BadgesDAOLocal badgesDAO;
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -67,7 +75,7 @@ public class RuleResource {
             throw new ServiceUnavailableException("No content available");
         }
         
-        /* Recover event/action properties from the DTO */
+        /* Recover event properties from the DTO */
         HashMap<String, String> conditionPropertiesMap = dto.getCondition().getProperties();
         HashMap<String, String> actionPropertiesMap = dto.getAction().getProperties();
         
@@ -79,16 +87,33 @@ public class RuleResource {
             conditionPropertiesList.add(p);
         }
         
-        List<RuleProperties> actionPropertiesList = new ArrayList<>();
-        for (Map.Entry<String, String> entry : actionPropertiesMap.entrySet()) {
-            RuleProperties p = new RuleProperties();
-            p.setName(entry.getKey());
-            p.setValue(entry.getValue());
-            actionPropertiesList.add(p);
+        rule.setEventProperties(conditionPropertiesList);
+        //rule.setActionProperties(actionPropertiesList);
+        
+        /* Action type */
+        
+        switch(dto.getAction().getType().getName()) {
+            case "ActionPoints":
+                ActionPoints action = new ActionPoints();
+                action.setName("ActionPoints");
+                action.setPoints(Long.parseLong(
+                        dto.getCondition()
+                        .getProperties()
+                        .get("nbPoints")));
+                rule.setActionType(action);
+                break;
+            case "ActionBadge":
+                ActionBadge actionBadge = new ActionBadge();
+                actionBadge.setName("ActionBadge");
+                Badge badge = badgesDAO.findById(Long.parseLong(
+                        dto.getAction()
+                        .getProperties()
+                        .get("badgeId")));
+                actionBadge.setBadge(badge);
+                rule.setActionType(actionBadge);
+                break;
         }
         
-        rule.setEventProperties(conditionPropertiesList);
-        rule.setActionProperties(actionPropertiesList);
         rulesDAOLocal.create(rule);
         
         return Response.status(Response.Status.CREATED).entity(dto).build();
