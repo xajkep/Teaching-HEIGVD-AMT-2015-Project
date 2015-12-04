@@ -41,10 +41,10 @@ var mysql = require('mysql');
 http.globalAgent.maxSockets = 5;
 var apikey = "";
 var baseURL = "http://localhost:8080/AMT_Projet_Untitled/";
-var addRuleURL = "/api/rules";
-var addBadgeURL = "/api/badges";
-var NumberOfRequestsPerEndUser = 30;
-var numberOfUser = 10;
+var addRuleURL = "api/rules";
+var addBadgeURL = "api/badges";
+var NumberOfRequestsPerEndUser = 4;
+var numberOfUser = 5;
 
 // MySql Credentials IMPORTANT
 var mysqlDatabase = "amt";
@@ -203,7 +203,11 @@ var eventEasy = {
 
 
 function getRequestPOST(data, url, callback) {
+	console.log("Prepare a POST request for user " + data.endUser);
+	var capturedData = JSON.parse(JSON.stringify(data));
+
   return function(callback) {
+
 
 		// Request headers and data
     var requestData = {
@@ -211,7 +215,7 @@ function getRequestPOST(data, url, callback) {
         "Content-Type": "application/json",
         "Authorization": apikey
       },
-      data: data,
+      data: capturedData,
       requestConfig:{
         "timeout": 5000,
         keepAlive: false
@@ -259,17 +263,19 @@ function tableOfRequests(callback){
 	  // X requests per endUser that will add 1 point each
 	  for (var i = 0; i < NumberOfRequestsPerEndUser; i++) {
 
-	    var url = '/api/events';
+	    var url = 'api/events';
 
 	    // The event
 	    var data = eventEasy;
 	    data.endUser = endUserNamesRandom[j];
-			console.log(JSON.stringify(data));
+			console.log("Adding request in table: " + JSON.stringify(data));
 	    endUserRequests.push(
 	      getRequestPOST(data, baseURL + url)
 	    );
 	  }
 	}
+	console.log("---------------------------------");
+	//console.log("Table of requests \n" + endUserRequests);
 	callback();
 }
 
@@ -304,13 +310,15 @@ function checkValues(callback){
 	console.log("------------------------------------------");
   var requestData = {
     headers:{
-      "Accept": "application/json"
+      "Accept": "application/json",
+			"Authorization": apikey
     }
   };
   // Points for each users
   var userPointsOnServer = [];
+	console.log("Apikey before check Values: " + apikey);
   for (var i = 0; i < numberOfUser; i++){
-		console.log("User to check: " + endUserNamesRandom[i]);
+		console.log("User to check:" + baseURL + "api/users/" + endUserNamesRandom[i] + "/reputation");
     client.get(baseURL + "api/users/" + endUserNamesRandom[i] + "/reputation", requestData, function(data, response){
       // push in userPointsOnServer the number of points for each user
       userPointsOnServer.push(data.points);
@@ -323,6 +331,7 @@ function checkValues(callback){
 			console.log(response.statusCode);
     });
   }
+	callback();
 }; // End of checkValues
 //===========================================================//
 
