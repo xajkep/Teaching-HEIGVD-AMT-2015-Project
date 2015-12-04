@@ -11,7 +11,6 @@ import javax.persistence.NoResultException;
 @Stateless
 public class RulePropertiesDAO extends GenericDAO<RuleProperties, Long> implements RulePropertiesDAOLocal {
 
-    @Override
     public RuleProperties findByValueAndName(String value, String name) throws BusinessDomainEntityNotFoundException {
         RuleProperties result;
         try {

@@ -1,6 +1,8 @@
- Error reading included file file:///C:/Users/Michaël/Google%20Drive/HES/Cours/AMT/Teaching-HEIGVD-AMT-2015-Project/Projet/AMT_Projet_Untitled/
 package ch.heigvd.amt.amt_project.services.dao;
 
+import ch.heigvd.amt.amt_project.models.Account;
+import ch.heigvd.amt.amt_project.models.ActionPoints;
+import ch.heigvd.amt.amt_project.models.ActionType;
 import javax.ejb.Stateless;
 
 /**
@@ -10,8 +12,6 @@ import javax.ejb.Stateless;
 
 
 @Stateless
-public class ActionPointsDAO implements ActionPointsDAOLocal {
+public class ActionPointsDAO extends GenericDAO<ActionPoints, Long>  implements ActionPointsDAOLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

@@ -1,20 +1,29 @@
 package ch.heigvd.amt.amt_project.services;
 
 import ch.heigvd.amt.amt_project.models.Account;
+import ch.heigvd.amt.amt_project.models.ActionPoints;
+import ch.heigvd.amt.amt_project.models.ActionType;
 import ch.heigvd.amt.amt_project.models.ApiKey;
 import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
+import ch.heigvd.amt.amt_project.models.EventType;
 import ch.heigvd.amt.amt_project.models.PointAwards;
 import ch.heigvd.amt.amt_project.models.Role;
+import ch.heigvd.amt.amt_project.models.Rule;
+import ch.heigvd.amt.amt_project.models.RuleProperties;
 import ch.heigvd.amt.amt_project.services.dao.AccountsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.ActionPointsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApiKeysDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.EventTypesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.RolesDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.RulePropertiesDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.RulesDAOLocal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +58,15 @@ public class TestDataManager implements TestDataManagerLocal {
 
     @EJB
     PointAwardsDAOLocal pointAwardsDAO;
+    
+    @EJB
+    RulesDAOLocal rulesDAO;
+    
+    @EJB
+    RulePropertiesDAOLocal rulePropertiesDAO;
+    
+    @EJB
+    ActionPointsDAOLocal actionPointsDAO;
 
     @Override
     public void generateTestData() {
@@ -86,6 +104,16 @@ public class TestDataManager implements TestDataManagerLocal {
         Application app3 = applicationsDAO.createAndReturnManagedEntity(new Application("app3", "testapp3", apiKeysDAO.createAndReturnManagedEntity(new ApiKey()), true, toto));
         Application app4 = applicationsDAO.createAndReturnManagedEntity(new Application("app4", "testapp4", apiKeysDAO.createAndReturnManagedEntity(new ApiKey()), true, toto));
 
+        /**
+         * Generate EventType
+         */
+        System.out.println("Generate Rule for app1");
+        List<RuleProperties> properties = new ArrayList<>();
+        properties.add(rulePropertiesDAO.createAndReturnManagedEntity(new RuleProperties("Tag", "Java")));
+        
+        ActionType at = actionPointsDAO.createAndReturnManagedEntity(new ActionPoints(5, "Low"));        
+        rulesDAO.create(new Rule(new EventType("Question", app1), properties, at));
+        
         /**
          * Generate endUser
          */

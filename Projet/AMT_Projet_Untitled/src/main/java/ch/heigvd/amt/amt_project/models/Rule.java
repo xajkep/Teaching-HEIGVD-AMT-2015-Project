@@ -25,10 +25,7 @@ public class Rule extends AbstractDomainModel<Long>{
 
     @OneToMany
     private List<RuleProperties> eventProperties;
-    
-    @OneToMany
-    private List<RuleProperties> actionProperties;
-
+   
     public List<RuleProperties> getEventProperties() {
         return eventProperties;
     }
@@ -36,22 +33,13 @@ public class Rule extends AbstractDomainModel<Long>{
     public void setEventProperties(List<RuleProperties> eventProperties) {
         this.eventProperties = eventProperties;
     }
-
-    public List<RuleProperties> getActionProperties() {
-        return actionProperties;
-    }
-
-    public void setActionProperties(List<RuleProperties> actionProperties) {
-        this.actionProperties = actionProperties;
-    }
     
     public Rule() {}
 
-    public Rule(EventType eventType, List<RuleProperties> eventProperties, ActionType actionType, List<RuleProperties> actionProperties) {
+    public Rule(EventType eventType, List<RuleProperties> eventProperties, ActionType actionType) {
         this.eventType = eventType;
         this.actionType = actionType;
         this.eventProperties = eventProperties;
-        this.actionProperties = actionProperties;
     }
     
     /**
