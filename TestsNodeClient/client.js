@@ -4,16 +4,17 @@
  * Objective: Test the concurrency gestion of the gamification platform.
  *
  * Details:
- * This program goal is to test the behaviour of the application with multiple paralell requests.
+ * This program goal is to test the behaviour of the application with multiple parallel requests.
  * This "client" will send multiple events to the gamification platform in order to increase the
  * amount of points / badges of a client and then will ask the client how many points he has.
  *
  * If the number of points are not equals on both sides (this node application and in the gamification platfomr)
  * there is a problem (probably concurrency).
  *
- * IMPORTANT: + Empty the database before testing. It's supposed that the users you will create are brand new ones.
- 								This will be usefull when the first events will be sent. Indeed, if two events from an unexisting
-								user arrive at the same time, there could be concurrency problems during the creation of the user.
+ * IMPORTANT: + It's recomended to empty the database before testing. Users are randomly created but there could
+ *							be colisions. It's supposed that the users you will create here are brand new ones.
+ *							This will be usefull when the first events will be sent. Indeed, if two events from an unexisting
+ *							user arrive at the same time, there could be concurrency problems during this creation of the user.
  *						+ The event gives ONE point to the user and is compared to the number of event sent. If you change
  *						  the event (from eventEasy to hard for instance) you will have to change the comparison in the
  *							checkValues's function.
@@ -21,8 +22,8 @@
  */
 var Client = require('node-rest-client').Client;
 var client = new Client();
-var async = require('async');
 
+var async = require('async');
 
 var http = require('http');
 
@@ -51,28 +52,18 @@ var mysqlDatabase = "amt";
 var mysqlUser = "amt";
 var mysqlPassword = "amt";
 
-// There is random number generation now ! This can be usefull anyway so we'll keep those names a moment.
+// There is random number generation now but this can be usefull anyway so we'll keep those names a moment.
 // We'll test with 10 users so we need IDs ! Here's ten 100% not random IDs:
 var endUserNamesFix = ["End0_Amber", "End1_Blond", "End2_Dark", "End3_YesItsBeer", "End4_Fag", "End5_Smith", "End6_JamesBond", "End7_JamesBrown", "End8_Sacha", "End9_Olivier"];
 
-// This is used only if we work on a not empty database, the rest of the code using it is commented below.
-var endUserPointsBeforeTest = [];
+// Table for End user events
+var endUserRequests = [];
 
-/* OLI (c)
- * This map keeps track of the transactions posted by the client,
- * even if they result in an error (for instance if two parallel requests try to create a new account).
- * In this case, the client is informed that the transaction has failed and it would be his responsibility
- * to retry.
- */
-var submittedStats = {}
+// This is used to store the request functions that will add rules and badges
+var rulesAndBadgesRequests = [];
 
-/* OLI (c)
- * This map keeps track of the transactions posted by the client, but only if the server has confirmed
- * their processing with a successful status code.
- * In this case, the client can assume that the transaction has been successfully processed.
- */
-var processedStats = {};
 
+//############################# RANDOM NAMES #################################//
 // Generate random usernames with Chance
 var endUserNamesRandom = [];
 for (var i = 0; i < numberOfUser; i++){
@@ -81,6 +72,7 @@ for (var i = 0; i < numberOfUser; i++){
 console.log("Table of " + numberOfUser + " random users created: " + endUserNamesRandom);
 
 
+//############################# GET API KEY ##################################//
 function getApiKey(notifyApiKeyHasBeenFetched){
 	// Connection to the database to fetch the apiKey of app1 (auto generated test app)
 	console.log("Getting apikey...");
@@ -111,6 +103,8 @@ function getApiKey(notifyApiKeyHasBeenFetched){
 	connection.end();
 }
 
+
+//############################# REQUESTS DATA ################################//
 // add badges on /api/badges
 
 var addBadge1 = {
@@ -185,7 +179,8 @@ var eventEasy = {
     }
 }
 
-//===========================================================//
+
+//######################## Build a Request Functions #########################//
 
 // This function return the functions that will send the requests (events)
 function getRequestPOST(data, url, callback) {
@@ -209,7 +204,6 @@ function getRequestPOST(data, url, callback) {
       }
     };
 
-    //logTransaction(submittedStats, requestData.data);
     console.log("POST " + url + JSON.stringify(requestData.data));
 
     var req = client.post(baseURL + url, requestData, function(data, response) {
@@ -236,13 +230,13 @@ function getRequestPOST(data, url, callback) {
   		});
   }
 }; // End of getRequestPOST
-//===========================================================//
 
-// Table for End user events
-var endUserRequests = [];
+//######################## Build Requests Table ##########################//
 
 // This function build the table of functions that we will execute in parallel later
-function tableOfRequests(callback){
+// The table is endUserRequests
+
+function tableOfRequestsFunction(callback){
 
 	// For endUser 0 to 9 (it's their IDs)
 	for (var j = 0; j < numberOfUser; j++){
@@ -261,14 +255,14 @@ function tableOfRequests(callback){
 	  }
 	}
 	callback();
-}// End of tableOfRequests
+}// End of tableOfRequestsFunction
 
 
-//===========================================================//
+//######################## POST requests in parallel #########################//
 
 // This function executes the functions in endUserRequests
 // Eachone of those functions sent their request, all of this in parallel.
-function postTransactionRequestsInParalell(callback){
+function postTransactionRequestsInparallel(callback){
   console.log("\n\n==========================================");
 	console.log("POSTing transaction requests in parallel");
 	console.log("------------------------------------------");
@@ -279,14 +273,14 @@ function postTransactionRequestsInParalell(callback){
         console.log("Result " + i + ": " + results[i].response.statusCode);
         numberOfUnsuccessfulResponses++;
       } else {
-        //logTransaction(processedStats, endUserRequests[i].requestData);
-				console.log("Posting succeed");
+				console.log("Posting transaction requests succeed");
       }
     }
     callback(null, endUserRequests.length + " transactions POSTs have been sent " + numberOfUnsuccessfulResponses + " have failed ");
   });
-};
-//===========================================================//
+};// End of postTransactionRequestsInparallel
+
+//###################### Verify Server-Client Values #########################//
 
 // This function get the number of points from the server and compare them to
 // the points sent. If users are new ones, values must be the same.
@@ -319,20 +313,17 @@ function checkValues(callback){
   }
 	callback();
 }; // End of checkValues
-//===========================================================//
 
+//########################### INITIALISATION #################################//
 
-// This function has to create the rules as we suppose that we start with a brand new application.
-// Data will be "addRuleQuestionEasy" for instance.
-// We use this function to add badges too
+// This function is just like getRequestPOST but with console informations.
 function initialize(data, url, callback){
 	console.log("\n\n==========================================");
 	console.log("Adding new rule or badge: " + JSON.stringify(data) + " ...");
 	console.log("------------------------------------------");
 	return getRequestPOST(data, url, callback);
 }
-
-var rulesAndBadgesRequests = [];
+// This function send the requests that add the badges and the rules in parallel
 function initialisation(notifyInitHasBeenDone){
 	console.log("\n\n==========================================");
 	console.log("POSTing rules and badges initialisation requests in parallel");
@@ -352,25 +343,28 @@ function initialisation(notifyInitHasBeenDone){
         console.log("Result " + i + ": " + results[i].response.statusCode);
 				failed++;
       } else {
-        //logTransaction(processedStats, endUserRequests[i].requestData);
-				console.log("Posting succeed");
+				console.log("Posting rules and badges succeed");
       }
     }
     notifyInitHasBeenDone(null, rulesAndBadgesRequests.length + " transactions POSTs have been sent " + failed + " have failed ");
 	});
 } // End of initialisation
 
-
-//===========================================================//
-// Time to test !!!!!
-//===========================================================//
+//############################################################################//
+// TESTS
+// 1) 	Fetch the api-key in the database
+// 2)		Post the requests to prepare the rules and badges
+// 3) 	Create the table of requests to send en parallel
+// 4) 	Post the requests (events) in parallel
+// 5) 	Verify the values client-server side
+//############################################################################//
 
 // Execute in series with async:
 async.series([
 	getApiKey,
 	initialisation,
-	tableOfRequests,
-  postTransactionRequestsInParalell,
+	tableOfRequestsFunction,
+  postTransactionRequestsInparallel,
   checkValues
 ], function(err, results) {
   console.log("\n\n==========================================");
@@ -379,4 +373,4 @@ async.series([
 	//console.log(err);
 	console.log(results);
 });
-//===========================================================//
+//============================================================================//
