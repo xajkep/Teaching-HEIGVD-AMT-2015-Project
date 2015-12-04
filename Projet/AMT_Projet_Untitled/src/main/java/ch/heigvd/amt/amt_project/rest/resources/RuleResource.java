@@ -17,9 +17,11 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.core.MediaType;
@@ -56,6 +58,7 @@ public class RuleResource {
             @HeaderParam("Authorization") String apikey) {
         Rule rule = new Rule();
         
+        /* Set event and action type */
         try {
             eventTypeDAO.findByName(
                     dto.getCondition().getType().getName(),
@@ -67,6 +70,7 @@ public class RuleResource {
             throw new ServiceUnavailableException("No content available");
         }
         
+        /* Recover event/action properties from the DTO */
         HashMap<String, String> conditionPropertiesMap = dto.getCondition().getProperties();
         HashMap<String, String> actionPropertiesMap = dto.getAction().getProperties();
         
@@ -91,5 +95,16 @@ public class RuleResource {
         rulesDAOLocal.create(rule);
         
         return Response.status(Response.Status.CREATED).entity(dto).build();
+    }
+    
+    @DELETE
+    @Path("/{ruleid}")
+    public Response delete(
+            @PathParam("ruleid") long ruleid) {
+        
+        Rule rule = rulesDAOLocal.findById(ruleid);
+        rulesDAOLocal.delete(rule);
+        
+        return Response.status(Response.Status.OK).build();
     }
 }
