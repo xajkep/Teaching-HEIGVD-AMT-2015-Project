@@ -6,7 +6,7 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author xajkep
+ * @author xajkep, mberthouzoz
  */
 @Stateless
 public class ActionTypesDAO extends GenericDAO<ActionType, Long> implements ActionTypesDAOLocal {
