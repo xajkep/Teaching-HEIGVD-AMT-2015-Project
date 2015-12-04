@@ -16,8 +16,6 @@ import javax.ws.rs.ext.Provider;
  *
  * @author xajkep
  */
-
-
 @Provider
 public class RestFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
@@ -31,7 +29,7 @@ public class RestFilter implements ContainerRequestFilter, ContainerResponseFilt
         String apikey = requestContext.getHeaderString("Authorization");
         
         // Bad request
-        if (apikey == null && apikey.equals("")) {
+        if (apikey == null || apikey.equals("")) {
             System.out.println("apikey == \"\" || apikey == null");
             throw new BadRequestException("Apikey is missing");
         } else if(!apiKeysDAO.exists(apikey)) {
