@@ -213,7 +213,7 @@ POST /api/events/
 {
   "type": String,
   "timestamp": Date,
-  "endUserId": String,
+  "endUser": String,
   "properties":
     {
       "tag": String,
