@@ -9,7 +9,7 @@ import javax.ejb.Local;
  */
 
 @Local
-public interface rulePropertiesDAOLocal extends IGenericDAO<RuleProperties, Long>{
+public interface RulePropertiesDAOLocal extends IGenericDAO<RuleProperties, Long>{
     
     public RuleProperties findByValueAndName(String value, String name) throws BusinessDomainEntityNotFoundException;
     

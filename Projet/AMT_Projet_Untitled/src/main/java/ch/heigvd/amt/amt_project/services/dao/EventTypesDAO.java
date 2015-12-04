@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
  * @author mberthouzoz
  */
 @Stateless
-public class EventTypeDAO extends GenericDAO<EventType, Long> implements EventTypeDAOLocal {
+public class EventTypesDAO extends GenericDAO<EventType, Long> implements EventTypesDAOLocal {
 
     @Override
     public EventType findByName(String type, Long appId) throws BusinessDomainEntityNotFoundException {

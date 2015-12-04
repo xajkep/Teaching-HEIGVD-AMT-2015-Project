@@ -19,7 +19,19 @@ public class RulesDAO extends GenericDAO<Rule, Long> implements RulesDAOLocal {
     public List<Rule> findByPropertiesAndEventType(List<RuleProperties> properties, String eventType) throws BusinessDomainEntityNotFoundException{
         List<Rule> result = null;
         try {
-            result = findByEventType(eventType);
+            List<Rule> rules = findByEventType(eventType);
+            boolean inList;
+            for(Rule r: rules) {
+                inList = false;
+                for(RuleProperties rp: properties) {
+                    if (r.getEventProperties().contains(rp)) {
+                        inList = true;
+                    }
+                }
+                if (inList) {
+                    result.add(r);
+                }
+            }
             
             return result;
         } catch (NoResultException e) {

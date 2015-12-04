@@ -41,7 +41,7 @@ public class PointAwards extends AbstractDomainModel<Long>{
      * @param endUser define end user
      * @param point number of point
      */
-    public PointAwards(EndUser endUser, int point, String reason) {
+    public PointAwards(EndUser endUser, long point, String reason) {
         this.endUser = endUser;
         this.point = point;
         this.date = new Date();

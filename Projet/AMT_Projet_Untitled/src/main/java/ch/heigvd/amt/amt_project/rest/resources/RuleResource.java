@@ -6,7 +6,7 @@ import ch.heigvd.amt.amt_project.rest.dto.RuleDTO;
 import ch.heigvd.amt.amt_project.services.dao.ActionTypesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
-import ch.heigvd.amt.amt_project.services.dao.EventTypeDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.EventTypesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.RulesDAOLocal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class RuleResource {
     RulesDAOLocal rulesDAOLocal;
     
     @EJB
-    EventTypeDAOLocal eventTypeDAO;
+    EventTypesDAOLocal eventTypesDAO;
     
     @EJB
     ActionTypesDAOLocal actionTypesDAOLocal;
@@ -57,7 +57,7 @@ public class RuleResource {
         
         /* Set event and action type */
         try {
-            eventTypeDAO.findByName(
+            eventTypesDAO.findByName(
                     dto.getCondition().getType().getName(),
                     applicationDAO.findByApikey(apikey).getId());
             
