@@ -82,10 +82,10 @@ public class RuleResource {
         }
         
         rule.setEventProperties(conditionPropertiesList);
-        
+        System.out.println(dto.getAction().getType());
         /* Action type */
         switch(dto.getAction().getType()) {
-            case "ActionPoints":
+            case "AwardPoints":
                 ActionPoints action = new ActionPoints();
                 action.setName("ActionPoints");
                 action.setPoints(Long.parseLong(
@@ -94,7 +94,7 @@ public class RuleResource {
                         .get("nbPoints")));
                 rule.setActionType(action);
                 break;
-            case "ActionBadge":
+            case "AwardBagde":
                 ActionBadge actionBadge = new ActionBadge();
                 actionBadge.setName("ActionBadge");
                 Badge badge = badgesDAO.findById(Long.parseLong(
