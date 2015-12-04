@@ -249,18 +249,16 @@ DELETE /api/eventsType/{name}
 POST /api/rules/
 ~~~json
   {
-    "if":{
+    "condition":{
       "type": String,
-      "properties":{
-        "name": String,
-        "value": String
+      "properties": {
+        String: String
       }
     },
-    "then": {
-      "action": String,
+    "action": {
+      "type": String,
       "properties": {
-        "name": String,
-        "value": String
+        String: String
       }
     }
   }
@@ -270,18 +268,16 @@ POST /api/rules/
 POST /api/rules/
 ~~~json
 {
-  "if":{
+  "condition":{
     "type": "question",
     "properties":{
-      "name": "difficulty",
-      "value": "hard"
+      "difficulty": "hard"
     }
   },
-  "then": {
-    "action": "awardPoint",
+  "action": {
+    "type": "awardPoint",
     "properties":{
-      "name": "nbPoints",
-      "value": "3"
+      "nbPoints": "3"
     }
   }
 }
