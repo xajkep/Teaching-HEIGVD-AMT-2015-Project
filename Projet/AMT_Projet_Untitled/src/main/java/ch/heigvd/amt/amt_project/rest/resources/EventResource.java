@@ -8,6 +8,7 @@ import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.EventTypeDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.RulesDAOLocal;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.core.Response;
 
 /**
@@ -37,6 +39,9 @@ public class EventResource {
     
     @EJB
     ApplicationsDAOLocal applicationsDAO;
+    
+    @EJB
+    RulesDAOLocal rulesDAO;
 
     @POST
     @Consumes("application/json")
@@ -68,8 +73,10 @@ public class EventResource {
         try {
             eventType = eventTypeDAO.findByName(eventTypeName, appId);
         } catch (BusinessDomainEntityNotFoundException ex) {
-            eventType = eventTypeDAO.createAndReturnManagedEntity(new EventType(eventTypeName, app));
+            throw new ServiceUnavailableException("No content available");
         }
+        
+        
         
         /*for (Entry<String, String> entry : event.getProperties().entrySet()) {
             System.out.println("Key: " + entry.getKey() + " value: " + entry.getValue());
