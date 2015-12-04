@@ -14,6 +14,7 @@ import ch.heigvd.amt.amt_project.rest.dto.EventDTO;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgeAwardsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAO;
+import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.EventTypesDAOLocal;
@@ -67,7 +68,7 @@ public class EventResource {
     BadgeAwardsDAOLocal badgeAwardsDAO;
 
     @EJB
-    BadgesDAO badgesDAO;
+    BadgesDAOLocal badgesDAO;
 
     @POST
     @Consumes("application/json")
