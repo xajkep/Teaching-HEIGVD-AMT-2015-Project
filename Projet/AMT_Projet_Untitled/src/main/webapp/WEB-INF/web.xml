@@ -9,23 +9,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
    
-<filter>
-   <filter-name>RestFilter</filter-name>
-   <filter-class>com.ibm.websphere.jaxrs.server.IBMRestFilter</filter-class>
-   <init-param>
-       <param-name>javax.ws.rs.Application</param-name>
-       <param-value>RestFilter</param-value>
-   </init-param>
-   
-   <init-param>
-       <param-name>requestProcessorAttribute</param-name>
-       <param-value>RestFilter</param-value>
-   </init-param>
-</filter>
-<filter-mapping>
-    <filter-name>RestFilter</filter-name>
-    <url-pattern>/api/*</url-pattern>
-</filter-mapping>
+    <filter>
+       <filter-name>RestFilter</filter-name>
+       <filter-class>ch.heigvd.amt.amt_project.web.filters.RestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RestFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
  
     <servlet>
         <servlet-name>AuthenticationServlet</servlet-name>
