@@ -2,12 +2,10 @@ package ch.heigvd.amt.amt_project.rest.resources;
 
 import ch.heigvd.amt.amt_project.models.ActionBadge;
 import ch.heigvd.amt.amt_project.models.ActionPoints;
-import ch.heigvd.amt.amt_project.models.ActionType;
 import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.Rule;
 import ch.heigvd.amt.amt_project.models.RuleProperties;
 import ch.heigvd.amt.amt_project.rest.dto.RuleDTO;
-import ch.heigvd.amt.amt_project.services.dao.ActionTypesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
@@ -47,9 +45,6 @@ public class RuleResource {
     EventTypesDAOLocal eventTypesDAO;
     
     @EJB
-    ActionTypesDAOLocal actionTypesDAOLocal;
-    
-    @EJB
     ApplicationsDAOLocal applicationDAO;
     
     @EJB
@@ -68,12 +63,10 @@ public class RuleResource {
             eventTypesDAO.findByName(
                     dto.getCondition().getType().getName(),
                     applicationDAO.findByApikey(apikey).getId());
-            
-            actionTypesDAOLocal.findByName(
-                    dto.getAction().getType().getName());
         } catch (BusinessDomainEntityNotFoundException ex) {
             throw new ServiceUnavailableException("No content available");
         }
+        
         
         /* Recover event properties from the DTO */
         HashMap<String, String> conditionPropertiesMap = dto.getCondition().getProperties();
@@ -88,10 +81,8 @@ public class RuleResource {
         }
         
         rule.setEventProperties(conditionPropertiesList);
-        //rule.setActionProperties(actionPropertiesList);
         
         /* Action type */
-        
         switch(dto.getAction().getType().getName()) {
             case "ActionPoints":
                 ActionPoints action = new ActionPoints();
@@ -111,6 +102,9 @@ public class RuleResource {
                         .get("badgeId")));
                 actionBadge.setBadge(badge);
                 rule.setActionType(actionBadge);
+                break;
+            default:
+                
                 break;
         }
         
