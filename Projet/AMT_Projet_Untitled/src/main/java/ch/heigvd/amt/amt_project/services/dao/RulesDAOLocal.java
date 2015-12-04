@@ -1,8 +1,8 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
-import ch.heigvd.amt.amt_project.models.EventType;
 import ch.heigvd.amt.amt_project.models.Rule;
-import java.util.HashMap;
+import ch.heigvd.amt.amt_project.models.RuleProperties;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +13,7 @@ import javax.ejb.Local;
 
 @Local
 public interface RulesDAOLocal extends IGenericDAO<Rule, Long> {
-    public Rule findByPropertiesAndEventType(HashMap<String, String> properties, EventType eventType);
+    public List<Rule> findByPropertiesAndEventType(List<RuleProperties> properties, String eventType) throws BusinessDomainEntityNotFoundException;
+    
+    public List<Rule> findByEventType(String eventType) throws BusinessDomainEntityNotFoundException;
 }

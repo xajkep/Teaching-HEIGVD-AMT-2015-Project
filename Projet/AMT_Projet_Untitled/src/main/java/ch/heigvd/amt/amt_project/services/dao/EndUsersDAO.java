@@ -74,7 +74,6 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
     public long getPoints(long userId) throws BusinessDomainEntityNotFoundException {
         long result;
         try {
-            System.out.println("userID : " + userId);
             result = (long) em.createNamedQuery("EndUser.getPoints")
                     .setParameter("user", userId).getSingleResult();
             return result;

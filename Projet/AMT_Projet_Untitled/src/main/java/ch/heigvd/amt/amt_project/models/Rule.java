@@ -3,14 +3,19 @@ package ch.heigvd.amt.amt_project.models;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
  *
- * @author YounTheory, xajkep
+ * @author YounTheory, xajkep, mberthouzoz
  */
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Rule.findByEventTyp", query = "SELECT r FROM Rule r WHERE r.eventType = :eventType")
+})
 public class Rule extends AbstractDomainModel<Long>{
     @ManyToOne
     private EventType eventType;

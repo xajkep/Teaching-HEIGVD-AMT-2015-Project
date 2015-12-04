@@ -50,7 +50,6 @@ public class RuleResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("")
     public Response add(
             RuleDTO dto,
             @HeaderParam("Authorization") String apikey) {
