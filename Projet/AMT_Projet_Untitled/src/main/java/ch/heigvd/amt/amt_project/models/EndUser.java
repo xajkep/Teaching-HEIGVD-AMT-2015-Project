@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
   @NamedQuery(name = "EndUser.findByApp", query = "SELECT e FROM EndUser e WHERE e.app.id = :app AND e.app.creator.id = :user"),
   @NamedQuery(name = "EndUser.getNumberOfUserDuringLastDays", query = "SELECT count(e) FROM EndUser e WHERE e.date > :date"),
   @NamedQuery(name = "EndUser.getNumberOfUserByApp", query = "SELECT count(e) FROM EndUser e WHERE e.app.id = :app"),
-  @NamedQuery(name = "EndUser.getPoints", query = "SELECT SUM(p.point) FROM EndUser e INNER JOIN PointAwards p ON e.pointAwards = p.id WHERE e.id = :user"),
+  @NamedQuery(name = "EndUser.getPoints", query = "SELECT SUM(p.point) FROM EndUser e, PointAwards p WHERE p.endUser = e AND e.id = :user"),
   @NamedQuery(name = "EndUser.findByApikey", query = "SELECT e FROM EndUser e WHERE e.app.key.apiKey = :apikey"),
   @NamedQuery(name = "EndUser.findByName", query = "SELECT e FROM EndUser e WHERE e.app.id = :app AND e.name = :name"),
   @NamedQuery(name = "EndUser.getBestUsers", query = "SELECT e.id, e.name, SUM(p.point) FROM EndUser e, PointAwards p WHERE e.app.key.apiKey = :apikey AND p.endUser = e GROUP BY p.endUser.id"),
