@@ -16,8 +16,6 @@ import javax.ws.rs.ext.Provider;
  *
  * @author xajkep
  */
-
-
 @Provider
 public class RestFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
