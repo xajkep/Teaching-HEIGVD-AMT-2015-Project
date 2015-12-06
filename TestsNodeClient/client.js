@@ -87,7 +87,7 @@ function getApiKey(notifyApiKeyHasBeenFetched){
 
 	connection.connect();
 
-	var queryString = 'SELECT apikey FROM application INNER JOIN apikey ON application.KEY_ID = apikey.ID WHERE application.name = \"app1\"';
+	var queryString = 'SELECT APIKEY FROM APPLICATION INNER JOIN APIKEY ON APPLICATION.KEY_ID = APIKEY.ID WHERE APPLICATION.NAME = \"app1\"';
 
 	connection.query(queryString, function(err, rows, fields) {
 	    if (err) throw err;
