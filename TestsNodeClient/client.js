@@ -282,38 +282,65 @@ function postTransactionRequestsInparallel(callback){
 
 //###################### Verify Server-Client Values #########################//
 
+
+var userPointsOnServer = [];
+
+function getUserPoints(userNameP){
+var userName = userNameP; //JSON.parse(JSON.stringify(userNameP)); utile seulement pour objets
+	return function(callback){
+		console.log("User to check (get user points):" + baseURL + "api/users/" + userName + "/reputation");
+
+		var requestData = {
+	    headers:{
+	      "Accept": "application/json",
+				"Authorization": apikey
+	    }
+	  };
+
+		client.get(baseURL + "api/users/" + userName + "/reputation", requestData, function(data, response){
+			console.log("Points pushed in table: " + data.points + " for user: " + userName);
+			userPointsOnServer.push(data.points);
+
+			console.log(response.statusCode + " - " + response.statusMessage);
+		});
+		callback(null, "Get function have been done for user " + userName);
+	}
+}
+
+
+
 // This function get the number of points from the server and compare them to
 // the points sent. If users are new ones, values must be the same.
 function checkValues(callback){
   console.log("\n\n==========================================");
 	console.log("Comparing client-side and server-side stats");
 	console.log("------------------------------------------");
-  var requestData = {
-    headers:{
-      "Accept": "application/json",
-			"Authorization": apikey
-    }
-  };
+
   // Points for each users
-  var userPointsOnServer = [];
 	var getUserPointsOnServer = [];
 
 	console.log("Apikey before check Values: " + apikey);
+
+	// Put the functions to get the points
   for (var i = 0; i < numberOfUser; i++){
 		console.log("User to check:" + baseURL + "api/users/" + endUserNamesRandom[i] + "/reputation");
-    client.get(baseURL + "api/users/" + endUserNamesRandom[i] + "/reputation", requestData, function(data, response){
-      // push in userPointsOnServer the number of points for each user
-      userPointsOnServer.push(data.points);
-      // The number of points given en this test is supposed to be equal to the NumberOfRequestsPerEndUser
-      // The eventEasy makes the endUser to earn 1 point according to the rule.
-      console.log("Points for user " + endUserNamesRandom[i] + ": " + data.points);
-      if(data.points !== NumberOfRequestsPerEndUser) {
-        console.log("Error: The number of points is " + data.points + " and should be " + NumberOfRequestsPerEndUser);
-      }
-			console.log(response.statusCode + " - " + response.statusMessage);
-    });
+		getUserPointsOnServer.push(getUserPoints(endUserNamesRandom[i]));
   }
-	callback();
+
+	async.series(getUserPointsOnServer, function(err, results){
+		console.log("User points got");
+		console.log("Table of points: " + userPointsOnServer);
+	});
+
+	for (var i = 0; i< numberOfUser; i++){
+		console.log("Comparing server datas with number of events sent");
+		if(userPointsOnServer[i] !== NumberOfRequestsPerEndUser){
+			console.log("ERROR: Number of points doesn't match. Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+		}
+		else{
+			console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+		}
+	}
 }; // End of checkValues
 
 //########################### INITIALISATION #################################//
