@@ -154,6 +154,20 @@ Prequrequisite :
 <img src="./img/entity-schema.jpg"/>
 Model schema
 
+Constraints (Unique) :
+	- Account
+		- email
+	- Application
+		- name
+	- EndUser
+	 - name, app_id
+	- EventType
+	 - name, app_id
+	- Role
+		- name
+	- RuleProperties
+		- name, value
+
 ### Dependence Model Schema
 <img src="./img/dependence-schema.jpg"/>
 Dependence schema
