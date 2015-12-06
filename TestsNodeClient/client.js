@@ -184,9 +184,9 @@ var eventEasy = {
 
 // This function return the functions that will send the requests (events)
 function getRequestPOST(data, url, callback) {
-	console.log("Prepare a POST request for user " + data.endUser);
+	//console.log("Prepare a POST request for user " + data.endUser);
 	var capturedData = JSON.parse(JSON.stringify(data));
-
+	console.log("getRequestPOST captured data: " + JSON.stringify(capturedData));
   return function(callback) {
 		// Request headers and data
     var requestData = {
@@ -204,7 +204,7 @@ function getRequestPOST(data, url, callback) {
       }
     };
 
-    console.log("POST " + url + JSON.stringify(requestData.data));
+    console.log("POST at: " + url + "With datas: " + JSON.stringify(requestData.data));
 
     var req = client.post(baseURL + url, requestData, function(data, response) {
   			var error = null;
@@ -296,6 +296,8 @@ function checkValues(callback){
   };
   // Points for each users
   var userPointsOnServer = [];
+	var getUserPointsOnServer = [];
+
 	console.log("Apikey before check Values: " + apikey);
   for (var i = 0; i < numberOfUser; i++){
 		console.log("User to check:" + baseURL + "api/users/" + endUserNamesRandom[i] + "/reputation");
@@ -308,7 +310,7 @@ function checkValues(callback){
       if(data.points !== NumberOfRequestsPerEndUser) {
         console.log("Error: The number of points is " + data.points + " and should be " + NumberOfRequestsPerEndUser);
       }
-			console.log(response.statusCode);
+			console.log(response.statusCode + " - " + response.statusMessage);
     });
   }
 	callback();
