@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name="RuleProperties.findByValueAndName", query = "SELECT r FROM RuleProperties r WHERE r.value = :value AND r.name = :name")
 })
 @Table(uniqueConstraints=
-           @UniqueConstraint(columnNames = {"name"})) 
+           @UniqueConstraint(columnNames = {"name", "value"})) 
 public class RuleProperties extends AbstractDomainModel<Long>{
     
     private String name;
