@@ -169,6 +169,10 @@ For the REST API we use the approach
 
 <img src="./img/rest-project-approach.jpg"/>
 
+Entity for Gamification:
+
+<img src="./img/entity-game-schema.jpg" />
+
 ### User interface
 <img src="./img/page-login.jpg"/>
 Login page
