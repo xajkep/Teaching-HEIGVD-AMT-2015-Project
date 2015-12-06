@@ -331,6 +331,16 @@ function checkValues(callback){
 		console.log("User points got");
 		console.log("Table of points: " + userPointsOnServer);
 	});
+
+	for (var i = 0; i< numberOfUser; i++){
+		console.log("Comparing server datas with number of events sent");
+		if(userPointsOnServer[i] !== NumberOfRequestsPerEndUser){
+			console.log("ERROR: Number of points doesn't match.")
+		}
+		else{
+			console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + );
+		}
+	}
 }; // End of checkValues
 
 //########################### INITIALISATION #################################//
