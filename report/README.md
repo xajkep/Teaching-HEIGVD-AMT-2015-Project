@@ -20,8 +20,7 @@ Implementation of the communcation with the database
 
 Implemenation of the webservice rest
 
-...
-
+Define the "Gamification"
 
 ## Introduction
 This project is to make during the AMT course at the HEIG-VD.
@@ -42,8 +41,8 @@ Prerequisite :
 * Install MySQL server
 * Configure MySQL server
 	* Create "amt" database
-	* User root must be connect to amt
-	* User root must have 1234 like password
+	* User amt must be connect to amt
+	* User amt must have amt like password
 * Create Glassfish server
 	* Server : Glassfish
 	* Name : AMT Server
@@ -69,6 +68,15 @@ At startup, the application generate some data and save to database.
 	* app4, testapp4, toto
 		* 15 end users
 * 90 end users
+* 2 badges for Application 1
+* 3 badges for Application 2
+* endUser10 has
+	* 1 badge
+	* 1500 points
+* endUser30 has
+	* 3 badges
+	* 3000 points
+
 
 ### How to execute and access the application
 Prerequisite :
@@ -130,6 +138,7 @@ Prerequisite :
 
 Prequrequisite :
 * Make npm install in TestsNodeClient
+* Set the api key at line 43.
 
 1. Open a shell
 2. Go to TestNodeClient folder
@@ -144,6 +153,13 @@ Prequrequisite :
 ### Model Schema
 <img src="./img/model-schema.jpg"/>
 Model schema
+
+### Gamification
+The end user can earn :
+ - Badges
+ - Points
+
+The end users appear in a ranking (leaderboard).
 
 ### Dependence Model Schema
 <img src="./img/dependence-schema.jpg"/>
@@ -235,26 +251,76 @@ Project
 	- ch.heigvd.amt.amt_project.models
 		- AbastractDomainModel.java
 		- Account.java
+		- ActionBadge.java
+		- ActionPoints.java
+		- ActionType.java
 		- ApiKey.java
 		- Application.java
+		- Badge.java
+		- BadgeAward.java
 		- EndUser.java
+		- EventType.java
+		- pointawards.java
 		- Role.java
+		- Rule.java
+		- RuleProperties.java
+	- ch.heigvd.amt.amt_project.rest
+		- config
+			- AppConfig.java
+			- JacksonConfiguration.java
+			- JsonExceptionMapper.java
+		- dto
+			- ActionTypeDTO.java
+			- BadgeDTO.java
+			- EndUserDTO.java
+			- EndUserReputationDTO.java
+			- EventDTO.java
+			- EventTypeDTO.java
+			- LeaderboardDTO.java
+			- PointAwardDTO.java
+			- RuleActionDTO.java
+			- RuleConditionDTO.java
+			- RuleDTO.java
+		- resources
+			- BadgeResource.java
+			- EventResource.java
+			- LeaderboardResource.java
+			- PointAwardsResource.java
+			- RuleResource.java
+			- UserResource.java
 	- ch.heigvd.amt.amt_project.services
 		- TestDataManager.java
 		- TestDataManagerLocal.java
-	- ch.heigvd.amt.amt_project.services.dao
-		- AccountsDao.java
-		- AccountsLocalDao.java
-		- ApiKeysDao.java
-		- ApiKeysLocalDao.java
-		- ApplicationsDao.java
-		- ApplicationsLocalDao.java
-		- EndUsersDao.java
-		- EndUsersLocalDao.java
-		- GenericDao.java
-		- IGenericDao.java
-		- RolesDao.java
-		- RolesDaoLocal.java
+		- dao
+			- AccountsDAO.java
+			- AccountsLocalDAO.java
+			- ActionBadgesDAO.java
+			- ActionBadgesDAOLocal.java
+			- ActionPointsDAO.java
+			- ActionPointsDAOLocal.java
+			- ApiKeysDA.java
+			- ApiKeysLocalDAO.java
+			- ApplicationsDAO.java
+			- ApplicationsLocalDAO.java
+			- BadgeAwardsDAO.java
+			- BadgeAwardsDAOLocal.java
+			- BadgesDAO.java
+			- BadgesDAOLocal.java
+			- BusinessDomainEntityNotFound.java
+			- EndUsersDAO.java
+			- EndUsersLocalDao.java
+			- EventTypeDAO.java
+			- EventTypeDAOLocal.java
+			- GenericDAO.java
+			- IGenericDAO.java
+			- PointAwardsDAO.java
+			- PointAwardsDAOLocal.java
+			- RolesDAO.java
+			- RolesAOoLocal.java
+			- RulePropertiesDAO.java
+			- RulePropertiesDAOLocal.java
+			- RuleDAO.java
+			- RuleDAOLocal.java
 	- ch.heigvd.amt.amt_project.util
 		- MonitoringListener.java
 	- ch.heigvd.amt.amt_project.web.controllers
@@ -310,7 +376,12 @@ Here are the requests that will be executed for each thread:
 * Get application list
 * Add a new application
 
-### Procedures
+#### REST API
+
+We have a client in Javascript.
+This program goal is to test the behaviour of the application with multiple parallel requests. This "client" will send multiple events to the gamification platform in order to increase the amount of points / badges of a client and then will ask the client how many points he has.
+
+If the number of points are not equals on both sides (this node application and in the gamification platfomr) there is a problem (probably concurrency).
 
 ### Results
 
