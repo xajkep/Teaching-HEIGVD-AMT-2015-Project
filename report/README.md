@@ -389,7 +389,7 @@ If the number of points are not equals on both sides (this node application and 
 
 ### Results
 
-### Apache JMeter
+#### Apache JMeter
 
 The thread group of JMeter tests contains two views to visualize query results. The first, "View results tree" can see requests and responses sent and the other, "Graph Results", lets see the send-response time and other details on the flow, the average or data for example. Other views can be added without worries thread group.
 
@@ -399,7 +399,13 @@ The requests results can be seen in the database.
 
 When the Selenium project is implemented (in test mode), the NetBeans progress bar shows the percentage of green and red successful tests stranded results.
 
+#### REST API
+
+We have a problem with the tests (failed).
+
 ## Known Issues
+
+At this stage, we have not been able to implement competition for lack of time and we have a problem with the API. A team member has not been present for over a week (the last weeks). (Korea)
 
 ## Conclusion
 The development of this application is not easy because it lacks some concepts for some member of the group to effectively move forward. Separating the tasks (Model, Documentation, Controller / View, Test) do not help learning.
