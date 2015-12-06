@@ -204,7 +204,7 @@ function getRequestPOST(data, url, callback) {
       }
     };
 
-    console.log("POST at: " + url + "With datas: " + JSON.stringify(requestData.data));
+    console.log("POST at: " + baseURL + url + "With datas: " + JSON.stringify(requestData.data));
 
     var req = client.post(baseURL + url, requestData, function(data, response) {
   			var error = null;
@@ -271,7 +271,7 @@ function postTransactionRequestsInparallel(callback){
   async.parallel(endUserRequests, function(err, results){
     for (var i = 0; i < endUserRequests.length; i++){
       if(results[i].response.statusCode < 200 || results[i].response.statusCode >= 300){
-        console.log("Result " + i + ": " + results[i].response.statusCode);
+        console.log("Result " + i + ": " + results[i].response.statusCode + " message: " + results[i].statusMessage);
         numberOfUnsuccessfulResponses++;
       } else {
 				console.log("Posting transaction requests succeed");
@@ -370,7 +370,7 @@ function initialisation(notifyInitHasBeenDone){
 		var failed = 0;
 		for (var i = 0; i < rulesAndBadgesRequests.length; i++){
       if(results[i].response.statusCode < 200 || results[i].response.statusCode >= 300){
-        console.log("Result " + i + ": " + results[i].response.statusCode);
+        console.log("Result " + i + ": " + results[i].response.statusCode + " Message: " + results[i].response.statusMessage);
 				failed++;
       } else {
 				console.log("Posting rules and badges succeed");
