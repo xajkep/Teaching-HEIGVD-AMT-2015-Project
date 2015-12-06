@@ -3,6 +3,8 @@
 @author xajkep
 @date   20151127
 
+THIS FILE IS FOR DEBUG PURPOSE
+
 Test the API with all apikey
 
 Features tested:
