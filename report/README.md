@@ -30,7 +30,7 @@ The main goal is to design an web application client-server in Java in 3 parts.
 
 The first part is to create the scaffolding of the application (Account, Application, Role, Api Key) and implementation of the design pattern MVC.
 
-The second part is to
+The second part is to create the gamification domain model. This is where we will have to define and implement game mechanisms (e.g. badges, reputation scores, leader boards, etc.). This is also where we will have to find a ways to make a connection between
 
 The third part is to
 
@@ -126,14 +126,28 @@ Prerequisite :
 2. Open the "AMT_Test_charge.jmx" file in JMeter
 3. Run the automated test by clicking the green arrow
 
+**NodeJS Test**
+
+Prequrequisite :
+* Make npm install in TestsNodeClient
+
+1. Open a shell
+2. Go to TestNodeClient folder
+3. node client.js
+
 ## Design
 
 ### System overview
 <img src="./img/navigation-schema.jpg"/>
 <caption>Navigation schema</caption>
 
-### Gamification features
-Part II
+### Model Schema
+<img src="./img/model-schema.jpg"/>
+Model schema
+
+### Dependence Model Schema
+<img src="./img/dependence-schema.jpg"/>
+Dependence schema
 
 ### User interface
 <img src="./img/page-login.jpg"/>
@@ -161,6 +175,7 @@ Userlist page
 Edit account page
 
 ### REST API
+[Specifications](../specifications/api-rest-spec.md "Specifications")
 
 ### Design patterns
 #### MVC
