@@ -1,6 +1,8 @@
 package ch.heigvd.amt.amt_project.models;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
@@ -8,6 +10,10 @@ import javax.persistence.Entity;
  */
 
 @Entity
+
+@NamedQueries({
+    @NamedQuery(name = "ActionPoints.findByPoints", query = "SELECT ap FROM ActionPoints ap WHERE ap.point = :points")
+})
 public class ActionPoints extends ActionType {
     private long point;
     

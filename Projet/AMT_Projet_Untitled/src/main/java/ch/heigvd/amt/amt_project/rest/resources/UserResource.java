@@ -79,8 +79,8 @@ public class UserResource {
             @HeaderParam("Authorization") String apikey) {
 
         try {
-            Long appId = applicationsDAO.findByApikey(apikey).getId();
-            EndUser e = endUsersDAO.findByName(endUserName, appId);
+            Application app = applicationsDAO.findByApikey(apikey);
+            EndUser e = endUsersDAO.findByName(endUserName, app);
             EndUserDTO dto = new EndUserDTO();
 
             dto.setName(e.getName());
@@ -115,7 +115,7 @@ public class UserResource {
         
         // Check if the user already exists
         try {
-            endUsersDAO.findByName(apikey, app.getId());
+            endUsersDAO.findByName(apikey, app);
         } catch (BusinessDomainEntityNotFoundException ex) {
             throw new ServiceUnavailableException("This user already exists");
         }
@@ -138,8 +138,8 @@ public class UserResource {
             EndUserDTO dto,
             @PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
         try {
-            Long appId = applicationsDAO.findByApikey(apikey).getId();
-            EndUser e = endUsersDAO.findByName(endUserName, appId);
+            Application app = applicationsDAO.findByApikey(apikey);
+            EndUser e = endUsersDAO.findByName(endUserName, app);
 
             if (!dto.getName().equals("")) {
                 e.setName(dto.getName());
@@ -158,8 +158,8 @@ public class UserResource {
     public Response delete(
             @PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
         try {
-            Long appId = applicationsDAO.findByApikey(apikey).getId();
-            EndUser e = endUsersDAO.findByName(endUserName, appId);
+            Application app = applicationsDAO.findByApikey(apikey);
+            EndUser e = endUsersDAO.findByName(endUserName, app);
             endUsersDAO.delete(e);
 
             return Response.status(Response.Status.OK).build();
@@ -174,10 +174,9 @@ public class UserResource {
     public EndUserReputationDTO getEndUserReputation(@PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
 
         try {
-            Long appId = applicationsDAO.findByApikey(apikey).getId();
-            System.out.println("appID" + appId);
+            Application app = applicationsDAO.findByApikey(apikey);
             System.out.println("endUserName" + endUserName);
-            EndUser endUser = endUsersDAO.findByName(endUserName, appId);
+            EndUser endUser = endUsersDAO.findByName(endUserName, app);
             System.out.println("endUser" + endUser.getId());
 
             EndUserReputationDTO dto = new EndUserReputationDTO();
@@ -212,8 +211,8 @@ public class UserResource {
     public List<BadgeDTO> getEndUserBadges(@PathParam("endUserName") String endUserName, @HeaderParam("Authorization") String apikey) {
 
         try {
-            Long appId = applicationsDAO.findByApikey(apikey).getId();
-            EndUser endUser = endUsersDAO.findByName(endUserName, appId);
+            Application app = applicationsDAO.findByApikey(apikey);
+            EndUser endUser = endUsersDAO.findByName(endUserName, app);
             List<BadgeDTO> result = new ArrayList<>();
 
             for (BadgeAward badgeAward : endUser.getBadgeAwards()) {
