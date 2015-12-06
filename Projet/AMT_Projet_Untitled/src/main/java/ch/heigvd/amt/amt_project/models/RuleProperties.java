@@ -3,6 +3,8 @@ package ch.heigvd.amt.amt_project.models;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
@@ -13,6 +15,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name="RuleProperties.findByValueAndName", query = "SELECT r FROM RuleProperties r WHERE r.value = :value AND r.name = :name")
 })
+@Table(uniqueConstraints=
+           @UniqueConstraint(columnNames = {"name"})) 
 public class RuleProperties extends AbstractDomainModel<Long>{
     
     private String name;

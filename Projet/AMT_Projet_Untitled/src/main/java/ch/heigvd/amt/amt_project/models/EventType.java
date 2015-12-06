@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
   @NamedQuery(name = "EventType.findByName", query = "SELECT e FROM EventType e WHERE e.app.id = :app AND e.name = :name"),
 })
 @Table(uniqueConstraints=
-           @UniqueConstraint(columnNames = {"eventtype_id", "name"})) 
+           @UniqueConstraint(columnNames = {"name"})) 
 public class EventType extends AbstractDomainModel<Long>{
     
     private String name;
