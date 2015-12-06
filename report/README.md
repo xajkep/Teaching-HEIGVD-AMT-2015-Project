@@ -409,5 +409,3 @@ At this stage, we have not been able to implement competition for lack of time a
 
 ## Conclusion
 The development of this application is not easy because it lacks some concepts for some member of the group to effectively move forward. Separating the tasks (Model, Documentation, Controller / View, Test) do not help learning.
-
-## Appending A: Auto Evaluation
