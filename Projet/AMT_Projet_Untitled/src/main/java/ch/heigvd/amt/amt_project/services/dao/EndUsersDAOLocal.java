@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
+import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
 import java.util.List;
@@ -28,5 +29,5 @@ public interface EndUsersDAOLocal extends IGenericDAO<EndUser, Long> {
 
     public List<Object[]> getBestUsers(String apiKey, int numberOfUser);
 
-    public EndUser findByName(String name, long appId) throws BusinessDomainEntityNotFoundException;
+    public EndUser findByName(String name, Application app) throws BusinessDomainEntityNotFoundException;
 }

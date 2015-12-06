@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
+import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.EventType;
 import javax.ejb.Local;
 
@@ -10,6 +11,6 @@ import javax.ejb.Local;
 @Local
 public interface EventTypesDAOLocal extends IGenericDAO<EventType, Long> {
 
-    public EventType findByName(String type, Long appId) throws BusinessDomainEntityNotFoundException;
+    public EventType findByName(String type, Application app) throws BusinessDomainEntityNotFoundException;
     
 }

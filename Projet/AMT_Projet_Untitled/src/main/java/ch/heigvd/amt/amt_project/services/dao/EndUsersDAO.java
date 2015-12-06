@@ -1,5 +1,6 @@
 package ch.heigvd.amt.amt_project.services.dao;
 
+import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.BadgeAward;
 import ch.heigvd.amt.amt_project.models.EndUser;
 import java.text.SimpleDateFormat;
@@ -118,11 +119,11 @@ public class EndUsersDAO extends GenericDAO<EndUser, Long> implements EndUsersDA
     }
 
     @Override
-    public EndUser findByName(String name, long appId) throws BusinessDomainEntityNotFoundException {
+    public EndUser findByName(String name, Application app) throws BusinessDomainEntityNotFoundException {
         EndUser result;
         try {
             result = (EndUser) em.createNamedQuery("EndUser.findByName")
-                    .setParameter("app", appId)
+                    .setParameter("app", app.getId())
                     .setParameter("name", name)
                     .getSingleResult();
             return result;

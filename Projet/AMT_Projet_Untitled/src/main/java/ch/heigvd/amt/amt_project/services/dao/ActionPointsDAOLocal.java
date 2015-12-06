@@ -11,5 +11,5 @@ import javax.ejb.Local;
 
 @Local
 public interface ActionPointsDAOLocal extends IGenericDAO<ActionPoints, Long> {
-    
+    public ActionPoints findByPoints(long points) throws BusinessDomainEntityNotFoundException;
 }

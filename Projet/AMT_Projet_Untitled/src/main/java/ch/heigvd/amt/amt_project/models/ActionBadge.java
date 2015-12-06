@@ -3,13 +3,18 @@ package ch.heigvd.amt.amt_project.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
- * @author YounTheory
+ * @author YounTheory, mberthouzoz
  */
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "ActionBadge.findByBadge", query = "SELECT ab FROM ActionBadge ab WHERE ab.badge.id = :badge")
+})
 public class ActionBadge extends ActionType{
     @ManyToOne
     private Badge badge;

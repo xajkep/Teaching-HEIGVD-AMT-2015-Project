@@ -90,17 +90,16 @@ public class EventResource {
             } catch (BusinessDomainEntityNotFoundException ex) {
                 Logger.getLogger(EventResource.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Long appId = app.getId();
             EndUser endUser = null;
             try {
-                endUser = endUserDAO.findByName(endUserName, appId);
+                endUser = endUserDAO.findByName(endUserName, app);
             } catch (BusinessDomainEntityNotFoundException ex) {
                 endUser = endUserDAO.createAndReturnManagedEntity(new EndUser(app, endUserName, date));
             }
             EventType eventType = null;
             String eventTypeName = event.getType();
             try {
-                eventType = eventTypesDAO.findByName(eventTypeName, appId);
+                eventType = eventTypesDAO.findByName(eventTypeName, app);
             } catch (BusinessDomainEntityNotFoundException ex) {
                 throw new ServiceUnavailableException("Event Type not exists");
             }
