@@ -127,7 +127,7 @@ var addRuleQuestionHard = {
     }
   },
   action: {
-    type: "awardPoint",
+    type: "AwardPoint",
     properties:{
 			"nbPoints":"3"
 		}
@@ -142,7 +142,7 @@ var addRuleQuestionMedium = {
     }
   },
   action: {
-    type: "awardPoint",
+    type: "AwardPoint",
     properties:{
 			"nbPoints":"2"
 		}
@@ -158,7 +158,7 @@ var addRuleQuestionEasy = {
     }
   },
   action: {
-    type: "awardPoint",
+    type: "AwardPoint",
     properties:{
 			"nbPoints":"1"
 		}
