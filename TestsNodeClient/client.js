@@ -42,8 +42,8 @@ var mysql = require('mysql');
 http.globalAgent.maxSockets = 5;
 var apikey = "";
 var baseURL = "http://localhost:8080/AMT_Projet_Untitled/";
-var addRuleURL = "api/rules";
-var addBadgeURL = "api/badges";
+var addRuleURL = "api/rules/";
+var addBadgeURL = "api/badges/";
 var NumberOfRequestsPerEndUser = 4;
 var numberOfUser = 5;
 
@@ -123,7 +123,7 @@ var addRuleQuestionHard = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "difficulty": "hard"
+      "dif": "hard"
     }
   },
   action: {
@@ -138,7 +138,7 @@ var addRuleQuestionMedium = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "difficulty": "medium"
+      "dif": "medium"
     }
   },
   action: {
@@ -154,7 +154,7 @@ var addRuleQuestionEasy = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "difficulty": "easy"
+      "dif": "easy"
     }
   },
   action: {
@@ -175,7 +175,7 @@ var eventEasy = {
   properties:
     {
       tag: "java",
-      difficulty: "easy"
+      dif: "easy"
     }
 }
 
@@ -250,7 +250,8 @@ function tableOfRequestsFunction(callback){
 	    data.endUser = endUserNamesRandom[j];
 			console.log("Adding request in table: " + JSON.stringify(data));
 	    endUserRequests.push(
-	      getRequestPOST(data, baseURL + url)
+	      getRequestPOST(data, url)
+
 	    );
 	  }
 	}
@@ -359,11 +360,11 @@ function initialisation(notifyInitHasBeenDone){
 	console.log("------------------------------------------");
 
 	// Ajout des fonctions POST au tableau
-	rulesAndBadgesRequests.push(initialize(addRuleQuestionEasy, baseURL + addRuleURL, notifyInitHasBeenDone));
-	rulesAndBadgesRequests.push(initialize(addRuleQuestionMedium, baseURL + addRuleURL, notifyInitHasBeenDone));
-	rulesAndBadgesRequests.push(initialize(addRuleQuestionHard, baseURL + addRuleURL, notifyInitHasBeenDone));
-	rulesAndBadgesRequests.push(initialize(addBadge1, baseURL + addBadgeURL, notifyInitHasBeenDone));
-	rulesAndBadgesRequests.push(initialize(addBadge2, baseURL + addBadgeURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addRuleQuestionEasy, addRuleURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addRuleQuestionMedium, addRuleURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addRuleQuestionHard, addRuleURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addBadge1, addBadgeURL, notifyInitHasBeenDone));
+	rulesAndBadgesRequests.push(initialize(addBadge2, addBadgeURL, notifyInitHasBeenDone));
 
 	async.parallel(rulesAndBadgesRequests, function(err, results){
 		var failed = 0;
