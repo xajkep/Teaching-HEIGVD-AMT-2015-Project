@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
@@ -14,6 +16,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
   @NamedQuery(name = "EventType.findByName", query = "SELECT e FROM EventType e WHERE e.app.id = :app AND e.name = :name"),
 })
+@Table(uniqueConstraints=
+           @UniqueConstraint(columnNames = {"name", "app_id"})) 
 public class EventType extends AbstractDomainModel<Long>{
     
     private String name;

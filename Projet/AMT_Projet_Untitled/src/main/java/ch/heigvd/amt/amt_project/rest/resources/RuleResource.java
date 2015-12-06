@@ -74,7 +74,6 @@ public class RuleResource {
         
         /* Recover event properties from the DTO */
         HashMap<String, String> conditionPropertiesMap = dto.getCondition().getProperties();
-        HashMap<String, String> actionPropertiesMap = dto.getAction().getProperties();
         
         List<RuleProperties> conditionPropertiesList = new ArrayList<>();
         for (Map.Entry<String, String> entry : conditionPropertiesMap.entrySet()) {
@@ -91,7 +90,7 @@ public class RuleResource {
                 ActionPoints action = new ActionPoints();
                 action.setName("ActionPoints");
                 action.setPoints(Long.parseLong(
-                        dto.getCondition()
+                        dto.getAction()
                         .getProperties()
                         .get("nbPoints")));
                 rule.setActionType(action);

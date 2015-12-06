@@ -40,7 +40,7 @@ var mysql = require('mysql');
  * of this test client). The higher the number, the higher the concurrency.
  */
 http.globalAgent.maxSockets = 5;
-var apikey = "";
+var apikey = "040482f1-2db8-4ab4-aba9-56d01e1539bd";
 var baseURL = "http://localhost:8080/AMT_Projet_Untitled/";
 var addRuleURL = "api/rules/";
 var addBadgeURL = "api/badges/";
@@ -87,15 +87,15 @@ function getApiKey(notifyApiKeyHasBeenFetched){
 
 	connection.connect();
 
-	var queryString = 'SELECT apikey FROM application INNER JOIN apikey ON application.KEY_ID = apikey.ID WHERE application.name = \"app1\"';
+	var queryString = 'SELECT APIKEY FROM APPLICATION INNER JOIN APIKEY ON APPLICATION.KEY_ID = APIKEY.ID WHERE APPLICATION.NAME = \"app1\"';
 
 	connection.query(queryString, function(err, rows, fields) {
 	    if (err) throw err;
 
 	 		// Normaly there is only one row
 	    for (var i in rows) {
-	        console.log('Got apikey: ', rows[i].apikey); //.fields[0]
-					apikey = rows[i].apikey;
+	        console.log('Got apikey: ', rows[i].APIKEY); //.fields[0]
+					apikey = rows[i].APIKEY;
 	    }
 			notifyApiKeyHasBeenFetched(null, "API key have been fetched");
 	});
@@ -127,8 +127,8 @@ var addRuleQuestionHard = {
     }
   },
   action: {
-    type: "AwardPoint",
-    properties:{
+    type: "AwardPoints",
+		properties:{
 			"nbPoints":"3"
 		}
   }
@@ -142,7 +142,7 @@ var addRuleQuestionMedium = {
     }
   },
   action: {
-    type: "AwardPoint",
+    type: "AwardPoints",
     properties:{
 			"nbPoints":"2"
 		}
@@ -158,7 +158,7 @@ var addRuleQuestionEasy = {
     }
   },
   action: {
-    type: "AwardPoint",
+    type: "AwardPoints",
     properties:{
 			"nbPoints":"1"
 		}
