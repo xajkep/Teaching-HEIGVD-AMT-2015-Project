@@ -161,6 +161,10 @@ The end user can earn :
 
 The end users appear in a ranking (leaderboard).
 
+For the REST API we use the approach
+
+<img src="./img/rest-project-approach.jpg"/>
+
 ### Dependence Model Schema
 <img src="./img/dependence-schema.jpg"/>
 Dependence schema
