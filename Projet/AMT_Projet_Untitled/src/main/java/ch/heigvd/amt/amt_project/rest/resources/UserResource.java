@@ -13,8 +13,6 @@ import ch.heigvd.amt.amt_project.services.dao.EndUsersDAOLocal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
