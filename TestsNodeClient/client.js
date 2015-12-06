@@ -335,10 +335,10 @@ function checkValues(callback){
 	for (var i = 0; i< numberOfUser; i++){
 		console.log("Comparing server datas with number of events sent");
 		if(userPointsOnServer[i] !== NumberOfRequestsPerEndUser){
-			console.log("ERROR: Number of points doesn't match.")
+			console.log("ERROR: Number of points doesn't match. Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
 		}
 		else{
-			console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + );
+			console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
 		}
 	}
 }; // End of checkValues
