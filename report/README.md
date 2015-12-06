@@ -151,8 +151,12 @@ Prequrequisite :
 <caption>Navigation schema</caption>
 
 ### Model Schema
-<img src="./img/model-schema.jpg"/>
+<img src="./img/entity-schema.jpg"/>
 Model schema
+
+### Dependence Model Schema
+<img src="./img/dependence-schema.jpg"/>
+Dependence schema
 
 ### Gamification
 The end user can earn :
@@ -164,10 +168,6 @@ The end users appear in a ranking (leaderboard).
 For the REST API we use the approach
 
 <img src="./img/rest-project-approach.jpg"/>
-
-### Dependence Model Schema
-<img src="./img/dependence-schema.jpg"/>
-Dependence schema
 
 ### User interface
 <img src="./img/page-login.jpg"/>
