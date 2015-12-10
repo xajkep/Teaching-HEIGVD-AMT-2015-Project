@@ -39,7 +39,7 @@ var mysql = require('mysql');
  * words, if it is equal to 1, then requests will be sent one by one (no concurrency on the server because
  * of this test client). The higher the number, the higher the concurrency.
  */
-http.globalAgent.maxSockets = 5;
+http.globalAgent.maxSockets = 1; // 5
 var apikey = "040482f1-2db8-4ab4-aba9-56d01e1539bd";
 var baseURL = "http://localhost:8080/AMT_Projet_Untitled/";
 var addRuleURL = "api/rules/";
@@ -97,7 +97,8 @@ function getApiKey(notifyApiKeyHasBeenFetched){
 	        console.log('Got apikey: ', rows[i].APIKEY); //.fields[0]
 					apikey = rows[i].APIKEY;
 	    }
-			notifyApiKeyHasBeenFetched(null, "API key have been fetched");
+			notifyApiKeyHasBeenFetched();
+			//notifyApiKeyHasBeenFetched(null, "API key have been fetched");
 	});
 
 	connection.end();
@@ -123,7 +124,8 @@ var addRuleQuestionHard = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "dif": "hard"
+      "dif": "hard",
+			"tag": "java"
     }
   },
   action: {
@@ -138,7 +140,8 @@ var addRuleQuestionMedium = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "dif": "medium"
+      "dif": "medium",
+			"tag": "java"
     }
   },
   action: {
@@ -154,7 +157,8 @@ var addRuleQuestionEasy = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "dif": "easy"
+      "dif": "easy",
+			"tag": "java"
     }
   },
   action: {
@@ -169,12 +173,13 @@ var addRuleQuestionEasy = {
 
 var endUserId = "";
 var eventEasy = {
-  type: "answerQuestion",
-  timestamp: new Date().toISOString(),
-  enduser: endUserId,
-  properties:
+  "type": "answerQuestion",
+  "timestamp": new Date().toISOString(),
+  "enduser": endUserId,
+  "properties":
     {
-      dif: "easy"
+			"dif": "easy",
+      "tag": "java"
     }
 }
 
@@ -267,7 +272,7 @@ function postTransactionRequestsInparallel(callback){
 	console.log("POSTing transaction requests in parallel");
 	console.log("------------------------------------------");
   var numberOfUnsuccessfulResponses = 0;
-  async.parallel(endUserRequests, function(err, results){
+  async.series(endUserRequests, function(err, results){
     for (var i = 0; i < endUserRequests.length; i++){
       if(results[i].response.statusCode < 200 || results[i].response.statusCode >= 300){
         console.log("Result " + i + ": " + results[i].response.statusCode + " message: " + results[i].statusMessage);
@@ -276,7 +281,8 @@ function postTransactionRequestsInparallel(callback){
 				console.log("Posting transaction requests succeed");
       }
     }
-    callback(null, endUserRequests.length + " transactions POSTs have been sent " + numberOfUnsuccessfulResponses + " have failed ");
+		callback();
+    //callback(null, endUserRequests.length + " transactions POSTs have been sent " + numberOfUnsuccessfulResponses + " have failed ");
   });
 };// End of postTransactionRequestsInparallel
 
@@ -341,6 +347,7 @@ function checkValues(callback){
 			console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
 		}
 	}
+	callback();
 }; // End of checkValues
 
 //########################### INITIALISATION #################################//
@@ -365,7 +372,7 @@ function initialisation(notifyInitHasBeenDone){
 	rulesAndBadgesRequests.push(initialize(addBadge1, addBadgeURL, notifyInitHasBeenDone));
 	rulesAndBadgesRequests.push(initialize(addBadge2, addBadgeURL, notifyInitHasBeenDone));
 
-	async.parallel(rulesAndBadgesRequests, function(err, results){
+	async.series(rulesAndBadgesRequests, function(err, results){
 		var failed = 0;
 		for (var i = 0; i < rulesAndBadgesRequests.length; i++){
       if(results[i].response.statusCode < 200 || results[i].response.statusCode >= 300){
@@ -375,7 +382,8 @@ function initialisation(notifyInitHasBeenDone){
 				console.log("Posting rules and badges succeed");
       }
     }
-    notifyInitHasBeenDone(null, rulesAndBadgesRequests.length + " transactions POSTs have been sent " + failed + " have failed ");
+		notifyInitHasBeenDone();
+    //notifyInitHasBeenDone(null, rulesAndBadgesRequests.length + " transactions POSTs have been sent " + failed + " have failed ");
 	});
 } // End of initialisation
 
@@ -389,7 +397,7 @@ function initialisation(notifyInitHasBeenDone){
 //############################################################################//
 
 // Execute in series with async:
-async.series([
+async.waterfall([
 	getApiKey,
 	initialisation,
 	tableOfRequestsFunction,

@@ -77,6 +77,7 @@ public class EventResource {
         Response.ResponseBuilder builder = null;
         try {
             String endUserName = event.getEnduser();
+
             HashMap<String, String> properties = event.getProperties();
             String timestamp = event.getTimestamp();
 
@@ -90,7 +91,7 @@ public class EventResource {
             } catch (BusinessDomainEntityNotFoundException ex) {
                 Logger.getLogger(EventResource.class.getName()).log(Level.SEVERE, null, ex);
             }
-            EndUser endUser = null;
+            EndUser endUser;
             try {
                 endUser = endUserDAO.findByName(endUserName, app);
             } catch (BusinessDomainEntityNotFoundException ex) {
