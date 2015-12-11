@@ -305,11 +305,11 @@ var userName = userNameP; //JSON.parse(JSON.stringify(userNameP)); utile seuleme
 
 		client.get(baseURL + "api/users/" + userName + "/reputation", requestData, function(data, response){
 			console.log("Points pushed in table: " + data.points + " for user: " + userName);
-			userPointsOnServer.push(data.points);
-
+			//userPointsOnServer.push(data.points);
+			callback(null, data.points);
 			console.log(response.statusCode + " - " + response.statusMessage);
 		});
-		callback(null, "Get function have been done for user " + userName);
+		//callback(null, "Get function have been done for user " + userName);
 	}
 }
 
@@ -334,20 +334,25 @@ function checkValues(callback){
   }
 
 	async.series(getUserPointsOnServer, function(err, results){
-		console.log("User points got");
-		console.log("Table of points: " + userPointsOnServer);
-	});
+		userPointsOnServer = results;
 
-	for (var i = 0; i< numberOfUser; i++){
-		console.log("Comparing server datas with number of events sent");
-		if(userPointsOnServer[i] !== NumberOfRequestsPerEndUser){
-			console.log("ERROR: Number of points doesn't match. Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+		userPointsOnServer.forEach (function(pts) {
+			console.log("User points got");
+			console.log("Table of points: " + pts);
+		});
+
+		for (var i = 0; i< numberOfUser; i++){
+			console.log("Comparing server datas with number of events sent");
+			if(userPointsOnServer[i] !== NumberOfRequestsPerEndUser){
+				console.log("ERROR: Number of points doesn't match. Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+			}
+			else{
+				console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+			}
 		}
-		else{
-			console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
-		}
-	}
-	callback();
+
+		callback();
+	});
 }; // End of checkValues
 
 //########################### INITIALISATION #################################//
@@ -405,9 +410,8 @@ async.waterfall([
   checkValues
 ], function(err, results) {
   console.log("\n\n==========================================");
-	console.log("Summary");
+	console.log("END Script");
 	console.log("------------------------------------------");
 	//console.log(err);
-	console.log(results);
 });
 //============================================================================//
