@@ -108,7 +108,7 @@ public class TestDataManager implements TestDataManagerLocal {
         Application app4 = applicationsDAO.createAndReturnManagedEntity(new Application("app4", "testapp4", apiKeysDAO.createAndReturnManagedEntity(new ApiKey()), true, toto));
 
         /**
-         * Generate EventType
+         * Generate Rules
          */
         System.out.println("Generate Rule for app1");
         List<RuleProperties> properties = new ArrayList<>();
