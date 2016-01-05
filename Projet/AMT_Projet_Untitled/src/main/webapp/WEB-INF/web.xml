@@ -25,6 +25,10 @@
         <servlet-name>AccountServlet</servlet-name>
         <servlet-class>ch.heigvd.amt.amt_project.web.controllers.AccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RulesServlet</servlet-name>
+        <servlet-class>ch.heigvd.amt.amt_project.web.controllers.RulesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/auth</url-pattern>
@@ -40,6 +44,10 @@
     <servlet-mapping>
         <servlet-name>AccountServlet</servlet-name>
         <url-pattern>/pages/account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RulesServlet</servlet-name>
+        <url-pattern>/pages/rules</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
