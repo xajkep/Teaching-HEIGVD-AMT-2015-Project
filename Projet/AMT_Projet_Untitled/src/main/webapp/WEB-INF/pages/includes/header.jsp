@@ -15,6 +15,7 @@
     <link href="static/css/amt_project.css" rel="stylesheet">
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap.wizard.js"></script>
     <script src="static/js/script.js"></script>
     
 
