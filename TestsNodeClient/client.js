@@ -8,7 +8,7 @@
  * This "client" will send multiple events to the gamification platform in order to increase the
  * amount of points / badges of a client and then will ask the client how many points he has.
  *
- * If the number of points are not equals on both sides (this node application and in the gamification platfomr)
+ * If the number of points are not equals on both sides (this node application and in the gamification platform)
  * there is a problem (probably concurrency).
  *
  * IMPORTANT: + It's recomended to empty the database before testing. Users are randomly created but there could
@@ -39,7 +39,7 @@ var mysql = require('mysql');
  * words, if it is equal to 1, then requests will be sent one by one (no concurrency on the server because
  * of this test client). The higher the number, the higher the concurrency.
  */
-http.globalAgent.maxSockets = 5;
+http.globalAgent.maxSockets = 1; // 5
 var apikey = "040482f1-2db8-4ab4-aba9-56d01e1539bd";
 var baseURL = "http://localhost:8080/AMT_Projet_Untitled/";
 var addRuleURL = "api/rules/";
@@ -97,7 +97,8 @@ function getApiKey(notifyApiKeyHasBeenFetched){
 	        console.log('Got apikey: ', rows[i].APIKEY); //.fields[0]
 					apikey = rows[i].APIKEY;
 	    }
-			notifyApiKeyHasBeenFetched(null, "API key have been fetched");
+			notifyApiKeyHasBeenFetched();
+			//notifyApiKeyHasBeenFetched(null, "API key have been fetched");
 	});
 
 	connection.end();
@@ -123,7 +124,8 @@ var addRuleQuestionHard = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "dif": "hard"
+      "dif": "hard",
+			"tag": "java"
     }
   },
   action: {
@@ -138,7 +140,8 @@ var addRuleQuestionMedium = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "dif": "medium"
+      "dif": "medium",
+			"tag": "java"
     }
   },
   action: {
@@ -154,7 +157,8 @@ var addRuleQuestionEasy = {
   condition:{
     type: "answerQuestion",
     properties:{
-      "dif": "easy"
+      "dif": "easy",
+			"tag": "java"
     }
   },
   action: {
@@ -169,12 +173,13 @@ var addRuleQuestionEasy = {
 
 var endUserId = "";
 var eventEasy = {
-  type: "answerQuestion",
-  timestamp: new Date().toISOString(),
-  enduser: endUserId,
-  properties:
+  "type": "answerQuestion",
+  "timestamp": new Date().toISOString(),
+  "enduser": endUserId,
+  "properties":
     {
-      dif: "easy"
+			"dif": "easy",
+      "tag": "java"
     }
 }
 
@@ -276,7 +281,8 @@ function postTransactionRequestsInparallel(callback){
 				console.log("Posting transaction requests succeed");
       }
     }
-    callback(null, endUserRequests.length + " transactions POSTs have been sent " + numberOfUnsuccessfulResponses + " have failed ");
+		callback();
+    //callback(null, endUserRequests.length + " transactions POSTs have been sent " + numberOfUnsuccessfulResponses + " have failed ");
   });
 };// End of postTransactionRequestsInparallel
 
@@ -299,11 +305,11 @@ var userName = userNameP; //JSON.parse(JSON.stringify(userNameP)); utile seuleme
 
 		client.get(baseURL + "api/users/" + userName + "/reputation", requestData, function(data, response){
 			console.log("Points pushed in table: " + data.points + " for user: " + userName);
-			userPointsOnServer.push(data.points);
-
+			//userPointsOnServer.push(data.points);
+			callback(null, data.points);
 			console.log(response.statusCode + " - " + response.statusMessage);
 		});
-		callback(null, "Get function have been done for user " + userName);
+		//callback(null, "Get function have been done for user " + userName);
 	}
 }
 
@@ -328,19 +334,25 @@ function checkValues(callback){
   }
 
 	async.series(getUserPointsOnServer, function(err, results){
-		console.log("User points got");
-		console.log("Table of points: " + userPointsOnServer);
-	});
+		userPointsOnServer = results;
 
-	for (var i = 0; i< numberOfUser; i++){
-		console.log("Comparing server datas with number of events sent");
-		if(userPointsOnServer[i] !== NumberOfRequestsPerEndUser){
-			console.log("ERROR: Number of points doesn't match. Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+		userPointsOnServer.forEach (function(pts) {
+			console.log("User points got");
+			console.log("Table of points: " + pts);
+		});
+
+		for (var i = 0; i< numberOfUser; i++){
+			console.log("Comparing server datas with number of events sent");
+			if(userPointsOnServer[i] !== NumberOfRequestsPerEndUser){
+				console.log("ERROR: Number of points doesn't match. Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+			}
+			else{
+				console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
+			}
 		}
-		else{
-			console.log("SUCCESS: Number of points matches ! Events sent: " + NumberOfRequestsPerEndUser + " Points on the server: " + userPointsOnServer[i]);
-		}
-	}
+
+		callback();
+	});
 }; // End of checkValues
 
 //########################### INITIALISATION #################################//
@@ -375,7 +387,8 @@ function initialisation(notifyInitHasBeenDone){
 				console.log("Posting rules and badges succeed");
       }
     }
-    notifyInitHasBeenDone(null, rulesAndBadgesRequests.length + " transactions POSTs have been sent " + failed + " have failed ");
+		notifyInitHasBeenDone();
+    //notifyInitHasBeenDone(null, rulesAndBadgesRequests.length + " transactions POSTs have been sent " + failed + " have failed ");
 	});
 } // End of initialisation
 
@@ -389,7 +402,7 @@ function initialisation(notifyInitHasBeenDone){
 //############################################################################//
 
 // Execute in series with async:
-async.series([
+async.waterfall([
 	getApiKey,
 	initialisation,
 	tableOfRequestsFunction,
@@ -397,9 +410,8 @@ async.series([
   checkValues
 ], function(err, results) {
   console.log("\n\n==========================================");
-	console.log("Summary");
+	console.log("END Script");
 	console.log("------------------------------------------");
 	//console.log(err);
-	console.log(results);
 });
 //============================================================================//
