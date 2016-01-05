@@ -3,6 +3,7 @@ package ch.heigvd.amt.amt_project.services.dao;
 import ch.heigvd.amt.amt_project.models.ActionBadge;
 import ch.heigvd.amt.amt_project.models.Badge;
 import javax.ejb.Stateless;
+import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 
 /**
@@ -19,6 +20,7 @@ public class ActionBadgesDAO extends GenericDAO<ActionBadge, Long> implements Ac
         try {
             res = (ActionBadge) em.createNamedQuery("ActionBadge.findByBadge")
                     .setParameter("badge", badge.getId())
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                     .getSingleResult();
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();

@@ -3,6 +3,7 @@ package ch.heigvd.amt.amt_project.services.dao;
 import ch.heigvd.amt.amt_project.models.Application;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 
 /**
@@ -47,7 +48,9 @@ public class ApplicationsDAO extends GenericDAO<Application, Long> implements Ap
         Application result;
         try {
             result = (Application) em.createNamedQuery("Application.findByApikey")
-                    .setParameter("apikey", apikey).getSingleResult();
+                    .setParameter("apikey", apikey)
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                    .getSingleResult();
             return result;
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();

@@ -120,7 +120,7 @@ public class RuleResource {
             case "AwardBagde":
                 Badge badge = badgesDAO.findById(Long.parseLong(
                         dto.getAction()
-                        .getProperties()
+                        .getProperties()        
                         .get("badgeId")));
 
                 ActionBadge actionBadge;
