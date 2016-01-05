@@ -54,3 +54,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 target
+/TestsNodeClient/node_modules
