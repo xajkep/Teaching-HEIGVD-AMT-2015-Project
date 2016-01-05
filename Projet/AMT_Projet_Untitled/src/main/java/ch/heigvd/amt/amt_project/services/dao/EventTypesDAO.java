@@ -3,6 +3,7 @@ package ch.heigvd.amt.amt_project.services.dao;
 import ch.heigvd.amt.amt_project.models.Application;
 import ch.heigvd.amt.amt_project.models.EventType;
 import javax.ejb.Stateless;
+import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 
 /**
@@ -12,6 +13,10 @@ import javax.persistence.NoResultException;
 @Stateless
 public class EventTypesDAO extends GenericDAO<EventType, Long> implements EventTypesDAOLocal {
 
+    /*public EventType createAndReturnManagedEntity(){
+        
+    }
+    */
     @Override
     public EventType findByName(String type, Application app) throws BusinessDomainEntityNotFoundException {
         EventType result;
@@ -20,6 +25,7 @@ public class EventTypesDAO extends GenericDAO<EventType, Long> implements EventT
             result = (EventType) em.createNamedQuery("EventType.findByName")
                     .setParameter("app", app.getId())
                     .setParameter("name", type)
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                     .getSingleResult();
             return result;
         } catch (NoResultException e) {

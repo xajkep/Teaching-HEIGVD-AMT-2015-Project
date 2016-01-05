@@ -6,6 +6,7 @@ import ch.heigvd.amt.amt_project.models.ActionPoints;
 import ch.heigvd.amt.amt_project.models.ActionType;
 import ch.heigvd.amt.amt_project.models.Badge;
 import javax.ejb.Stateless;
+import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 
 /**
@@ -23,6 +24,7 @@ public class ActionPointsDAO extends GenericDAO<ActionPoints, Long>  implements 
         try {
             res = (ActionPoints) em.createNamedQuery("ActionPoints.findByPoints")
                     .setParameter("points", points)
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                     .getSingleResult();
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();

@@ -2,6 +2,7 @@ package ch.heigvd.amt.amt_project.services.dao;
 
 import ch.heigvd.amt.amt_project.models.RuleProperties;
 import javax.ejb.Stateless;
+import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 
 /**
@@ -17,6 +18,7 @@ public class RulePropertiesDAO extends GenericDAO<RuleProperties, Long> implemen
             result = (RuleProperties) em.createNamedQuery("RuleProperties.findByValueAndName")
                     .setParameter("value", value)
                     .setParameter("name", name)
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                     .getSingleResult();
         } catch (NoResultException e) {
             throw new BusinessDomainEntityNotFoundException();
