@@ -87,4 +87,18 @@ $(document).ready(function () {
             $('#rootwizard').find("a[href*='tab5']").trigger('click');
         })
     });
+    
+    $('input:radio[name="actionType"]').change(
+            function() {
+                if($(this).is(':checked')) {
+                    if($(this).val() == 'point') {
+                        $('#pointSelection').show();
+                        $('#badgeSelection').hide();
+                    } else if($(this).val() == 'badge') {
+                        $('#badgeSelection').show();
+                        $('#pointSelection').hide();
+                    }
+                }
+            }
+    );
 });

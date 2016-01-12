@@ -82,11 +82,31 @@
             Configure action property:<br/>
             <input id="pointSelection" type="text" placeholder="Number of points" name="numberOfPoints" style="display: none;"/>
             <div id="badgeSelection" style="display: none;">
-            <c:forEach items="${badges}" var="badge" varStatus="loop">
-                <input type="radio" name="badgeId" value="${badge.getId()}" /> <img src="${badge.getPicture()}" /> ${badge.getDescription()}<br/>
-            </c:forEach>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <c:forEach items="${badges}" var="badge" varStatus="loop">
+                            <div class="col-sm-4 col-md-3 col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        ${badge.getDescription()}</div>
+                                </div> 
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <img class="img-responsive img-circle" width="100px" src="static/img/${badge.getPicture()}" />
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input type="radio" name="badgeId" value="${badge.getId()}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
             </div>
-            
+
             <ul class="pager wizard">
                 <li class="previous"><a href="javascript:;">Previous</a></li>
                 <li class="next actionConfig"><a href="javascript:;">Next</a></li>
