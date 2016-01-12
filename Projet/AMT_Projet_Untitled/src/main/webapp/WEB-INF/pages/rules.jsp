@@ -20,6 +20,7 @@
             Enter the event name you want to modify/create:
             <br/>
             <select name="event" id="event">
+                <option value="">None</option>
                 <c:forEach items="${events}" var="event" varStatus="loop">
                     <option value="${event.getName()}">${event.getName()}</option>
                 </c:forEach>
