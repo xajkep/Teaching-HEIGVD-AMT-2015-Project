@@ -54,7 +54,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <button class="glyphicon glyphicon-plus addEventProperties"></button>
+                    <button class="btn glyphicon glyphicon-plus addEventProperties"></button>
                 </div>
             </div>
             <div class="row">

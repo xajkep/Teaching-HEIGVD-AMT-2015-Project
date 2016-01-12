@@ -33,7 +33,7 @@ $(document).ready(function () {
     $(".addEventProperties").click( function () {
         var inputName = '<label>Name</label> <input type="text" class="form-control"  name="name" />';
         var inputValue = '<label>Value</label> <input type="text" class="form-control" name="value" />';
-        var remove = '<button class="glyphicon glyphicon-minus removeEventProperties"></button>';
+        var remove = '<button class="btn glyphicon glyphicon-minus removeEventProperties"></button>';
         var input = '<div class="row"><div class="col-xs-2 col-sm-1">'+remove+'</div><div class="col-xs-5 col-sm-4">'+inputName +'</div><div class="col-xs-5 col-sm-4">'+ inputValue+'</div>';
        $('.evenPropertiesAdd').append(input);
        $('.removeEventProperties').click(function () {
