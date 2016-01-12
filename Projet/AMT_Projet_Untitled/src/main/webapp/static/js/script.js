@@ -42,7 +42,6 @@ $(document).ready(function () {
     });
 
 
-
     $("#new_event_property").hide();
     $('#eventProperties').change(function () {
         if ($(this).find('option:selected').val() === "new") {
@@ -59,7 +58,7 @@ $(document).ready(function () {
         }
         console.log(window.location.href + "&ajax=properties&eventName=" + eventName);
         $.get(window.location.href + "&ajax=properties&eventName=" + eventName, function (properties) {
-            
+            $('.eventPropertiesList').html('');
             $.each(properties, function(key, prop) {
                 var propertiesDisplay = prop.name + " - " + prop.value;
                 var input = '<div class="form-group"><label><input type="checkbox" value="' + prop.id + '" name="eventPropertiesId"/> '+ propertiesDisplay+'</label></div>';
