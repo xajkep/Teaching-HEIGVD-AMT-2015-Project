@@ -2,7 +2,7 @@
 <h1>Create a rule</h1>
 
 <div id="rootwizard">
-    <div class="navbar" style="">
+    <div class="navbar" style="display: none">
         <div class="navbar-inner">
             <div class="container">
                 <ul>
@@ -15,11 +15,14 @@
             </div>
         </div>
     </div>
+    <div id="bar" class="progress progress-striped active">
+        <div class="bar"></div>
+    </div>
     <div class="tab-content">
         <div class="tab-pane" id="tab1">
-            <div class="row">
+            <div class="row row-margin-bottom">
                 <div class="col-xs-12">
-                    Enter the event name you want to modify/create:
+                    Choose the event name :
                 </div>
             </div>
             <div class="row">
@@ -37,14 +40,13 @@
                 </div>
             </div>
             <ul class="pager wizard">
-                <li class="previous"><a href="javascript:;">Previous</a></li>
                 <li class="next eventName"><a href="javascript:;">Next</a></li>
             </ul>
         </div>  
         <div class="tab-pane" id="tab2">
-            <div class="row">
+            <div class="row row-margin-bottom">
                 <div class="col-xs-12">
-                    Enter/choose the properties of the choosen/created event type:
+                    Enter/choose the properties of the event type:
                 </div>
             </div>
             <div class="row">
@@ -53,7 +55,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12 addProperties">
                     <button class="btn glyphicon glyphicon-plus addEventProperties"></button>
                 </div>
             </div>
@@ -68,42 +70,59 @@
             </ul>
         </div>
         <div class="tab-pane" id="tab3">
-            Choose the action type for this event:
-            <br/>
-            <input type="radio" value="point" name="actionType"/> Award Points
-            <br/>
-            <input type="radio" value="badge" name="actionType"/> Award Badges
+            <div class="row row-margin-bottom">
+                <div class="col-xs-12">
+                    Choose the action type for this event:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label><input type="radio" checked value="point" name="actionType"/> Award Points</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label><input type="radio" value="badge" name="actionType"/> Award Badges</label>
+                </div>
+            </div>
             <ul class="pager wizard">
                 <li class="previous"><a href="javascript:;">Previous</a></li>
                 <li class="next actionType"><a href="javascript:;">Next</a></li>
             </ul>
         </div>
         <div class="tab-pane" id="tab4">
-            Configure action property:<br/>
-            <input id="pointSelection" type="text" placeholder="Number of points" name="numberOfPoints" style="display: none;"/>
+            <div class="row row-margin-bottom">
+                <div class="col-xs-12">
+                    Configure action property:
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <input id="pointSelection" type="text" class="form-control" placeholder="Number of points" name="numberOfPoints"/>
+                </div>
+            </div>
             <div id="badgeSelection" style="display: none;">
                 <div class="row">
-                    <div class="col-md-12">
 
-                        <c:forEach items="${badges}" var="badge" varStatus="loop">
-                            <div class="col-sm-4 col-md-3 col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        ${badge.getDescription()}</div>
-                                </div> 
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <img class="img-responsive img-circle" width="100px" src="static/img/${badge.getPicture()}" />
-                                    </div>
-                                </div> 
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <input type="radio" name="badgeId" value="${badge.getId()}" />
-                                    </div>
+                    <c:forEach items="${badges}" var="badge" varStatus="loop">
+                        <div class="col-sm-4 col-md-3 col-xs-12 badges">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    ${badge.getDescription()}</div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <img class="img-responsive img-circle" width="100px" src="static/img/${badge.getPicture()}" />
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <input type="radio" name="badgeId" value="${badge.getId()}" />
                                 </div>
                             </div>
-                        </c:forEach>
-                    </div>
+                        </div>
+                    </c:forEach>
+
                 </div>
             </div>
 
@@ -113,7 +132,11 @@
             </ul>
         </div>
         <div class="tab-pane" id="tab5">
-            Confirm:
+            <div class="row row-margin-bottom">
+                <div class="col-xs-12">
+                    Confirm:
+                </div>
+            </div>
             <ul class="pager wizard">
                 <li class="previous"><a href="javascript:;">Previous</a></li>
                 <li class="next confirm"><a href="javascript:;">Finish</a></li>
