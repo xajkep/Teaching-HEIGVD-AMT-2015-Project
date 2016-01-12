@@ -87,5 +87,4 @@ $(document).ready(function () {
             $('#rootwizard').find("a[href*='tab5']").trigger('click');
         })
     });
-
 });
