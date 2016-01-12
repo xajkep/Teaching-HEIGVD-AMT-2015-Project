@@ -52,7 +52,7 @@
             <input id="pointSelection" type="text" placeholder="Number of points" name="numberOfPoints" style="display: none;"/>
             <div id="badgeSelection" style="display: none;">
             <c:forEach items="${badges}" var="badge" varStatus="loop">
-                <input type="radio" name="badgeId" value="${badge.getId()}" /> <img src="${badge.getPicture()}" /> ${badge.getDescription()}<br/>
+                <input type="radio" name="badgeId" value="${badge.getId()}" /> <img src="static/img/${badge.getPicture()}" style="height: 30px;" /> ${badge.getDescription()}<br/>
             </c:forEach>
             </div>
         </div>
