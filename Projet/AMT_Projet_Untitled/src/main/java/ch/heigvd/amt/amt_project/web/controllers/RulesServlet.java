@@ -5,6 +5,7 @@ import ch.heigvd.amt.amt_project.models.EventType;
 import ch.heigvd.amt.amt_project.models.Rule;
 import ch.heigvd.amt.amt_project.models.RuleProperties;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EventTypesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.RulePropertiesDAOLocal;
@@ -40,6 +41,9 @@ public class RulesServlet extends HttpServlet{
     
     @EJB
     private ApplicationsDAOLocal applicationDAO;
+    
+    @EJB
+    private BadgesDAOLocal badgeDAO;
     
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -97,7 +101,7 @@ public class RulesServlet extends HttpServlet{
             // Return form
             request.setAttribute("appId", appId);
             request.setAttribute("events", eventDAO.findAll());
-            //request.setAttribute("properties", new Gson().toJson(properties));
+            request.setAttribute("badges", badgeDAO.findAll());
             request.getRequestDispatcher("/WEB-INF/pages/rules.jsp").forward(request, response);
         }
         

@@ -141,16 +141,16 @@ public class TestDataManager implements TestDataManagerLocal {
          * Generate Badge for App 1
          */
         System.out.println("Generate badges for app1");
-        Badge badge1App1 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 1 badge app1", "urlbadge1", app1));
-        Badge badge2App1 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 2 badge app1", "urlbadge2", app1));
+        Badge badge1App1 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 1 badge", "urlbadge1", app1));
+        Badge badge2App1 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 2 badge", "urlbadge2", app1));
 
         /**
          * Generate Badge for App 2
          */
         System.out.println("Generate badges for app2");
-        Badge badge1App2 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 1 badge app2", "urlbadge1", app2));
-        Badge badge2App2 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 2 badge app2", "urlbadge2", app2));
-        Badge badge3App2 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 3 badge app2", "urlbadge3", app2));
+        Badge badge1App2 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 3 badge", "urlbadge1", app2));
+        Badge badge2App2 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 4 badge", "urlbadge2", app2));
+        Badge badge3App2 = badgesDAO.createAndReturnManagedEntity(new Badge("Description 5 badge", "urlbadge3", app2));
 
         /**
          * Set badge for enduser1

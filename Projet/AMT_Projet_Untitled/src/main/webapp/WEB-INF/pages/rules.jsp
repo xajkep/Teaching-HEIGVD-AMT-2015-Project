@@ -2,7 +2,7 @@
 <h1>Create a rule</h1>
 
 <div id="rootwizard">
-    <div class="navbar" style="display: none;">
+    <div class="navbar" style="">
         <div class="navbar-inner">
             <div class="container">
                 <ul>
@@ -31,7 +31,6 @@
             Enter/choose the properties of the choosen/created event type:
             <br/>
             <select name="eventProperties" id="eventProperties">
-                <!-- TODO c'est copié collé de dessus -->
                 <c:forEach items="${ruleProperties}" var="ruleProperties" varStatus="loop">
                     <option value="${event.getName()}">${event.getName()}</option>
                 </c:forEach>
@@ -41,9 +40,20 @@
         </div>
         <div class="tab-pane" id="tab3">
             Choose the action type for this event:
+            <br/>
+            <input type="radio" value="point" name="actionType"/> Award Points
+            <br/>
+            <input type="radio" value="badge" name="actionType"/> Award Badges
+
         </div>
         <div class="tab-pane" id="tab4">
-            Configure action:
+            Configure action property:<br/>
+            <input id="pointSelection" type="text" placeholder="Number of points" name="numberOfPoints" style="display: none;"/>
+            <div id="badgeSelection" style="display: none;">
+            <c:forEach items="${badges}" var="badge" varStatus="loop">
+                <input type="radio" name="badgeId" value="${badge.getId()}" /> <img src="${badge.getPicture()}" /> ${badge.getDescription()}<br/>
+            </c:forEach>
+            </div>
         </div>
         <div class="tab-pane" id="tab5">
             Confirm:
