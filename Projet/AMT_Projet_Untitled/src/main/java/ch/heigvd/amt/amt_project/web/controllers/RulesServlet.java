@@ -59,9 +59,13 @@ public class RulesServlet extends HttpServlet{
         // Ajax calls (for the form)
         if (ajax != null) {
             
+            System.out.println("ajax");
+            System.out.println(ajax);
+            
             // Return event properties
             if (ajax.equalsIgnoreCase("properties")) {
-                String eventName = request.getParameter("id");
+                System.out.println(request.getParameter("eventName"));
+                String eventName = request.getParameter("eventName");
                 
                 Application app = applicationDAO.findById(appId);
                 
