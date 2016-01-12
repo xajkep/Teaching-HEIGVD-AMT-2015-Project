@@ -1,7 +1,8 @@
 <%@include file="includes/header.jsp" %>
+<h1>Create a rule</h1>
 
 <div id="rootwizard">
-    <div class="navbar">
+    <div class="navbar" style="display: none;">
         <div class="navbar-inner">
             <div class="container">
                 <ul>
@@ -54,5 +55,4 @@
         </ul>
     </div>
 </div>
-
 <%@include file="includes/footer.jsp" %>
