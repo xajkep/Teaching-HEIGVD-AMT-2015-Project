@@ -122,8 +122,4 @@ $(document).ready(function () {
                 }
             }
     );
-    
-    $('#submitRulesForm').click(function() {
-        $('#rulesForm').submit();
-    });
 });

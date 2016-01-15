@@ -136,7 +136,7 @@
             <div class="row row-margin-bottom">
                 <div class="col-xs-12">
                     Confirm:
-                    <button id="submitRulesForm" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </div>
             <ul class="pager wizard">
