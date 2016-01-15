@@ -120,4 +120,43 @@ $(document).ready(function () {
                 }
             }
     );
+    
+    $('#btnNext').click(function() {
+        // event name
+        if ($('input[name="new_event"]').val() === "") {
+            $('#confirmEventName').html($('select[name="event"] option:selected').val());
+        } else {
+            $('#confirmEventName').html($('input[name="new_event"]').val());
+        }
+        
+        // properties
+        var prop_names = [];
+        $('input[name^="name"]').each(function() {
+            prop_names.push($(this).val());
+        });
+        
+        var prop_values = [];
+        $('input[name^="value"]').each(function() {
+            prop_values.push($(this).val());
+        });
+        
+        var props_html = "";
+        for (i = 0; i < prop_names.length; i++) {
+            props_html += prop_names[i] + " - " + prop_values[i] + "<br/>";
+        }
+        
+        $('#confirmProps').html(props_html);
+        
+        // Action type
+        $('#confirmActionType').html($('input[name=actionType]').val());
+        
+        // number of points and badge
+        if ($('input[name=actionType]:checked').val() === "badge") {
+            // badge
+            $('#confirmActionParam').html($('input[name=badgeId]:checked').val());
+        } else {
+            // point
+            $('#confirmActionParam').html($('input[name=numberOfPoints]').val());
+        }
+    });
 });

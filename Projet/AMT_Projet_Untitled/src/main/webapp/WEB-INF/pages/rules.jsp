@@ -129,13 +129,19 @@
 
             <ul class="pager wizard">
                 <li class="previous"><a href="javascript:;">Previous</a></li>
-                <li class="next actionConfig"><a href="javascript:;">Next</a></li>
+                <li class="next actionConfig"><a id="btnNext" href="javascript:;">Next</a></li>
             </ul>
         </div>
         <div class="tab-pane" id="tab5">
             <div class="row row-margin-bottom">
                 <div class="col-xs-12">
-                    Confirm:
+                    Confirm:<br/>
+                    <b>Event name:</b> <p id="confirmEventName"></p>
+                    <b>Properties:</b> <p id="confirmProps"></p>
+                    <b>Action type:</b> <p id="confirmActionType"></p>
+                    <b>Number of points / Badge ID:</b> <p id="confirmActionParam"></p>
+                    
+                    <br/>
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </div>
