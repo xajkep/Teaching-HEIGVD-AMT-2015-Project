@@ -17,10 +17,6 @@ $(document).ready(function () {
             }
 
         }});
-    $('#rootwizard .finish').click(function () {
-        alert('Finished!, Starting over!');
-        $('#rootwizard').find("a[href*='tab1']").trigger('click');
-    });
 
     $('#rootwizard').find('.pager .next').addClass('disabled');
 
@@ -31,9 +27,11 @@ $(document).ready(function () {
             $("#new_event").show();
         } else if ($(this).find('option:selected').val() === "") {
             $("#new_event").hide();
+            $('#new_event').val('');
         } else {
             $('#rootwizard').find('.pager .next').removeClass('disabled');
             $("#new_event").hide();
+            $('#new_event').val('');
         }
     });
 
