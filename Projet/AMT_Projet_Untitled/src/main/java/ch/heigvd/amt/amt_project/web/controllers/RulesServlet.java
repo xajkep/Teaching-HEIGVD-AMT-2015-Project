@@ -137,44 +137,65 @@ public class RulesServlet extends HttpServlet{
         
         // Event name
         String eventName;
-        if (request.getParameter("new_event") == "") {
+        EventType eventType = null;
+        if (request.getParameter("new_event").equals("")) {
             eventName = request.getParameter("event");
+            try {
+                eventType = eventTypesDAO.findByName(eventName, app);
+            } catch (BusinessDomainEntityNotFoundException ex) {
+                Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             eventName = request.getParameter("new_event");
+            eventType = eventTypesDAO.createAndReturnManagedEntity(new EventType(eventName, app));
         }
-        EventType eventType = eventTypesDAO.createAndReturnManagedEntity(new EventType(eventName, app));
+        
         
         // Rules properties
         List<RuleProperties> ruleProperties = new ArrayList<>();
         
         // Existant prop. IDs
         String[] existantPropIDsStrings = request.getParameterValues("eventPropertiesId");
-        for(int i = 0; i < existantPropIDsStrings.length; i++) {
-            System.out.println(existantPropIDsStrings[i]); // debug
-            
-            ruleProperties.add(
-                    rulePropertiesDAO.findById(
-                            (long)Integer.parseInt(existantPropIDsStrings[i])
-                    )
-            );
+        if (existantPropIDsStrings != null) {
+            for(int i = 0; i < existantPropIDsStrings.length; i++) {
+                System.out.println(existantPropIDsStrings[i]); // debug
+
+                ruleProperties.add(
+                        rulePropertiesDAO.findById(
+                                (long)Integer.parseInt(existantPropIDsStrings[i])
+                        )
+                );
+            }
         }
         
         // New prop.
-        String[] names = request.getParameterValues("name");
-        String[] values = request.getParameterValues("values");
         
-        for(int i = 0; i < names.length; i++) {
-            ruleProperties.add(
-                    rulePropertiesDAO.createAndReturnManagedEntity(
-                            new RuleProperties(names[i], values[i])
-                    )
-            );
+        System.out.println(request.toString());
+        
+        String[] names = request.getParameterValues("name");
+        String[] values = request.getParameterValues("value");
+        
+        System.out.println(request.getParameterValues("name[]").toString());
+        System.out.println(request.getParameterValues("value[]").toString());
+        
+        
+        if (names != null && values != null) {
+            for(int i = 0; i < names.length; i++) {
+                System.out.println(names[i]);
+                System.out.println(values[i]);
+                
+                ruleProperties.add(
+                        rulePropertiesDAO.createAndReturnManagedEntity(
+                                new RuleProperties(names[i], values[i])
+                        )
+                );
+            }
         }
         
 
         // Action type
         ActionType actionType;
-        if (request.getParameter("name") == "point") {
+        if (request.getParameter("actionType").equals("point")) {
             /* code for point award */
             
             // Get number of awarded points
