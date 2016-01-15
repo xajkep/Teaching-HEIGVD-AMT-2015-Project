@@ -16,9 +16,7 @@ import javax.persistence.UniqueConstraint;
 @NamedQueries({
   @NamedQuery(name = "EventType.findByName", query = "SELECT e FROM EventType e WHERE e.app.id = :app AND e.name = :name"),
 })
-//upsert
-/*@NamedNativeQuery(name = "EventType.upsert", query = "INSERT INTO EventType (ID, NAME, APP_ID) VALUES
-(?1, ?2, ?3) ON DUPLICATE KEY UPDATE BALANCE=BALANCE+?4, NUMBEROFTRANSACTIONS=NUMBEROFTRANSACTIONS+0")*/
+
 @Table(uniqueConstraints=
            @UniqueConstraint(columnNames = {"name", "app_id"})) 
 public class EventType extends AbstractDomainModel<Long>{
