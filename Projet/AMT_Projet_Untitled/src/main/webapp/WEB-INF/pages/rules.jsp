@@ -18,6 +18,7 @@
     <div id="bar" class="progress progress-striped active">
         <div class="bar"></div>
     </div>
+    <form id="rulesForm" method="post" action="" >
     <div class="tab-content">
         <div class="tab-pane" id="tab1">
             <div class="row row-margin-bottom">
@@ -56,7 +57,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 addProperties">
-                    <button class="btn glyphicon glyphicon-plus addEventProperties"></button>
+                    <button type="button" class="btn glyphicon glyphicon-plus addEventProperties"></button>
                 </div>
             </div>
             <div class="row">
@@ -135,6 +136,7 @@
             <div class="row row-margin-bottom">
                 <div class="col-xs-12">
                     Confirm:
+                    <button id="submitRulesForm" class="btn btn-success">Save</button>
                 </div>
             </div>
             <ul class="pager wizard">
@@ -143,5 +145,6 @@
             </ul>
         </div>
     </div>
+    </form>
 </div>
 <%@include file="includes/footer.jsp" %>

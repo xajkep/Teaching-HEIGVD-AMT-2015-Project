@@ -1,13 +1,20 @@
 package ch.heigvd.amt.amt_project.web.controllers;
 
+import ch.heigvd.amt.amt_project.models.ActionBadge;
+import ch.heigvd.amt.amt_project.models.ActionPoints;
+import ch.heigvd.amt.amt_project.models.ActionType;
 import ch.heigvd.amt.amt_project.models.Application;
+import ch.heigvd.amt.amt_project.models.Badge;
 import ch.heigvd.amt.amt_project.models.EventType;
 import ch.heigvd.amt.amt_project.models.Rule;
 import ch.heigvd.amt.amt_project.models.RuleProperties;
+import ch.heigvd.amt.amt_project.services.dao.ActionBadgesDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.ActionPointsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.ApplicationsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BadgesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.BusinessDomainEntityNotFoundException;
 import ch.heigvd.amt.amt_project.services.dao.EventTypesDAOLocal;
+import ch.heigvd.amt.amt_project.services.dao.PointAwardsDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.RulePropertiesDAOLocal;
 import ch.heigvd.amt.amt_project.services.dao.RulesDAOLocal;
 import com.google.gson.Gson;
@@ -31,19 +38,28 @@ public class RulesServlet extends HttpServlet{
     
     
     @EJB
-    private EventTypesDAOLocal eventDAO;
+    private EventTypesDAOLocal eventTypesDAO;
     
     @EJB
     private RulePropertiesDAOLocal rulePropertiesDAO;
     
     @EJB
-    private RulesDAOLocal ruleDAO;
+    private RulesDAOLocal rulesDAO;
     
     @EJB
     private ApplicationsDAOLocal applicationDAO;
     
     @EJB
-    private BadgesDAOLocal badgeDAO;
+    private BadgesDAOLocal badgesDAO;
+    
+    @EJB
+    private PointAwardsDAOLocal pointAwardsDAO;
+    
+    @EJB
+    private ActionPointsDAOLocal actionPointsDAO;
+    
+    @EJB
+    private ActionBadgesDAOLocal actionBadgesDAO;
     
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -74,14 +90,14 @@ public class RulesServlet extends HttpServlet{
                 
                 EventType eventType = null;
                 try {
-                    eventType = eventDAO.findByName(eventName, app);
+                    eventType = eventTypesDAO.findByName(eventName, app);
                 } catch (BusinessDomainEntityNotFoundException ex) {
                     Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
                 List<Rule> rules = null;
                 try {
-                    rules = ruleDAO.findByEventType(eventType);
+                    rules = rulesDAO.findByEventType(eventType);
                 } catch (BusinessDomainEntityNotFoundException ex) {
                     Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -103,24 +119,86 @@ public class RulesServlet extends HttpServlet{
         } else {
             // Return form
             request.setAttribute("appId", appId);
-            request.setAttribute("events", eventDAO.findAll());
-            request.setAttribute("badges", badgeDAO.findAll());
+            request.setAttribute("events", eventTypesDAO.findAll());
+            request.setAttribute("badges", badgesDAO.findAll());
             request.getRequestDispatcher("/WEB-INF/pages/rules.jsp").forward(request, response);
         }
+    }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-                
-        /*List<EventType> events = eventDAO.findAll();
+        /* GET data */
+        long appId = Integer.parseInt(request.getParameter("app"));
         
-        List<Rule> properties = new ArrayList<>();
-        for (EventType event : events) {
-            try {
-                properties.addAll(ruleDAO.findByEventType(event));
-            } catch (BusinessDomainEntityNotFoundException ex) {
-                Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }*/
+        /* DB data */
+        Application app = applicationDAO.findById(appId);
         
+        /* POST data */
         
+        // Event name
+        String eventName;
+        if (request.getParameter("new_event") == "") {
+            eventName = request.getParameter("event");
+        } else {
+            eventName = request.getParameter("new_event");
+        }
+        EventType eventType = eventTypesDAO.createAndReturnManagedEntity(new EventType(eventName, app));
+        
+        // Rules properties
+        List<RuleProperties> ruleProperties = new ArrayList<>();
+        
+        // Existant prop. IDs
+        String[] existantPropIDsStrings = request.getParameterValues("eventPropertiesId");
+        for(int i = 0; i < existantPropIDsStrings.length; i++) {
+            System.out.println(existantPropIDsStrings[i]); // debug
+            
+            ruleProperties.add(
+                    rulePropertiesDAO.findById(
+                            (long)Integer.parseInt(existantPropIDsStrings[i])
+                    )
+            );
+        }
+        
+        // New prop.
+        String[] names = request.getParameterValues("name");
+        String[] values = request.getParameterValues("values");
+        
+        for(int i = 0; i < names.length; i++) {
+            ruleProperties.add(
+                    rulePropertiesDAO.createAndReturnManagedEntity(
+                            new RuleProperties(names[i], values[i])
+                    )
+            );
+        }
+        
+
+        // Action type
+        ActionType actionType;
+        if (request.getParameter("name") == "point") {
+            /* code for point award */
+            
+            // Get number of awarded points
+            long numberOfPoints = Integer.parseInt(
+                    request.getParameter("numberOfPoints")
+            );
+            
+            actionType = actionPointsDAO.createAndReturnManagedEntity(
+                    new ActionPoints(numberOfPoints, "")
+            ); 
+        } else {
+            /* code for badge award */
+            
+            long badgeId = Integer.parseInt(request.getParameter("badgeId"));
+            
+            Badge badge = badgesDAO.findById(badgeId);
+            
+            actionType = actionBadgesDAO.createAndReturnManagedEntity(
+                    new ActionBadge(badge, "")
+            );
+        }
+        
+        // Finally, create the rule
+        rulesDAO.create(new Rule(eventType, ruleProperties, actionType));
     }
     
 }

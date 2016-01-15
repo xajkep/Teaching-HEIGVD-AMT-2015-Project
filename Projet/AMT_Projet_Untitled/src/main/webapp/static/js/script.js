@@ -46,8 +46,8 @@ $(document).ready(function () {
     });
 
     $(".addEventProperties").click(function () {
-        var inputName = '<div class="row"><div class="col-xs-3"><label>Name</label></div><div class="col-xs-9"> <input type="text" class="form-control"  name="name" /></div></div>';
-        var inputValue = '<div class="row"><div class="col-xs-3"><label>Value</label></div><div class="col-xs-9">  <input type="text" class="form-control" name="value" /></div></div>';
+        var inputName = '<div class="row"><div class="col-xs-3"><label>Name</label></div><div class="col-xs-9"> <input type="text" class="form-control"  name="name[]" /></div></div>';
+        var inputValue = '<div class="row"><div class="col-xs-3"><label>Value</label></div><div class="col-xs-9">  <input type="text" class="form-control" name="value[]" /></div></div>';
         var remove = '<button class="btn glyphicon glyphicon-minus removeEventProperties"></button>';
         var input = '<div class="row"><div class="col-xs-2 col-sm-1">' + remove + '</div><div class="col-xs-5 col-sm-4">' + inputName + '</div><div class="col-xs-5 col-sm-4">' + inputValue + '</div>';
         $('.evenPropertiesAdd').append(input);
@@ -122,4 +122,8 @@ $(document).ready(function () {
                 }
             }
     );
+    
+    $('#submitRulesForm').click(function() {
+        $('#rulesForm').submit();
+    });
 });
