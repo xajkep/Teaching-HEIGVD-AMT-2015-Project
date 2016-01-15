@@ -8,15 +8,11 @@ import javax.persistence.NoResultException;
 
 /**
  *
- * @author mberthouzoz
+ * @author mberthouzoz yountheory
  */
 @Stateless
 public class EventTypesDAO extends GenericDAO<EventType, Long> implements EventTypesDAOLocal {
 
-    /*public EventType createAndReturnManagedEntity(){
-        
-    }
-    */
     @Override
     public EventType findByName(String type, Application app) throws BusinessDomainEntityNotFoundException {
         EventType result;
