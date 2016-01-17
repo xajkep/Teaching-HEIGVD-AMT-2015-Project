@@ -43,7 +43,7 @@
                             <a class="btn btn-danger" id="app_state_button" href="pages/app?action=enable&id=${app.getId()}">DISABLED<a>
                         </c:if>
                                     
-                        <a class="btn btn-default" id="app_rules" href="pages/rules?app=${app.getId()}">Rules</a>
+                        <a class="btn btn-default" id="app_rules" href="pages/rules?app=${app.getId()}">New rules</a>
 
                     </td> 
                 </tr>

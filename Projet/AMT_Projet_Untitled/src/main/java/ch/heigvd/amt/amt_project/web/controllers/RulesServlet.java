@@ -155,7 +155,7 @@ public class RulesServlet extends HttpServlet{
             
             System.out.println("SAVE NEW EVENT: "+eventName+" for app "+app.getId()); //debug
             
-            eventType = eventTypesDAO.createAndReturnManagedEntity(new EventType(eventName, app));
+            eventType = new EventType(eventName, app);
         }
         
         
@@ -180,23 +180,15 @@ public class RulesServlet extends HttpServlet{
         
         System.out.println(request.toString());
         
-        String[] names = request.getParameterValues("name");
-        String[] values = request.getParameterValues("value");
+        String[] names = request.getParameterValues("name[]");
+        String[] values = request.getParameterValues("value[]");
         
-        System.out.println(request.getParameterValues("name[]").toString());
-        System.out.println(request.getParameterValues("value[]").toString());
-        
-        
-        if (names != null && values != null) {
+        if (names.length > 0 && values.length > 0) {
             for(int i = 0; i < names.length; i++) {
                 System.out.println(names[i]);
                 System.out.println(values[i]);
                 
-                ruleProperties.add(
-                        rulePropertiesDAO.createAndReturnManagedEntity(
-                                new RuleProperties(names[i], values[i])
-                        )
-                );
+                ruleProperties.add(new RuleProperties(names[i], values[i]));
             }
         }
         
@@ -211,9 +203,7 @@ public class RulesServlet extends HttpServlet{
                     request.getParameter("numberOfPoints")
             );
             
-            actionType = actionPointsDAO.createAndReturnManagedEntity(
-                    new ActionPoints(numberOfPoints, "")
-            ); 
+            actionType = new ActionPoints(numberOfPoints, ""); 
         } else {
             /* code for badge award */
             
@@ -221,13 +211,14 @@ public class RulesServlet extends HttpServlet{
             
             Badge badge = badgesDAO.findById(badgeId);
             
-            actionType = actionBadgesDAO.createAndReturnManagedEntity(
-                    new ActionBadge(badge, "")
-            );
+            actionType = new ActionBadge(badge, "");
         }
         
         // Finally, create the rule
         rulesDAO.create(new Rule(eventType, ruleProperties, actionType));
+        
+        response.sendRedirect("app");
+        
     }
     
 }

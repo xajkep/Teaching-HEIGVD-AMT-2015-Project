@@ -66,10 +66,9 @@ $(document).ready(function () {
 
     $(".next.eventName").click(function () {
         var eventName = $('#event').val();
-        if (eventName == "new") {
+        if (eventName === "new") {
             eventName = $('#new_event').val();
         }
-        console.log(window.location.href + "&ajax=properties&eventName=" + eventName);
         $.get(window.location.href + "&ajax=properties&eventName=" + eventName, function (properties) {
             $('.eventPropertiesList').html('');
             $.each(properties, function (key, prop) {
@@ -82,7 +81,7 @@ $(document).ready(function () {
 
     $('#pointSelection').change(function () {
         $('#rootwizard').find('.pager .next').addClass('disabled');
-        if ($(this).val() != "") {
+        if ($(this).val() !== "") {
             console.log('pts');
             $('#rootwizard').find('.pager .next').removeClass('disabled');
         }
@@ -94,7 +93,7 @@ $(document).ready(function () {
         if ($('input:radio[name="actionType"]:checked') == "point") {
             $('#pointSelection').change(function () {
                 $('#rootwizard').find('.pager .next').addClass('disabled');
-                if ($(this).val() != "") {
+                if ($(this).val() !== "") {
                     console.log('pts');
                     $('#rootwizard').find('.pager .next').removeClass('disabled');
                 }
