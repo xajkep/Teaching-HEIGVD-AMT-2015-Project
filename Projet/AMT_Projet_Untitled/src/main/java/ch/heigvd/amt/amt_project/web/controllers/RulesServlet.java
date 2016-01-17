@@ -149,12 +149,7 @@ public class RulesServlet extends HttpServlet{
                 Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            
-            
             eventName = request.getParameter("new_event");
-            
-            System.out.println("SAVE NEW EVENT: "+eventName+" for app "+app.getId()); //debug
-            
             eventType = new EventType(eventName, app);
         }
         
@@ -182,8 +177,8 @@ public class RulesServlet extends HttpServlet{
         
         String[] names = request.getParameterValues("name[]");
         String[] values = request.getParameterValues("value[]");
-        
-        if (names.length > 0 && values.length > 0) {
+ 
+        if (names != null && values != null) {
             for(int i = 0; i < names.length; i++) {
                 System.out.println(names[i]);
                 System.out.println(values[i]);
