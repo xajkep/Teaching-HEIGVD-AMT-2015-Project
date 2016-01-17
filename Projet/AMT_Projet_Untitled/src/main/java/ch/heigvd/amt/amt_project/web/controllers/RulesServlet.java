@@ -125,7 +125,10 @@ public class RulesServlet extends HttpServlet{
         }
     }
     
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        System.out.println("IN POST"); //debug
         
         /* GET data */
         long appId = Integer.parseInt(request.getParameter("app"));
@@ -146,7 +149,12 @@ public class RulesServlet extends HttpServlet{
                 Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            
+            
             eventName = request.getParameter("new_event");
+            
+            System.out.println("SAVE NEW EVENT: "+eventName+" for app "+app.getId()); //debug
+            
             eventType = eventTypesDAO.createAndReturnManagedEntity(new EventType(eventName, app));
         }
         

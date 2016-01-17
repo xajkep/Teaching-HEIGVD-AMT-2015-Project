@@ -18,7 +18,8 @@
     <div id="bar" class="progress progress-striped active">
         <div class="bar"></div>
     </div>
-    <form id="rulesForm" method="post" action="" >
+    <form id="rulesForm" method="post" action="pages/rules" >
+    <input type="hidden" name="app" value="${appId}" />
     <div class="tab-content">
         <div class="tab-pane" id="tab1">
             <div class="row row-margin-bottom">
