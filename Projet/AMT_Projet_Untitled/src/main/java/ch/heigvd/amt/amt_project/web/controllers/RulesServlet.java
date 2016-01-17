@@ -76,6 +76,8 @@ public class RulesServlet extends HttpServlet{
         
         String ajax = request.getParameter("ajax");
         
+        String json;
+        
         // Ajax calls (for the form)
         if (ajax != null) {
             
@@ -92,7 +94,16 @@ public class RulesServlet extends HttpServlet{
                 try {
                     eventType = eventTypesDAO.findByName(eventName, app);
                 } catch (BusinessDomainEntityNotFoundException ex) {
-                    Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                    // If the event doesn't exist, return empty array
+                    List<RuleProperties> empty = new ArrayList<>();
+                    json = new Gson().toJson(empty);
+                    response.setContentType("application/json");
+                    PrintWriter out = response.getWriter();
+                    out.write(json);
+                    out.flush(); 
+
+                    return;
                 }
                 
                 List<Rule> rules = null;
@@ -110,7 +121,7 @@ public class RulesServlet extends HttpServlet{
                     }
                 }
                 
-                String json = new Gson().toJson(properties);
+                json = new Gson().toJson(properties);
                 response.setContentType("application/json");
                 PrintWriter out = response.getWriter();
                 out.write(json);
