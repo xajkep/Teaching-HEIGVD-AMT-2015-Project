@@ -149,12 +149,9 @@ public class RulesServlet extends HttpServlet{
                 Logger.getLogger(RulesServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            
-            
             eventName = request.getParameter("new_event");
             
             System.out.println("SAVE NEW EVENT: "+eventName+" for app "+app.getId()); //debug
-            
             eventType = eventTypesDAO.createAndReturnManagedEntity(new EventType(eventName, app));
         }
         
@@ -183,8 +180,8 @@ public class RulesServlet extends HttpServlet{
         String[] names = request.getParameterValues("name");
         String[] values = request.getParameterValues("value");
         
-        System.out.println(request.getParameterValues("name[]").toString());
-        System.out.println(request.getParameterValues("value[]").toString());
+        //System.out.println(request.getParameterValues("name[]").toString());
+        //System.out.println(request.getParameterValues("value[]").toString());
         
         
         if (names != null && values != null) {
