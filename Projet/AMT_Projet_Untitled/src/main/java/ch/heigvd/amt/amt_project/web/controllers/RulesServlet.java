@@ -158,7 +158,7 @@ public class RulesServlet extends HttpServlet{
         List<RuleProperties> ruleProperties = new ArrayList<>();
         
         // Existant prop. IDs
-        String[] existantPropIDsStrings = request.getParameterValues("eventPropertiesId");
+        String[] existantPropIDsStrings = request.getParameterValues("eventPropertiesId[]");
         if (existantPropIDsStrings != null) {
             for(int i = 0; i < existantPropIDsStrings.length; i++) {
                 System.out.println(existantPropIDsStrings[i]); // debug
@@ -177,7 +177,7 @@ public class RulesServlet extends HttpServlet{
         
         String[] names = request.getParameterValues("name[]");
         String[] values = request.getParameterValues("value[]");
- 
+
         if (names != null && values != null) {
             for(int i = 0; i < names.length; i++) {
                 System.out.println(names[i]);
